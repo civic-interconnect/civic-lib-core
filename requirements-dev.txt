@@ -1,0 +1,11 @@
+# ======================================================
+# ESSENTIAL EXTERNAL TOOLS FOR TESTING
+# ======================================================
+
+# civic-lib package (here in this repository)
+.
+
+# Testing dependencies
+pytest
+pytest-asyncio
+pytest-cov
