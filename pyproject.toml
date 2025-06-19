@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "civic-lib"
-version = "0.1.0"
+version = "0.9.0"
 description = "Shared internal utility library for Civic Interconnect Agents"
 authors = [
     { name="Civic Interconnect", email="info@civic-interconnect.org" }
@@ -24,3 +24,20 @@ dependencies = [
 [project.urls]
 "Homepage" = "https://github.com/civic-interconnect/civic-interconnect-lib"
 "Source" = "https://github.com/civic-interconnect/civic-interconnect-lib"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+fix = true
+unsafe-fixes = true  # includes formatter-like changes
+preview = true  # enables Ruff formatter
+
+[tool.ruff.lint]
+extend-select = ["E", "F", "W", "I", "UP", "C90", "N", "B", "A", "SIM"]
+ignore = ["E501"]  # line length handled by formatter
+
+[tool.ruff.format]
+docstring-code-format = true

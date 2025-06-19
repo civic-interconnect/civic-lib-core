@@ -8,11 +8,12 @@ MIT License — maintained by Civic Interconnect
 """
 
 from gql.transport.exceptions import (
-    TransportServerError,
+    TransportProtocolError,
     TransportQueryError,
-    TransportProtocolError
+    TransportServerError,
 )
-from loguru import logger
+
+from civic_lib import log_utils
 
 
 def handle_transport_errors(e, resource_name="resource"):
@@ -28,17 +29,17 @@ def handle_transport_errors(e, resource_name="resource"):
     """
     if isinstance(e, TransportServerError):
         if "403" in str(e):
-            logger.warning(f"{resource_name} access not yet enabled (403 Forbidden).")
+            log_utils.logger.warning(f"{resource_name} access not yet enabled (403 Forbidden).")
             return f"{resource_name} access not yet granted"
-        logger.error(f"Server error: {e}")
+        log_utils.logger.error(f"Server error: {e}")
 
     elif isinstance(e, TransportQueryError):
-        logger.error(f"GraphQL query error: {e}")
+        log_utils.logger.error(f"GraphQL query error: {e}")
 
     elif isinstance(e, TransportProtocolError):
-        logger.error(f"Transport protocol error: {e}")
+        log_utils.logger.error(f"Transport protocol error: {e}")
 
     else:
-        logger.error(f"Unexpected error: {e}")
+        log_utils.logger.error(f"Unexpected error: {e}")
 
     raise e
