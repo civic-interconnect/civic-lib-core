@@ -1,5 +1,5 @@
 """
-civic_lib/config_utils.py
+civic_lib_core/config_utils.py
 
 Service-specific configuration and environment helpers.
 """
@@ -11,7 +11,7 @@ from pathlib import Path
 
 import yaml
 
-from civic_lib import log_utils
+from civic_lib_core import log_utils
 
 __all__ = [
     "load_api_key",

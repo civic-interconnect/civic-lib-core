@@ -1,10 +1,10 @@
 """
-Test cases for civic_lib.report_utils module.
+Test cases for civic-lib-core.report_utils module.
 """
 
 from pathlib import Path
 
-from civic_lib import report_utils
+from civic_lib_core import report_utils
 
 
 def test_is_report_file_true():

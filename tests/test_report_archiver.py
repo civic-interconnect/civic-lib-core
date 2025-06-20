@@ -1,11 +1,11 @@
 """
-Test cases for civic_lib.report_archiver module.
+Test cases for civic-lib-core.report_archiver module.
 """
 
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
-from civic_lib import report_archiver
+from civic_lib_core import report_archiver
 
 
 def test_archive_old_reports(tmp_path: Path) -> None:

@@ -1,5 +1,5 @@
 """
-Test cases for civic_lib.error_utils module.
+Test cases for civic-lib-core.error_utils module.
 """
 
 import pytest
@@ -9,7 +9,7 @@ from gql.transport.exceptions import (
     TransportServerError,
 )
 
-from civic_lib import error_utils
+from civic_lib_core import error_utils
 
 
 def test_handle_transport_server_error_forbidden():

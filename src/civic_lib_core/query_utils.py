@@ -1,5 +1,5 @@
 """
-civic_lib/query_utils.py
+civic_lib_core/query_utils.py
 
 Generic pagination helper for GraphQL queries using gql client.
 Part of the Civic Interconnect agent framework.
@@ -9,7 +9,7 @@ MIT License — maintained by Civic Interconnect
 
 from typing import Any
 
-from civic_lib import log_utils
+from civic_lib_core import log_utils
 
 __all__ = ["fetch_paginated"]
 

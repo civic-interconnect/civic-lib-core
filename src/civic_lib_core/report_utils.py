@@ -1,5 +1,5 @@
 """
-civic_lib/report_utils.py
+civic_lib_core/report_utils.py
 
 Basic helpers for working with Civic Interconnect reports.
 Part of the Civic Interconnect agent framework.

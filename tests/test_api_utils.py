@@ -1,12 +1,12 @@
 """
-Test cases for civic_lib.api_utils module.
+Test cases for civic-lib-core.api_utils module.
 """
 
 from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from civic_lib import api_utils
+from civic_lib_core import api_utils
 
 
 @pytest.mark.asyncio
@@ -20,7 +20,7 @@ async def test_async_paged_query_single_page():
         }
     }
 
-    with patch("civic_lib.api_utils.Client") as mock_client:
+    with patch("civic_lib_core.api_utils.Client") as mock_client:
         mock_instance = mock_client.return_value
         mock_instance.execute_async = AsyncMock(return_value=fake_data["data"])
 
@@ -38,7 +38,7 @@ async def test_async_paged_query_single_page():
 
 def test_paged_query_sync_wrapper():
     with patch(
-        "civic_lib.api_utils.async_paged_query", return_value=["item1", "item2"]
+        "civic_lib_core.api_utils.async_paged_query", return_value=["item1", "item2"]
     ) as mock_async:
         result = api_utils.paged_query(
             url="https://fake.url/graphql", api_key="key", query={}, data_path=["items"]

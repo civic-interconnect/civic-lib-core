@@ -1,5 +1,5 @@
 """
-civic_lib/report_reader.py
+civic_lib_core/report_reader.py
 
 Functions for reading and validating Civic Interconnect agent reports.
 """
@@ -8,9 +8,9 @@ import json
 from pathlib import Path
 from typing import Any
 
-from civic_lib import log_utils
-from civic_lib.report_constants import REPORT_EXTENSION
-from civic_lib.report_utils import is_report_file
+from civic_lib_core import log_utils
+from civic_lib_core.report_constants import REPORT_EXTENSION
+from civic_lib_core.report_utils import is_report_file
 
 __all__ = ["get_latest_report", "read_latest_report", "validate_report_format"]
 

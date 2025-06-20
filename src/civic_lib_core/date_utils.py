@@ -1,5 +1,5 @@
 """
-civic_lib/date_utils.py
+civic_lib_core/date_utils.py
 
 Date handling helpers for reports and time-based logic.
 Part of the Civic Interconnect agent framework.

@@ -1,10 +1,10 @@
 """
-Test cases for civic_lib.report_summary module.
+Test cases for civic-lib-core.report_summary module.
 """
 
 from pathlib import Path
 
-from civic_lib import report_summary
+from civic_lib_core import report_summary
 
 
 def test_write_markdown_summary(tmp_path: Path) -> None:

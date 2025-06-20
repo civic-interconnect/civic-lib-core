@@ -1,10 +1,10 @@
 """
-Test cases for civic_lib.file_utils module.
+Test cases for civic-lib-core.file_utils module.
 """
 
 from pathlib import Path
 
-from civic_lib import file_utils
+from civic_lib_core import file_utils
 
 
 def test_resolve_path_returns_absolute_path():

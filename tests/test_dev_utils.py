@@ -1,10 +1,10 @@
 """
 tests/test_dev_utils.py
 
-Unit tests for civic_lib.dev_utils functions.
+Unit tests for civic-lib-core.dev_utils functions.
 """
 
-from civic_lib.dev_utils import suggest_paths
+from civic_lib_core.dev_utils import suggest_paths
 
 
 def test_suggest_paths_simple_dict():

@@ -1,11 +1,11 @@
 """
-Test cases for civic_lib.log_utils module.
+Test cases for civic-lib-core.log_utils module.
 """
 
 import os
 from pathlib import Path
 
-from civic_lib import log_utils
+from civic_lib_core import log_utils
 
 
 def test_logger_initializes(tmp_path: Path) -> None:

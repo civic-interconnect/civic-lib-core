@@ -1,5 +1,5 @@
 """
-Test cases for civic_lib.schema_utils module.
+Test cases for civic-lib-core.schema_utils module.
 """
 
 import json
@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from civic_lib import schema_utils
+from civic_lib_core import schema_utils
 
 
 def test_load_json_success(tmp_path: Path) -> None:

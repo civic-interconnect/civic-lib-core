@@ -1,5 +1,5 @@
 """
-civic_lib/report_constants.py
+civic_lib_core/report_constants.py
 
 Shared constants for report generation, reading, validation, and indexing.
 Used across Civic Interconnect agents and admin tools.

@@ -1,5 +1,5 @@
 """
-civic_lib/api_utils.py
+civic_lib_core/api_utils.py
 
 Core utilities for API authentication, configuration loading, and logging.
 Part of the Civic Interconnect agent framework.
@@ -12,7 +12,7 @@ import asyncio
 from gql import Client
 from gql.transport.aiohttp import AIOHTTPTransport
 
-from civic_lib import log_utils
+from civic_lib_core import log_utils
 
 __all__ = [
     "async_paged_query",

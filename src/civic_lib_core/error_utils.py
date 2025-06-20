@@ -1,5 +1,5 @@
 """
-civic_lib/error_utils.py
+civic_lib_core/error_utils.py
 
 Centralized error handling for GraphQL and network operations.
 Used by agents to log and surface helpful messages when API errors occur.
@@ -13,7 +13,7 @@ from gql.transport.exceptions import (
     TransportServerError,
 )
 
-from civic_lib import log_utils
+from civic_lib_core import log_utils
 
 __all__ = ["handle_transport_errors"]
 

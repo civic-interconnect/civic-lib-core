@@ -1,5 +1,5 @@
 """
-civic_lib/version_utils.py
+civic_lib_core/version_utils.py
 
 Tools for checking and reporting agent/library compatibility.
 Part of the Civic Interconnect agent framework.
@@ -9,7 +9,7 @@ MIT License — maintained by Civic Interconnect
 
 import re
 
-from civic_lib import log_utils
+from civic_lib_core import log_utils
 
 __all__ = ["check_version", "parse_version"]
 

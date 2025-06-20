@@ -1,10 +1,10 @@
 """
-Test cases for civic_lib.date_utils module.
+Test cases for civic-lib-core.date_utils module.
 """
 
 from datetime import datetime
 
-from civic_lib import date_utils
+from civic_lib_core import date_utils
 
 
 def test_now_utc_str_format():

@@ -1,11 +1,11 @@
 """
-Test cases for civic_lib.report_writer module.
+Test cases for civic-lib-core.report_writer module.
 """
 
 import json
 from pathlib import Path
 
-from civic_lib import report_writer
+from civic_lib_core import report_writer
 
 
 def test_write_report_creates_file(tmp_path: Path) -> None:

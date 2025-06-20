@@ -1,5 +1,5 @@
 """
-civic_lib/path_utils.py
+civic_lib_core/path_utils.py
 
 Cross-platform path helpers for reports and file management.
 Part of the Civic Interconnect agent framework.

@@ -1,10 +1,10 @@
 """
-Test cases for civic_lib.query_utils module.
+Test cases for civic-lib-core.query_utils module.
 """
 
 import pytest
 
-from civic_lib import query_utils
+from civic_lib_core import query_utils
 
 
 @pytest.mark.asyncio

@@ -1,8 +1,8 @@
 """
-Test cases for civic_lib.report_constants module.
+Test cases for civic-lib-core.report_constants module.
 """
 
-from civic_lib import report_constants
+from civic_lib_core import report_constants
 
 
 def test_timestamp_format_constant_exists() -> None:

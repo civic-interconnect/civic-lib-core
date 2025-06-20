@@ -1,4 +1,4 @@
-from civic_lib import yaml_utils
+from civic_lib_core import yaml_utils
 
 
 def test_write_and_read_yaml(tmp_path):

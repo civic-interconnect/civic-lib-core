@@ -1,35 +1,18 @@
-# civic-interconnect-lib
+# civic-lib-core
+
+[![Version](https://img.shields.io/badge/version-v0.9.1-blue)](https://github.com/civic-interconnect/civic-lib-core/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Tests](https://github.com/civic-interconnect/civic-lib-core/actions/workflows/tests.yml/badge.svg)](https://github.com/civic-interconnect/civic-lib-core/actions/workflows/tests.yml)
 
 > Shared internal utility library for Civic Interconnect Agents
-
-[![Version](https://img.shields.io/badge/version-v0.9.0-blue)](https://github.com/civic-interconnect/civic-interconnect-lib/releases)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Tests](https://github.com/civic-interconnect/civic-interconnect-lib/actions/workflows/tests.yml/badge.svg)](https://github.com/civic-interconnect/civic-interconnect-lib/actions/workflows/tests.yml)
-
-Provides common reusable functions used by multiple agents in the Civic Interconnect project.
-
-## Key Design Rules
-
-- This package is for widely shared functionality only.
-- Each agent using this library remains independent.
-- Code in the library must be:
-  - Stateless
-  - Simple
-  - Easy to maintain
-- The library contains cross-cutting helpers such as:
-  - API key loading
-  - Config loading
-  - Query execution (GraphQL pagination)
-  - Exception handling
-  - Logging setup
 
 
 ## Installation When Building Civic Interconnect Agents
 
 Add to the agent’s requirements.txt:
 
-`civic-lib` or
-`-e git+https://github.com/civic-interconnect/civic-interconnect-lib.git@main#egg=civic-lib`
+`civic-lib-core` or
+`-e git+https://github.com/civic-interconnect/civic-lib-core.git@main#egg=civic-lib-core`
 
 ## Local Development (of this library)
 
@@ -52,24 +35,24 @@ git pull
 
 First: Update these files to the new version:
 
-1. **VERSION file**
-2. **pyproject.toml**
-3. **setup.cfg**
-4. **README.md** (update version badge)
+1. VERSION file
+2. pyproject.toml
+3. setup.cfg
+4. README.md (update version badge)
 
 Then run the following:
 
 ```shell
-pip uninstall civic-lib -y
+pip uninstall civic-lib-core -y
 pip install -e .
 pytest
 pre-commit autoupdate --repo https://github.com/pre-commit/pre-commit-hooks
 ruff check . --fix
 git add .
-git commit -m "Release: civic-lib v0.9.0"
+git commit -m "Release: v0.9.1"
 git push origin main
-git tag v0.9.0
-git push origin v0.9.0
+git tag v0.9.1
+git push origin v0.9.1
 ```
 
 

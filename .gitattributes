@@ -1,0 +1,8 @@
+* text=auto
+
+# Use LF for Python and shell scripts
+*.py text eol=lf
+*.sh text eol=lf
+
+# Use CRLF for PowerShell scripts (Windows-friendly)
+*.ps1 text eol=crlf

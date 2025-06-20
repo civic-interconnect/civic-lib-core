@@ -1,5 +1,5 @@
 """
-Test cases for civic_lib.config_utils module.
+Test cases for civic-lib-core.config_utils module.
 """
 
 import tempfile
@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from civic_lib import config_utils
+from civic_lib_core import config_utils
 
 
 def test_load_openstates_api_key_success(monkeypatch: pytest.MonkeyPatch):

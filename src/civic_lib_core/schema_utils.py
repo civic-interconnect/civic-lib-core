@@ -1,5 +1,5 @@
 """
-civic_lib/schema_utils.py
+civic_lib_core/schema_utils.py
 
 Centralized schema change detection utilities for Civic Interconnect agents.
 Part of the Civic Interconnect agent framework.
@@ -11,7 +11,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from civic_lib import log_utils
+from civic_lib_core import log_utils
 
 __all__ = ["detect_schema_change", "hash_dict", "load_json"]
 

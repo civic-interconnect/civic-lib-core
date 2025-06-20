@@ -1,18 +1,23 @@
-# ======================================================
-# ESSENTIAL EXTERNAL TOOLS FOR DEVELOPMENT
-# ======================================================
+# ================================================
+# requirements-dev.txt
+# Development Tools for Library Repos
+# ================================================
 
-# Install Python dependencies
+# Base project dependencies
 -r requirements.txt
 
-# Install dev tools
+# Code quality and linting
 pre-commit
 ruff
 
-# Install the civic-lib package itself in editable mode
-.
-
-# Install testing tools
+# Testing and coverage
 pytest
 pytest-asyncio
 pytest-cov
+
+# Packaging and publishing
+build
+twine
+
+# Local editable install of this package
+.

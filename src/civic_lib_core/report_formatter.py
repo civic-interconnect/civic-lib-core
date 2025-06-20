@@ -1,5 +1,5 @@
 """
-civic_lib/report_formatter.py
+civic_lib_core/report_formatter.py
 
 Format Civic Interconnect agent reports into various human-readable forms.
 Supports Markdown, plain text, and CSV formats.

@@ -1,11 +1,11 @@
 """
-Test cases for civic_lib.path_utils module.
+Test cases for civic-lib-core.path_utils module.
 """
 
 import tempfile
 from pathlib import Path
 
-from civic_lib import path_utils
+from civic_lib_core import path_utils
 
 
 def test_safe_filename():

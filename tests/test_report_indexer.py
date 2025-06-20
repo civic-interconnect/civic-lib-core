@@ -1,10 +1,10 @@
 """
-Test cases for civic_lib.report_indexer module.
+Test cases for civic-lib-core.report_indexer module.
 """
 
 from pathlib import Path
 
-from civic_lib import report_indexer, report_writer
+from civic_lib_core import report_indexer, report_writer
 
 
 def test_generate_index_creates_index_md(tmp_path: Path) -> None:

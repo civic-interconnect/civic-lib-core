@@ -34,4 +34,4 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest --cov=civic_lib tests/
+          pytest --cov=civic_lib_core tests/

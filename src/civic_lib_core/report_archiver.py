@@ -1,5 +1,5 @@
 """
-civic_lib/report_archiver.py
+civic_lib_core/report_archiver.py
 
 Archives old Civic Interconnect agent reports by renaming them with `.archived.json`.
 Used by admin and maintenance tools, not daily agents.
@@ -10,8 +10,8 @@ MIT License — maintained by Civic Interconnect
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
-from civic_lib import log_utils
-from civic_lib.report_constants import DATE_ONLY_FORMAT
+from civic_lib_core import log_utils
+from civic_lib_core.report_constants import DATE_ONLY_FORMAT
 
 __all__ = ["archive_old_reports", "archive_reports_older_than"]
 

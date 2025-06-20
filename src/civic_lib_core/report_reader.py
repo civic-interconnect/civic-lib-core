@@ -1,5 +1,5 @@
 """
-civic_lib/report_reader.py
+civic_lib_core/report_reader.py
 
 Functions for reading, inspecting, and validating Civic Interconnect agent reports.
 Used by dashboards, CLI tools, and indexing utilities.
@@ -11,10 +11,10 @@ import json
 from pathlib import Path
 from typing import Any
 
-from civic_lib import log_utils
-from civic_lib.report_constants import EXPECTED_REPORT_KEYS, REPORT_EXTENSION
-from civic_lib.report_utils import is_report_file
-from civic_lib.version_utils import check_version
+from civic_lib_core import log_utils
+from civic_lib_core.report_constants import EXPECTED_REPORT_KEYS, REPORT_EXTENSION
+from civic_lib_core.report_utils import is_report_file
+from civic_lib_core.version_utils import check_version
 
 __all__ = [
     "check_schema_version",

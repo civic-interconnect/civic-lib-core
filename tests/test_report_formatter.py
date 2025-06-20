@@ -1,8 +1,8 @@
 """
-Test cases for civic_lib.report_formatter module.
+Test cases for civic-lib-core.report_formatter module.
 """
 
-from civic_lib import report_formatter
+from civic_lib_core import report_formatter
 
 
 def sample_report() -> dict:

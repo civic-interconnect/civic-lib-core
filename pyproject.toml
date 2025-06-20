@@ -3,8 +3,8 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "civic-lib"
-version = "0.9.0"
+name = "civic-lib-core"
+version = "0.9.1"
 description = "Shared internal utility library for Civic Interconnect Agents"
 authors = [
     { name="Civic Interconnect", email="info@civic-interconnect.org" }
@@ -22,8 +22,8 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/civic-interconnect/civic-interconnect-lib"
-"Source" = "https://github.com/civic-interconnect/civic-interconnect-lib"
+"Homepage" = "https://github.com/civic-interconnect/civic-lib-core"
+"Source" = "https://github.com/civic-interconnect/civic-lib-core"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

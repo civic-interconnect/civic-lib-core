@@ -1,8 +1,8 @@
 """
-Test cases for civic_lib.version_utils module.
+Test cases for civic-lib-core.version_utils module.
 """
 
-from civic_lib import version_utils
+from civic_lib_core import version_utils
 
 
 def test_check_version_match():

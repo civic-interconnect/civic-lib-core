@@ -1,10 +1,10 @@
 from pathlib import Path
 
-from civic_lib import log_utils
-from civic_lib.path_utils import ensure_dir
-from civic_lib.report_constants import REPORTS_DIR
-from civic_lib.report_reader import get_latest_report
-from civic_lib.report_utils import get_agent_name_from_path
+from civic_lib_core import log_utils
+from civic_lib_core.path_utils import ensure_dir
+from civic_lib_core.report_constants import REPORTS_DIR
+from civic_lib_core.report_reader import get_latest_report
+from civic_lib_core.report_utils import get_agent_name_from_path
 
 __all__ = ["generate_index"]
 

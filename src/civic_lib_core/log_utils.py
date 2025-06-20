@@ -1,5 +1,5 @@
 """
-civic_lib/log_utils.py
+civic_lib_core/log_utils.py
 
 Centralized log functions for Civic Interconnect agents.
 Part of the Civic Interconnect agent framework.
@@ -11,8 +11,8 @@ from pathlib import Path
 
 from loguru import logger
 
-from civic_lib.date_utils import now_utc_str
-from civic_lib.path_utils import ensure_dir
+from civic_lib_core.date_utils import now_utc_str
+from civic_lib_core.path_utils import ensure_dir
 
 __all__ = [
     "init_logger",

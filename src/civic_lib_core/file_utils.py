@@ -1,5 +1,5 @@
 """
-civic_lib/file_utils.py
+civic_lib_core/file_utils.py
 
 Utility functions for root-relative logic.
 Part of the Civic Interconnect agent framework.
