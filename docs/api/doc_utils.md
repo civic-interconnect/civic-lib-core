@@ -50,6 +50,16 @@ Generate YAML API summary (backward compatibility).
 
 Parse a Python file and return its AST, or None if there's a syntax error.
 
+### `publish_api_docs(source_pkg_str='civic_lib_core')`
+
+One-liner to generate complete API documentation for release.
+
+Generates YAML summary, Markdown docs, and MkDocs config in one call.
+Perfect for automated release workflows.
+
+Args:
+    source_pkg_str: Source package to document (auto-detects project)
+
 ### `write_module_markdown(file_path, module_name, functions, classes)`
 
 Write markdown documentation for a single module.

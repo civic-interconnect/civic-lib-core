@@ -8,20 +8,24 @@ This script:
 - Updates pre-commit hooks
 - Installs the package in editable mode
 - Formats and lints the code
+- Generates up-to-date API documentation
 - Runs pre-commit hooks twice (fix + verify)
 - Runs unit tests if present
 - Commits changes if any are staged
-- Replaces and re-tags if the tag already exists
-- Pushes changes and tag to GitHub
+- Creates a new Git tag for the release
+- Pushes the commit and tag to the remote repository
 
-Assumes version strings have already been updated using:
-    civic-dev bump 1.0.3 1.0.4
+Update the VERSION file before running this script.
+Command should look something like:
+    civic-dev bump-version 1.0.3 1.0.4
 """
 
 import subprocess
 from pathlib import Path
 
 import typer
+
+from civic_lib_core.doc_utils import publish_api_docs
 
 app = typer.Typer(help="Run formatting, tests, and tagging to publish a release.")
 
@@ -65,6 +69,9 @@ def main() -> None:
         # Format and lint
         run("ruff format .")
         run("ruff check . --fix")
+
+        # Generate fresh API documentation after formatting
+        publish_api_docs()
 
         # Pre-commit: first pass may fix
         run("pre-commit run --all-files", check=False)

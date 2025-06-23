@@ -103,6 +103,12 @@ doc_utils:
     signature: parse_python_file(file_path)
     docstring: Parse a Python file and return its AST, or None if there's a syntax
       error.
+  - name: publish_api_docs
+    signature: publish_api_docs(source_pkg_str='civic_lib_core')
+    docstring: "One-liner to generate complete API documentation for release.\n\n\
+      Generates YAML summary, Markdown docs, and MkDocs config in one call.\nPerfect\
+      \ for automated release workflows.\n\nArgs:\n    source_pkg_str: Source package\
+      \ to document (auto-detects project)"
   - name: write_module_markdown
     signature: write_module_markdown(file_path, module_name, functions, classes)
     docstring: Write markdown documentation for a single module.
