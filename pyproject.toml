@@ -1,6 +1,6 @@
 [project]
 name = "civic-lib-core"
-version = "0.9.2"
+version = "0.9.3"
 description = "Shared internal utility library for Civic Interconnect Agents"
 authors = [
     { name="Civic Interconnect", email="info@civic-interconnect.org" }
