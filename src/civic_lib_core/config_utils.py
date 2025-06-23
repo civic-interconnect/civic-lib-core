@@ -2,6 +2,20 @@
 civic_lib_core/config_utils.py
 
 Service-specific configuration and environment helpers.
+
+In config.yaml:
+
+    log_level: info  # or debug, warning, error, critical
+
+In code:
+
+    from civic_lib_core import config_utils
+
+    "load_api_key",
+    "load_yaml_config",
+    "load_version",
+    "parse_version",
+
 """
 
 import os
@@ -15,7 +29,6 @@ from civic_lib_core import log_utils
 
 __all__ = [
     "load_api_key",
-    "load_openstates_api_key",
     "load_yaml_config",
     "load_version",
     "parse_version",
@@ -46,19 +59,6 @@ def load_api_key(env_var: str, service_name: str) -> str:
         )
         sys.exit(f"Error: {env_var} is required for {service_name}.")
     return key
-
-
-def load_openstates_api_key() -> str:
-    """
-    Load the OpenStates API key from environment variables.
-
-    Returns:
-        str: The OpenStates API key.
-
-    Exits:
-        If the API key is not set in the environment.
-    """
-    return load_api_key("OPENSTATES_API_KEY", "OpenStates")
 
 
 def load_yaml_config(filename: str = "config.yaml", root_dir: Path | None = None) -> dict:

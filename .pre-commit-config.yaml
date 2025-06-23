@@ -1,19 +1,26 @@
 repos:
+  # YAML, JSON, file hygiene
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
       - id: check-yaml
         files: ^\.github/|\.pre-commit-config\.yaml
+      - id: check-json
       - id: end-of-file-fixer
         exclude: ^schemas/|^storage/
       - id: trailing-whitespace
         exclude: ^schemas/|^storage/
+      - id: check-added-large-files
+        args: ["--maxkb=100"]
 
+  # Ruff linting and formatting
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.0  # Ruff version
+    rev: v0.12.0
     hooks:
       - id: ruff-check
-        types_or: [python, pyi]
+        name: ruff check
         args: [--fix]
+        types_or: [python, pyi]
       - id: ruff-format
+        name: ruff format
         types_or: [python, pyi]

@@ -11,7 +11,7 @@ from civic_lib_core import report_writer
 def test_write_report_creates_file(tmp_path: Path) -> None:
     data = [{"id": 1, "name": "Test"}]
     agent_name = "test_agent"
-    agent_version = "v1.2.3"
+    agent_version = "1.2.3"
 
     result_path = report_writer.write_report(data, agent_name, agent_version, report_dir=tmp_path)
     result_file = Path(result_path)
@@ -28,7 +28,7 @@ def test_write_report_creates_file(tmp_path: Path) -> None:
 def test_write_report_csv_format(tmp_path: Path) -> None:
     data = [{"id": 1, "name": "Alice"}, {"id": 2, "name": "Bob"}]
     agent_name = "csv_agent"
-    agent_version = "v0.9.0"
+    agent_version = "0.9.0"
 
     result_path = report_writer.write_report(
         data, agent_name, agent_version, report_dir=tmp_path, file_format="csv"

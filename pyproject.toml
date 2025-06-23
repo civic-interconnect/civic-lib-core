@@ -1,10 +1,6 @@
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "civic-lib-core"
-version = "0.9.1"
+version = "0.9.2"
 description = "Shared internal utility library for Civic Interconnect Agents"
 authors = [
     { name="Civic Interconnect", email="info@civic-interconnect.org" }
@@ -17,23 +13,47 @@ dependencies = [
     "loguru",
     "python-dotenv",
     "PyYAML",
+    "typer[all]",
+    "rich",
     "requests",
     "gql[aiohttp]",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mkdocs",
+  "mkdocs-material",
+  "pre-commit",
+  "pytest",
+  "pytest-asyncio",
+  "pytest-cov",
+  "ruff",
+  "build",
+  "twine"
 ]
 
 [project.urls]
 "Homepage" = "https://github.com/civic-interconnect/civic-lib-core"
 "Source" = "https://github.com/civic-interconnect/civic-lib-core"
 
+[project.scripts]
+civic-dev = "civic_dev.cli:app"
+civic-lib-core = "civic_lib_core.cli.cli:app"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [tool.setuptools]
 package-dir = {"" = "src"}
+license-files = ["LICENSE"]
 
 [tool.ruff]
 line-length = 100
 target-version = "py312"
 fix = true
-unsafe-fixes = true  # includes formatter-like changes
-preview = true  # enables Ruff formatter
+unsafe-fixes = true
+preview = true
 
 [tool.ruff.lint]
 extend-select = ["E", "F", "W", "I", "UP", "C90", "N", "B", "A", "SIM"]
@@ -41,3 +61,11 @@ ignore = ["E501"]  # line length handled by formatter
 
 [tool.ruff.format]
 docstring-code-format = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra --strict-markers"
+testpaths = [
+  "tests"
+]
+python_files = "test_*.py"

@@ -1,0 +1,39 @@
+site_name: Civic Lib Core Documentation
+site_description: Documentation for Civic Lib Core
+theme:
+  name: material
+  palette:
+  - scheme: default
+    primary: indigo
+    accent: indigo
+nav:
+- Home: index.md
+- API Reference:
+  - Overview: api/index.md
+  - Api Utils: api/api_utils.md
+  - Cli > Cli: api/cli.cli.md
+  - Cli > Serve App: api/cli.serve_app.md
+  - Config Utils: api/config_utils.md
+  - Date Utils: api/date_utils.md
+  - Dev Utils: api/dev_utils.md
+  - Doc Utils: api/doc_utils.md
+  - Error Utils: api/error_utils.md
+  - File Utils: api/file_utils.md
+  - Log Utils: api/log_utils.md
+  - Path Utils: api/path_utils.md
+  - Report Archiver: api/report_archiver.md
+  - Report Formatter: api/report_formatter.md
+  - Report Indexer: api/report_indexer.md
+  - Report Reader: api/report_reader.md
+  - Report Summary: api/report_summary.md
+  - Report Utils: api/report_utils.md
+  - Report Writer: api/report_writer.md
+  - Schema Utils: api/schema_utils.md
+  - Version Utils: api/version_utils.md
+  - Yaml Utils: api/yaml_utils.md
+plugins:
+- search
+markdown_extensions:
+- toc
+- codehilite
+- admonition

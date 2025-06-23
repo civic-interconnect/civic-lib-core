@@ -11,7 +11,7 @@ def sample_report() -> dict:
         "timestamp": "2025-06-18 10:00:00 UTC",
         "record_count": 2,
         "agent_version": "v1.2.3",
-        "lib_version": "v0.4.0",
+        "lib_version": "0.4.0",
         "results": [
             {"id": 1, "name": "Alice"},
             {"id": 2, "name": "Bob"},

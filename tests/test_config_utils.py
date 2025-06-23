@@ -11,18 +11,6 @@ import yaml
 from civic_lib_core import config_utils
 
 
-def test_load_openstates_api_key_success(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("OPENSTATES_API_KEY", "fake_key_123")
-    key = config_utils.load_openstates_api_key()
-    assert key == "fake_key_123"
-
-
-def test_load_openstates_api_key_failure(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.delenv("OPENSTATES_API_KEY", raising=False)
-    with pytest.raises(SystemExit):
-        config_utils.load_openstates_api_key()
-
-
 def test_load_yaml_config_success(tmp_path: Path):
     config_data = {"key1": "value1", "key2": 2}
     config_file = tmp_path / "config.yaml"

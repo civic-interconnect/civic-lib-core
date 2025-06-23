@@ -12,8 +12,8 @@ def test_write_markdown_summary(tmp_path: Path) -> None:
         "agent": "summary_agent",
         "timestamp": "2025-06-18 08:00:00 UTC",
         "record_count": 5,
-        "agent_version": "v1.1.0",
-        "lib_version": "v0.2.0",
+        "agent_version": "1.1.0",
+        "lib_version": "0.2.0",
         "results": [],
     }
 

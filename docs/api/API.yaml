@@ -1,0 +1,351 @@
+api_utils:
+  functions:
+  - name: paged_query
+    signature: paged_query(url, api_key, query, data_path)
+    docstring: "Run a paged GraphQL query synchronously.\n\nArgs:\n    url (str):\
+      \ GraphQL endpoint.\n    api_key (str): API key.\n    query: gql.Query object.\n\
+      \    data_path (list): Path to the list of edges.\n\nReturns:\n    list: All\
+      \ collected items."
+config_utils:
+  functions:
+  - name: load_api_key
+    signature: load_api_key(env_var, service_name)
+    docstring: "Load an API key from the environment.\n\nArgs:\n    env_var (str):\
+      \ Environment variable name to load.\n    service_name (str): Friendly service\
+      \ name for error messaging.\n\nReturns:\n    str: API key value.\n\nExits:\n\
+      \    If the API key is missing."
+  - name: load_version
+    signature: load_version(filename='VERSION', root_dir=None)
+    docstring: "Load the version string from a VERSION file.\n\nArgs:\n    filename\
+      \ (str): The version filename (default: \"VERSION\").\n    root_dir (Path |\
+      \ None): Optional base path.\n\nReturns:\n    str: Version string.\n\nExits:\n\
+      \    If the file is missing or unreadable."
+  - name: load_yaml_config
+    signature: load_yaml_config(filename='config.yaml', root_dir=None)
+    docstring: "Load a YAML configuration file from the given root directory.\n\n\
+      Args:\n    filename (str): The config file name (default: \"config.yaml\").\n\
+      \    root_dir (Path | None): Root directory to search (default: Path.cwd()).\n\
+      \nReturns:\n    dict: Parsed configuration as a dictionary.\n\nRaises:\n   \
+      \ FileNotFoundError: If the config file cannot be found."
+  - name: parse_version
+    signature: parse_version(version)
+    docstring: "Parse a version string like '1.2.3' into a tuple.\n\nRaises:\n   \
+      \ ValueError: if the version is not properly formatted."
+date_utils:
+  functions:
+  - name: date_range
+    signature: date_range(days_back)
+    docstring: "Generate a list of date strings from `days_back` days ago up to today\
+      \ (UTC).\n\nArgs:\n    days_back (int): Number of days to include, ending with\
+      \ today (inclusive).\n\nReturns:\n    list[str]: List of UTC dates in 'YYYY-MM-DD',\
+      \ earliest to latest."
+  - name: now_utc
+    signature: now_utc()
+    docstring: "Return the current UTC datetime object.\n\nReturns:\n    datetime:\
+      \ Current UTC datetime."
+  - name: now_utc_str
+    signature: now_utc_str(fmt='%Y-%m-%d %H:%M:%S UTC')
+    docstring: "Return the current time in UTC as a formatted string.\n\nArgs:\n \
+      \   fmt (str): Format string for datetime output. Default includes 'UTC'.\n\n\
+      Returns:\n    str: Formatted current UTC time."
+  - name: today_utc_str
+    signature: today_utc_str()
+    docstring: "Return today's date in UTC in 'YYYY-MM-DD' format.\n\nReturns:\n \
+      \   str: Current UTC date as a string."
+dev_utils:
+  functions:
+  - name: log_suggested_paths
+    signature: log_suggested_paths(response, max_depth=3, source_label='response')
+    docstring: "Log inferred paths to nested keys in a response dictionary.\n\nArgs:\n\
+      \    response (dict): Parsed API response.\n    max_depth (int): Maximum depth\
+      \ to explore.\n    source_label (str): Label for context in logs."
+  - name: suggest_paths
+    signature: suggest_paths(response, max_depth=3, current_path=None)
+    docstring: "Suggest possible nested data paths in a response dictionary.\n\nArgs:\n\
+      \    response (dict): Parsed API response.\n    max_depth (int): Maximum traversal\
+      \ depth.\n    current_path (list[str] | None): Used internally for recursion.\n\
+      \nReturns:\n    list of (path, key, summary): Potential paths to explore."
+doc_utils:
+  functions:
+  - name: extract_module_api
+    signature: extract_module_api(source_path)
+    docstring: "Extract public API information from all Python modules in source_path.\n\
+      \nReturns:\n    Dict mapping module names to their public functions and classes\
+      \ with docstrings."
+  - name: extract_public_names
+    signature: extract_public_names(tree)
+    docstring: Extract names from __all__ declaration.
+  - name: find_public_classes
+    signature: find_public_classes(tree, public_names)
+    docstring: Find all public classes in the AST with their docstrings.
+  - name: find_public_functions
+    signature: find_public_functions(tree, public_names)
+    docstring: Find all public functions in the AST with their docstrings.
+  - name: generate_api_docs
+    signature: generate_api_docs(source_dir_str='civic_lib_core', output_dir_str='api')
+    docstring: Generate Markdown API documentation (backward compatibility).
+  - name: generate_docs
+    signature: generate_docs(source_pkg_str='civic_lib_core', output_dir_str='api',
+      formats=None)
+    docstring: "Generate API documentation in multiple formats.\n\nArgs:\n    source_pkg_str:\
+      \ Package directory containing Python source files\n    output_dir_str: Output\
+      \ directory name (will be created under docs/)\n    formats: List of formats\
+      \ to generate (\"yaml\", \"markdown\", or both)"
+  - name: generate_mkdocs_config
+    signature: generate_mkdocs_config(project_name=None, source_pkg_str='civic_lib_core')
+    docstring: "Generate mkdocs.yml configuration file with auto-discovered API docs.\n\
+      \nArgs:\n    project_name: Name for the documentation site (auto-detected if\
+      \ None)\n    source_pkg_str: Source package to scan for modules"
+  - name: generate_summary_yaml
+    signature: generate_summary_yaml(source_pkg_str='civic_lib_core', docs_output_string='api')
+    docstring: Generate YAML API summary (backward compatibility).
+  - name: parse_python_file
+    signature: parse_python_file(file_path)
+    docstring: Parse a Python file and return its AST, or None if there's a syntax
+      error.
+  - name: write_module_markdown
+    signature: write_module_markdown(file_path, module_name, functions, classes)
+    docstring: Write markdown documentation for a single module.
+error_utils:
+  functions:
+  - name: handle_transport_errors
+    signature: handle_transport_errors(e, resource_name='resource')
+    docstring: "Handle GraphQL transport errors with consistent logging and friendly\
+      \ feedback.\n\nArgs:\n    e (Exception): The exception raised by gql transport.\n\
+      \    resource_name (str): Human-readable name of the queried resource (for logs\
+      \ and user messages).\n\nReturns:\n    str: A message if the error is a known\
+      \ access denial (403). Re-raises otherwise.\n\nRaises:\n    Exception: The original\
+      \ error, unless a known handled case."
+file_utils:
+  functions:
+  - name: ensure_docs_output_dir
+    signature: ensure_docs_output_dir(output_dir_str='api')
+    docstring: Ensure output directory exists under project root/docs.
+  - name: ensure_source_path
+    signature: ensure_source_path(source_pkg_str='civic_lib_core')
+    docstring: Resolve and validate the source package path.
+  - name: find_project_root
+    signature: find_project_root()
+    docstring: "Find the actual project root, whether civic_lib_core is installed\
+      \ or local.\n\nReturns:\n    Path: The project root directory"
+  - name: resolve_path
+    signature: resolve_path(relative_path)
+    docstring: "Return an absolute Path from project root for a relative path.\n\n\
+      Args:\n    relative_path (str | Path): The relative or partial path to resolve.\n\
+      \nReturns:\n    Path: The absolute path resolved from the project root."
+log_utils:
+  functions:
+  - name: init_logger
+    signature: init_logger(log_level=None, log_to_console=True)
+    docstring: "Initialize loguru logging once per session.\n\nIf no log level is\
+      \ provided, attempts to load it from config.yaml as 'log_level'.\nDefaults to\
+      \ INFO if not found or config is missing.\n\nArgs:\n    log_level (str | None):\
+      \ Optional log level override (default: config.yaml or \"INFO\").\n    log_to_console\
+      \ (bool): If True, logs to stderr in addition to file."
+  - name: log_agent_end
+    signature: log_agent_end(agent_name, status='success')
+    docstring: Log the end of an agent with its status and UTC timestamp.
+  - name: log_agent_start
+    signature: log_agent_start(agent_name)
+    docstring: Log the start of an agent by name.
+path_utils:
+  functions:
+  - name: ensure_dir
+    signature: ensure_dir(path)
+    docstring: "Ensure a directory exists, creating it if necessary.\n\nArgs:\n  \
+      \  path (str | Path): The directory path to ensure.\n\nReturns:\n    Path: The\
+      \ resolved Path object of the directory."
+  - name: safe_filename
+    signature: safe_filename(name)
+    docstring: "Convert a string into a safe, lowercase filename.\n\nReplaces spaces\
+      \ and forward slashes with underscores.\n\nArgs:\n    name (str): Original string.\n\
+      \nReturns:\n    str: Sanitized, lowercase filename string."
+report_archiver:
+  functions:
+  - name: archive_old_reports
+    signature: archive_old_reports(agent_dir, keep_latest=True)
+    docstring: "Rename old .json reports to .archived.json, optionally keeping the\
+      \ latest.\n\nArgs:\n    agent_dir (Path): Directory with report files.\n   \
+      \ keep_latest (bool): Whether to keep the most recent report unarchived.\n\n\
+      Returns:\n    list[Path]: List of archived report file paths."
+  - name: archive_reports_older_than
+    signature: archive_reports_older_than(agent_dir, days_old)
+    docstring: Archive reports older than a specified number of days.
+report_formatter:
+  functions:
+  - name: format_report_as_csv
+    signature: format_report_as_csv(report)
+    docstring: "Convert report results to CSV format.\n\nArgs:\n    report (dict):\
+      \ Parsed report dictionary.\n\nReturns:\n    str: CSV-formatted string of the\
+      \ report results."
+  - name: format_report_as_markdown
+    signature: format_report_as_markdown(report)
+    docstring: "Convert a report dictionary to a Markdown summary string.\n\nArgs:\n\
+      \    report (dict): Parsed report dictionary.\n\nReturns:\n    str: Markdown-formatted\
+      \ report summary."
+  - name: format_report_as_text
+    signature: format_report_as_text(report)
+    docstring: "Convert a report dictionary to a plain text summary string.\n\nArgs:\n\
+      \    report (dict): Parsed report dictionary.\n\nReturns:\n    str: Text-formatted\
+      \ report summary."
+  - name: to_csv
+    signature: to_csv(data, path)
+    docstring: "Write raw result data to a CSV file.\n\nArgs:\n    data (list[dict]):\
+      \ Result rows to write.\n    path (Path): File path to write CSV to."
+  - name: to_markdown
+    signature: to_markdown(data, path)
+    docstring: "Write raw result data to a Markdown table.\n\nArgs:\n    data (list[dict]):\
+      \ Result rows to write.\n    path (Path): File path to write Markdown to."
+report_indexer:
+  functions:
+  - name: generate_index
+    signature: generate_index(report_dir=REPORTS_DIR)
+    docstring: "Generate a Markdown index listing the latest report from each agent.\n\
+      \nArgs:\n    report_dir (Path): The base `reports/` directory to scan."
+report_reader:
+  functions:
+  - name: check_schema_version
+    signature: check_schema_version(report, required, strict=False)
+    docstring: "Check if the report's schema version matches the required version.\n\
+      Args:\n    report (dict): The parsed report dictionary.\n    required (str):\
+      \ The required schema version to check against.\n    strict (bool): If True,\
+      \ raise an error if the version does not match.\n                   If False,\
+      \ return False and log a warning.\nReturns:\n    bool: True if the schema version\
+      \ matches, False otherwise."
+  - name: get_latest_report
+    signature: get_latest_report(agent_dir)
+    docstring: "Get the most recent report file from the specified agent directory.\n\
+      \nArgs:\n    agent_dir (Path): Path to the agent's report folder.\n\nReturns:\n\
+      \    Path | None: The latest report file, or None if none found."
+  - name: read_latest_report
+    signature: read_latest_report(agent_dir, strict=False)
+    docstring: "Read and return the contents of the latest report for a given agent.\n\
+      \nArgs:\n    agent_dir (Path): Path to the agent's report folder.\n    strict\
+      \ (bool): If True, raise errors on missing or invalid reports.\n           \
+      \        If False, return None and log a warning.\n\nReturns:\n    dict | None:\
+      \ Parsed report contents, or None if no report exists or format is invalid (in\
+      \ non-strict mode)."
+  - name: validate_report_format
+    signature: validate_report_format(report)
+    docstring: "Validate that a report contains all expected top-level keys.\n\nArgs:\n\
+      \    report (dict): The parsed report to validate.\n\nReturns:\n    bool: True\
+      \ if valid, False otherwise."
+report_summary:
+  functions:
+  - name: write_markdown_summary
+    signature: write_markdown_summary(report, path)
+    docstring: "Write a Markdown summary of a report's key metadata.\n\nArgs:\n  \
+      \  report (dict): The report data (already parsed).\n    path (Path): The output\
+      \ path to write the .md file."
+report_utils:
+  functions:
+  - name: get_agent_name_from_path
+    signature: get_agent_name_from_path(path)
+    docstring: "Extract and format the agent name from a report file path.\n\nThe\
+      \ agent name is derived from the parent folder of the report file,\nwith underscores\
+      \ replaced by spaces and title-cased.\n\nIf the path does not have a parent\
+      \ directory, returns 'Unknown Agent'.\n\nArgs:\n    path (Path): The path to\
+      \ a report file.\n\nReturns:\n    str: Formatted agent name or fallback string."
+  - name: is_report_file
+    signature: is_report_file(path)
+    docstring: "Determine whether the given file path is a valid report file.\n\n\
+      A valid report file must:\n- Have a \".json\" extension\n- Begin with a date\
+      \ prefix (e.g., \"2024-01-01\")\n\nArgs:\n    path (Path): The path to check.\n\
+      \nReturns:\n    bool: True if the path matches report file format, False otherwise."
+report_writer:
+  functions:
+  - name: write_report
+    signature: write_report(data, agent_name, agent_version, schema_version='1.0.0',
+      report_dir=REPORTS_DIR, file_format='json')
+    docstring: "Write agent output to a timestamped report file with metadata.\n\n\
+      Args:\n    data (list[dict[str, Any]]): The results to include in the report.\n\
+      \    agent_name (str): The name of the agent generating the report.\n    agent_version\
+      \ (str): The version of the agent code.\n    report_dir (str | Path): Root directory\
+      \ where reports are saved (default: REPORTS_DIR).\n    file_format (str): Output\
+      \ format, one of \"json\" or \"csv\" (default: \"json\").\n\nReturns:\n    Path:\
+      \ The full path to the saved report file."
+schema_utils:
+  functions:
+  - name: detect_schema_change
+    signature: detect_schema_change(old_file, new_data)
+    docstring: "Detect if the schema has changed by comparing the old file's hash\
+      \ with the new data.\nArgs:\n    old_file (Path): The path to the old schema\
+      \ file.\n    new_data (dict): The new schema data to compare against.\nReturns:\n\
+      \    bool: True if the schema has changed (i.e., hashes differ), False otherwise."
+  - name: hash_dict
+    signature: hash_dict(data)
+    docstring: "Hash a JSON-serializable dictionary for change detection.\nArgs:\n\
+      \    data (dict): The dictionary to hash.\nReturns:\n    str: The SHA-256 hash\
+      \ of the JSON-encoded dictionary."
+  - name: load_json
+    signature: load_json(path)
+    docstring: "Load a JSON file and return its contents as a dictionary.\nArgs:\n\
+      \    path (str | Path): The path to the JSON file.\nReturns:\n    dict: The\
+      \ parsed JSON data.\nRaises:\n    FileNotFoundError: If the file does not exist.\n\
+      \    json.JSONDecodeError: If the file is not valid JSON."
+version_utils:
+  functions:
+  - name: bump_version
+    signature: bump_version(old_version, new_version)
+    docstring: No description available.
+  - name: check_version
+    signature: check_version(agent_version, lib_version, strict=False)
+    docstring: "Check compatibility of agent and lib versions using SemVer rules.\n\
+      \nArgs:\n    agent_version (str): Version string for the agent.\n    lib_version\
+      \ (str): Version string for the shared library.\n    strict (bool): If True,\
+      \ requires exact version match.\n\nReturns:\n    bool: True if compatible, False\
+      \ otherwise."
+  - name: find_init_files
+    signature: find_init_files(root_dir)
+    docstring: Recursively find all __init__.py files under the given directory.
+  - name: get_lib_version
+    signature: get_lib_version()
+    docstring: "Get the current library version.\n\nReturns:\n    str: The semantic\
+      \ version string (e.g., \"1.2.3\")."
+  - name: get_version
+    signature: get_version()
+    docstring: Convenience alias for get_lib_version().
+  - name: lib_version
+    signature: lib_version()
+    docstring: Convenience alias for get_lib_version().
+  - name: parse_version
+    signature: parse_version(version)
+    docstring: "Parse a version string into a tuple of integers.\n\nArgs:\n    version\
+      \ (str): A semantic version string, e.g., \"1.2.3\".\n\nReturns:\n    tuple[int,\
+      \ int, int]: A tuple of (major, minor, patch) version numbers.\n\nRaises:\n\
+      \    ValueError: If the version string is not in the expected format."
+  - name: update_version_in_init
+    signature: update_version_in_init(path, new_version)
+    docstring: 'Update __version__ assignment in a given __init__.py file.
+
+      Only works for simple string assignment: __version__ = "..."'
+  - name: update_version_string
+    signature: update_version_string(path, old, new)
+    docstring: No description available.
+yaml_utils:
+  functions:
+  - name: read_yaml
+    signature: read_yaml(path)
+    docstring: "Read and parse a YAML file into a dictionary.\n\nArgs:\n    path (str\
+      \ | Path): YAML file path.\n\nReturns:\n    dict: Parsed YAML data."
+  - name: write_yaml
+    signature: write_yaml(data, path)
+    docstring: "Write a dictionary to a YAML file.\n\nArgs:\n    data (dict): Data\
+      \ to write.\n    path (str | Path): File path to write to.\n\nReturns:\n   \
+      \ Path: The path the file was written to."
+cli.cli:
+  functions:
+  - name: main
+    signature: main()
+    docstring: No description available.
+  - name: serve_local_app
+    signature: serve_local_app()
+    docstring: Start the application locally for development or preview.
+cli.serve_app:
+  functions:
+  - name: main
+    signature: main()
+    docstring: 'Launch the local development server for the static web app.
+
+
+      Serves the `docs/` directory using `python -m http.server 8000`.'
