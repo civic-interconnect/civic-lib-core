@@ -1,17 +1,16 @@
 [project]
 name = "civic-lib-core"
-version = "0.9.3"
+version = "0.9.4"
 description = "Shared internal utility library for Civic Interconnect Agents"
 authors = [
     { name="Civic Interconnect", email="info@civic-interconnect.org" }
 ]
 license = { text = "MIT" }
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 
 dependencies = [
     "loguru",
-    "python-dotenv",
     "PyYAML",
     "typer[all]",
     "rich",

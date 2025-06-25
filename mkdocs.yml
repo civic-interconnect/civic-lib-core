@@ -6,13 +6,14 @@ theme:
   - scheme: default
     primary: indigo
     accent: indigo
+  features:
+  - navigation.expand
 nav:
 - Home: index.md
 - API Reference:
-  - Overview: api/index.md
   - Api Utils: api/api_utils.md
-  - Cli > Cli: api/cli.cli.md
-  - Cli > Serve App: api/cli.serve_app.md
+  - Cli.Cli: api/cli.cli.md
+  - Cli.Serve App: api/cli.serve_app.md
   - Config Utils: api/config_utils.md
   - Date Utils: api/date_utils.md
   - Dev Utils: api/dev_utils.md
@@ -21,7 +22,9 @@ nav:
   - File Utils: api/file_utils.md
   - Log Utils: api/log_utils.md
   - Path Utils: api/path_utils.md
+  - Query Utils: api/query_utils.md
   - Report Archiver: api/report_archiver.md
+  - Report Constants: api/report_constants.md
   - Report Formatter: api/report_formatter.md
   - Report Indexer: api/report_indexer.md
   - Report Reader: api/report_reader.md

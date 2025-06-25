@@ -14,15 +14,25 @@ Reinstalls .venv if pyproject.toml, requirements.txt, or poetry.lock are newer.
 """
 
 import subprocess
+import sys
 from pathlib import Path
 
-import typer
-
 from civic_dev import install_deps
-from civic_lib_core import version_utils
+from civic_lib_core import log_utils, version_utils
 from civic_lib_core.version_utils import get_lib_version
 
-app = typer.Typer(help="Format, lint, and test code with environment check.")
+logger = log_utils.logger
+
+
+def run_check(command: list[str], label: str) -> None:
+    """Run a shell command and fail fast if it errors."""
+    logger.info(f"{label} ...")
+    result = subprocess.run(command)
+    if result.returncode != 0:
+        logger.error(
+            f"{label} failed. \nPlease rerun `civic-dev prep-code` to apply and verify all fixes.\n"
+        )
+        raise subprocess.CalledProcessError(result.returncode, command)
 
 
 def should_reinstall() -> bool:
@@ -42,57 +52,47 @@ def should_reinstall() -> bool:
     return False
 
 
-@app.command("prep-code")
-def main():
-    """
-    Run full code preparation sequence.
-    """
-    typer.echo("Checking virtual environment...")
-    install_deps.main()
+def main() -> int:
+    try:
+        logger.info("Checking virtual environment...")
+        install_deps.main()
 
-    typer.echo("Checking version compatibility...")
+        logger.info("Checking version compatibility...")
+        version_file = Path("VERSION")
+        config_file = Path("config.yaml")
 
-    version_file = Path("VERSION")
-    config_file = Path("config.yaml")
+        if version_file.exists():
+            try:
+                agent_version = version_file.read_text(encoding="utf-8").strip()
+                compatible = version_utils.check_version(agent_version, get_lib_version())
+                if compatible:
+                    logger.info(
+                        f"Versions compatible: agent={agent_version}, lib={get_lib_version()}"
+                    )
+                else:
+                    logger.warning(
+                        f"Version mismatch: agent={agent_version}, lib={get_lib_version()}"
+                    )
+            except Exception as e:
+                logger.warning(f"Error checking version: {e}")
+        else:
+            logger.warning("VERSION file not found — skipping version check.")
 
-    if not version_file.exists():
-        typer.secho("VERSION file not found — skipping version check.", fg=typer.colors.YELLOW)
-    else:
-        try:
-            agent_version = version_file.read_text(encoding="utf-8").strip()
-            compatible = version_utils.check_version(agent_version, get_lib_version())
-            if not compatible:
-                typer.secho(
-                    f"Version mismatch: agent={agent_version}, lib={get_lib_version()}",
-                    fg=typer.colors.BRIGHT_YELLOW,
-                )
-            else:
-                typer.echo(f"✓ Versions compatible: agent={agent_version}, lib={get_lib_version()}")
-        except Exception as e:
-            typer.secho(f"Error checking version: {e}", fg=typer.colors.RED)
+        if not config_file.exists():
+            logger.warning("config.yaml not found — logger may fall back to defaults.")
 
-    if not config_file.exists():
-        typer.secho(
-            "config.yaml not found — logger may fall back to defaults.", fg=typer.colors.YELLOW
-        )
+        run_check(["ruff", "format", "."], "Formatting code with Ruff")
+        run_check(["ruff", "check", ".", "--fix"], "Linting and fixing issues with Ruff")
+        run_check(["pre-commit", "run", "--all-files"], "Running pre-commit hooks (allowing fixes)")
+        run_check(["pre-commit", "run", "--all-files"], "Verifying pre-commit hooks (must pass)")
+        run_check(["pytest", "tests"], "Running unit tests")
 
-    typer.echo("Formatting code with Ruff...")
-    subprocess.run(["ruff", "format", "."], check=True)
-
-    typer.echo("Linting and fixing issues with Ruff...")
-    subprocess.run(["ruff", "check", ".", "--fix"], check=True)
-
-    typer.echo("Running pre-commit hooks (1st pass, allow fixes)...")
-    subprocess.run(["pre-commit", "run", "--all-files"], check=False)
-
-    typer.echo("Running pre-commit hooks (2nd pass, verify clean)...")
-    subprocess.run(["pre-commit", "run", "--all-files"], check=True)
-
-    typer.echo("Running unit tests...")
-    subprocess.run(["pytest", "tests"], check=True)
-
-    typer.echo("Code formatted, linted, and tested successfully.")
+        logger.info("Code formatted, linted, and tested successfully.")
+        return 0
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Process failed: {e}")
+        return e.returncode
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

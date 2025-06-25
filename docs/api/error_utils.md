@@ -1,8 +1,28 @@
 # Module `error_utils`
 
+## Classes
+
+### `TransportProtocolError(self, /, *args, **kwargs)`
+
+Transport protocol error.
+
+The answer received from the server does not correspond to the transport protocol.
+
+### `TransportQueryError(self, msg: str, query_id: Optional[int] = None, errors: Optional[List[Any]] = None, data: Optional[Any] = None, extensions: Optional[Any] = None)`
+
+The server returned an error for a specific query.
+
+This exception should not close the transport connection.
+
+### `TransportServerError(self, message: str, code: Optional[int] = None)`
+
+The server returned a global error.
+
+This exception will close the transport connection.
+
 ## Functions
 
-### `handle_transport_errors(e, resource_name='resource')`
+### `handle_transport_errors(e: Exception, resource_name: str = 'resource') -> str`
 
 Handle GraphQL transport errors with consistent logging and friendly feedback.
 

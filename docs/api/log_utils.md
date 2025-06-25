@@ -2,7 +2,17 @@
 
 ## Functions
 
-### `init_logger(log_level=None, log_to_console=True)`
+### `ensure_dir(path: str | pathlib.Path) -> pathlib.Path`
+
+Ensure a directory exists, creating it if necessary.
+
+Args:
+    path (str | Path): The directory path to ensure.
+
+Returns:
+    Path: The resolved Path object of the directory.
+
+### `init_logger(log_level: str | None = None, log_to_console: bool = True) -> None`
 
 Initialize loguru logging once per session.
 
@@ -13,10 +23,20 @@ Args:
     log_level (str | None): Optional log level override (default: config.yaml or "INFO").
     log_to_console (bool): If True, logs to stderr in addition to file.
 
-### `log_agent_end(agent_name, status='success')`
+### `log_agent_end(agent_name: str, status: str = 'success') -> None`
 
 Log the end of an agent with its status and UTC timestamp.
 
-### `log_agent_start(agent_name)`
+### `log_agent_start(agent_name: str) -> None`
 
 Log the start of an agent by name.
+
+### `now_utc_str(fmt: str = '%Y-%m-%d %H:%M:%S UTC') -> str`
+
+Return the current time in UTC as a formatted string.
+
+Args:
+    fmt (str): Format string for datetime output. Default includes 'UTC'.
+
+Returns:
+    str: Formatted current UTC time.

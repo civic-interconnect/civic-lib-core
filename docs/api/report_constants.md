@@ -1,4 +1,4 @@
-# Module `cli.serve_app`
+# Module `report_constants`
 
 ## Classes
 
@@ -11,11 +11,3 @@ methods to do system calls on path objects. Depending on your system,
 instantiating a Path will return either a PosixPath or a WindowsPath
 object. You can also instantiate a PosixPath or WindowsPath directly,
 but cannot instantiate a WindowsPath on a POSIX system or vice versa.
-
-## Functions
-
-### `main()`
-
-Launch the local development server for the static web app.
-
-Serves the `docs/` directory using `python -m http.server 8000`.

@@ -7,8 +7,9 @@ This script:
 - Verifies `.venv` exists and is usable
 - Installs required and dev dependencies via pyproject.toml
 - Installs pre-commit hooks
+- Installs in non-editable mode by default
 
-Does NOT create or activate the virtual environment.
+Does NOT create or activate the virtual environment. Those should be done first.
 """
 
 import os
@@ -23,7 +24,6 @@ __all__ = [
     "run",
     "verify_venv",
 ]
-
 
 VENV_DIR = Path(".venv")
 
@@ -55,7 +55,7 @@ def install_dependencies(python_bin: Path, is_editable: bool = False):
         "--prefer-binary",
     ])
 
-    # Install with dev extras
+    # Install project with dev extras
     install_cmd = [
         str(python_bin),
         "-m",
@@ -70,7 +70,7 @@ def install_dependencies(python_bin: Path, is_editable: bool = False):
     ]
     run(install_cmd)
 
-    # Install from requirements-dev.txt if present
+    # Optional: install extra dev requirements
     req_file = Path("requirements-dev.txt")
     if req_file.exists():
         run([
@@ -85,7 +85,7 @@ def install_dependencies(python_bin: Path, is_editable: bool = False):
             "--no-cache-dir",
         ])
 
-    # Install pre-commit hooks if possible
+    # Install pre-commit hooks if available
     try:
         run([str(python_bin), "-m", "pre_commit", "install"])
     except subprocess.CalledProcessError:
@@ -111,19 +111,20 @@ def verify_venv():
     return python_bin
 
 
-def main(is_editable: bool = False):
-    print("Verifying .venv...")
-    python_bin = verify_venv()
+def main(is_editable: bool = False) -> int:
+    try:
+        print("Verifying .venv...")
+        python_bin = verify_venv()
 
-    print("Installing dependencies...")
-    install_dependencies(python_bin, is_editable)
+        print("Installing dependencies...")
+        install_dependencies(python_bin, is_editable)
 
-    print("Environment setup complete.")
+        print("Environment setup complete.")
+        return 0
+    except subprocess.CalledProcessError as e:
+        print(f"Setup failed: {e}")
+        return 1
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except subprocess.CalledProcessError as e:
-        print(f"Setup failed: {e}")
-        sys.exit(1)
+    sys.exit(main())
