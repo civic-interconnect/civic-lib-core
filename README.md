@@ -1,6 +1,6 @@
 # civic-lib-core
 
-[![Version](https://img.shields.io/badge/version-v0.9.4-blue)](https://github.com/civic-interconnect/civic-lib-core/releases)
+[![Version](https://img.shields.io/badge/version-v0.9.5-blue)](https://github.com/civic-interconnect/civic-lib-core/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Tests](https://github.com/civic-interconnect/civic-lib-core/actions/workflows/tests.yml/badge.svg)](https://github.com/civic-interconnect/civic-lib-core/actions/workflows/tests.yml)
 

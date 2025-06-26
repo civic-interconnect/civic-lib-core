@@ -14,7 +14,7 @@ from typing import Any
 
 from civic_lib_core import log_utils, report_formatter, version_utils
 from civic_lib_core.date_utils import now_utc_str
-from civic_lib_core.path_utils import ensure_dir, safe_filename
+from civic_lib_core.fs_utils import ensure_dir, safe_filename
 from civic_lib_core.report_constants import DATE_ONLY_FORMAT, REPORTS_DIR, TIMESTAMP_FORMAT
 
 __all__ = ["write_report"]

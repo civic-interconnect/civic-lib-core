@@ -30,7 +30,7 @@ def run_check(command: list[str], label: str) -> None:
     result = subprocess.run(command)
     if result.returncode != 0:
         logger.error(
-            f"{label} failed. \nPlease rerun `civic-dev prep-code` to apply and verify all fixes.\n"
+            f"{label} failed. \n\nPlease RE-RUN `civic-dev prep-code` to apply and verify all fixes.\n"
         )
         raise subprocess.CalledProcessError(result.returncode, command)
 

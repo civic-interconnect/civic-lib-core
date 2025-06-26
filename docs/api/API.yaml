@@ -1,94 +1,149 @@
-api_utils:
-- async_paged_query
-- paged_query
-config_utils:
+civic_dev.bump_version:
+- bump_version_cmd
+- main
+- update_file
+civic_dev.cli:
+- bump_version_command
+- install_deps_command
+- layout_command
+- main
+- prepare_code
+- publish_api_command
+- release_command
+civic_dev.install_deps:
+- get_python_bin
+- get_venv_dir
+- install_dependencies
+- main
+- run
+- verify_venv
+civic_dev.layout:
+- main
+civic_dev.prep_code:
+- get_lib_version
+- main
+- run_check
+- should_reinstall
+civic_dev.publish_api:
+- main
+civic_dev.release:
+- main
+- publish_api_docs
+- run
+civic_lib_core.cli.cli:
+- hello
+civic_lib_core.config_utils:
 - load_api_key
 - load_version
 - load_yaml_config
 - parse_version
-date_utils:
+civic_lib_core.date_utils:
 - date_range
 - now_utc
 - now_utc_str
 - today_utc_str
-dev_utils:
+civic_lib_core.dev_utils:
 - log_suggested_paths
 - suggest_paths
-doc_utils:
+civic_lib_core.docs_api_build:
+- generate_api_docs
+- generate_docs
+- publish_api_docs
+civic_lib_core.docs_api_config:
 - build_api_nav
-- dynamic_import_from_path
+- ensure_dir
 - ensure_docs_output_dir
-- ensure_source_path
+- extract_module_api
+- generate_docs
+- generate_mkdocs_config
+- generate_summary_yaml
+- normalize_formats
+- write_index_md
+- write_markdown_docs
+- write_yaml_summary
+civic_lib_core.docs_api_extract:
+- dynamic_import_from_path
 - extract_module_api
 - extract_public_names
 - find_public_classes
 - find_public_functions
-- generate_api_docs
-- generate_docs
-- generate_mkdocs_config
-- generate_summary_yaml
 - get_public_members
-- normalize_formats
 - parse_python_file
-- publish_api_docs
-- write_index_md
+civic_lib_core.docs_api_render:
 - write_markdown_docs
 - write_module_markdown
 - write_yaml_summary
-error_utils:
+civic_lib_core.error_utils:
 - handle_transport_errors
-file_utils:
+civic_lib_core.fs_utils:
+- discover_project_layout
+- ensure_dir
 - ensure_docs_output_dir
-- ensure_source_path
 - find_project_root
+- find_source_dir
+- get_repo_package_names
+- get_source_dir
+- get_valid_packages
 - resolve_path
-log_utils:
+- safe_filename
+civic_lib_core.graphql_utils:
+- async_paged_query
+- fetch_paginated
+- handle_transport_errors
+- paged_query
+civic_lib_core.log_utils:
 - ensure_dir
 - init_logger
 - log_agent_end
 - log_agent_start
 - now_utc_str
-path_utils:
-- ensure_dir
-- safe_filename
-query_utils:
+civic_lib_core.project_checks:
+- run_all_checks
+civic_lib_core.project_layout:
+- NamedTuple
+- discover_project_layout
+- find_project_root
+- format_layout
+- get_repo_package_names
+- verify_layout
+civic_lib_core.query_utils:
 - fetch_paginated
-report_archiver:
+civic_lib_core.report_archiver:
 - archive_old_reports
 - archive_reports_older_than
-report_formatter:
+civic_lib_core.report_formatter:
 - format_report_as_csv
 - format_report_as_markdown
 - format_report_as_text
 - to_csv
 - to_markdown
-report_indexer:
+civic_lib_core.report_indexer:
 - ensure_dir
 - generate_index
 - get_agent_name_from_path
 - get_latest_report
-report_reader:
+civic_lib_core.report_reader:
 - check_schema_version
 - check_version
 - get_latest_report
 - is_report_file
 - read_latest_report
 - validate_report_format
-report_summary:
+civic_lib_core.report_summary:
 - write_markdown_summary
-report_utils:
+civic_lib_core.report_utils:
 - get_agent_name_from_path
 - is_report_file
-report_writer:
+civic_lib_core.report_writer:
 - ensure_dir
 - now_utc_str
 - safe_filename
 - write_report
-schema_utils:
+civic_lib_core.schema_utils:
 - detect_schema_change
 - hash_dict
 - load_json
-version_utils:
+civic_lib_core.version_utils:
 - bump_version
 - check_version
 - find_init_files
@@ -98,6 +153,6 @@ version_utils:
 - parse_version
 - update_version_in_init
 - update_version_string
-yaml_utils:
+civic_lib_core.yaml_utils:
 - read_yaml
 - write_yaml

@@ -20,7 +20,7 @@ import sys
 from loguru import logger
 
 from civic_lib_core.date_utils import now_utc_str
-from civic_lib_core.path_utils import ensure_dir
+from civic_lib_core.fs_utils import ensure_dir
 
 __all__ = [
     "init_logger",

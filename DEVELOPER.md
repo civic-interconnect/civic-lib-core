@@ -12,8 +12,10 @@ cd civic-lib-core
 py -m venv .venv
 .\.venv\Scripts\activate
 py -m pip install --upgrade pip setuptools wheel --prefer-binary
-py -m pip install -e .[dev]
-civic-dev prep-code      # repeat if needed
+py -m pip install --upgrade -e .[dev]
+pytest tests
+civic-dev layout
+civic-dev prep-code
 civic-dev publish-api
 mkdocs serve
 ```
@@ -22,16 +24,19 @@ Visit local API docs at: <http://localhost:8000>
 
 ## Releasing New Version
 
-Run pre-release preparation and verification.
-Delete .venv. Recreate and activate.
+Before publishing a new version, delete .venv. and recreate and activate.
+Run pre-release preparation, installing and upgrading without the -e editable flag.
+Verify all tests pass. Run prep-code (twice if needed).
+Verify the docs are generated and appear correctly.
 
 ```powershell
 git pull
 py -m venv .venv
 .\.venv\Scripts\activate
 py -m pip install --upgrade pip setuptools wheel --prefer-binary
-py -m pip install .[dev]
-civic-dev prep-code        # repeat if needed
+py -m pip install --upgrade .[dev]
+pytest tests
+civic-dev prep-code
 civic-dev publish-api
 mkdocs serve
 ```
@@ -39,13 +44,13 @@ mkdocs serve
 After verifying changes:
 
 ```powershell
-civic-dev bump-version 0.9.3 0.9.4
+civic-dev bump-version 0.9.4 0.9.5
 civic-dev release
 ```
 
 ## Publishing Library to PyPI
 
-Requires valid PyPI token:
+Requires a valid PyPI token set in your environment or `~/.pypirc`.
 
 ```powershell
 py -m build

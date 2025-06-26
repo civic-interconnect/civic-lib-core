@@ -1,6 +1,6 @@
 [project]
 name = "civic-lib-core"
-version = "0.9.4"
+version = "0.9.5"
 description = "Shared internal utility library for Civic Interconnect Agents"
 authors = [
     { name="Civic Interconnect", email="info@civic-interconnect.org" }
@@ -37,7 +37,7 @@ dev = [
 
 [project.scripts]
 civic-dev = "civic_dev.cli:app"
-civic-lib-core = "civic_lib_core.cli.cli:app"
+civic-core = "civic_lib_core.cli.cli:app"
 
 [build-system]
 requires = ["setuptools", "wheel"]

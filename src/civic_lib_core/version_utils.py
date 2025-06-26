@@ -24,7 +24,7 @@ __all__ = [
     "update_version_string",
 ]
 
-log_utils.init_logger()
+
 logger = log_utils.logger
 
 

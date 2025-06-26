@@ -15,7 +15,7 @@ Run `civic-dev --help` for usage across all Civic Interconnect repos.
 
 import typer
 
-from civic_dev import bump_version, install_deps, prep_code, publish_api, release
+from civic_dev import bump_version, install_deps, layout, prep_code, publish_api, release
 
 app = typer.Typer(help="Developer CLI for Civic Interconnect projects.")
 
@@ -37,16 +37,22 @@ def install_deps_command(
     install_deps.main(is_editable=is_editable)
 
 
-@app.command("publish-api")
-def publish_api_command():
-    """Fetch or regenerate app API files."""
-    publish_api.main()
+@app.command("layout")
+def layout_command():
+    """Show the current project layout."""
+    layout.main()
 
 
 @app.command("prep-code")
 def prepare_code():
     """Format, lint, and test the codebase."""
     prep_code.main()
+
+
+@app.command("publish-api")
+def publish_api_command():
+    """Fetch or regenerate app API files."""
+    publish_api.main()
 
 
 @app.command("release")

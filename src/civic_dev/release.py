@@ -25,7 +25,7 @@ import sys
 from pathlib import Path
 
 from civic_lib_core import log_utils
-from civic_lib_core.doc_utils import publish_api_docs
+from civic_lib_core.docs_api_build import publish_api_docs
 
 logger = log_utils.logger
 
