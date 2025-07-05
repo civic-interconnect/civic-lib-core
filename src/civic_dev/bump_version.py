@@ -53,9 +53,9 @@ def _bump_version(old_version: str, new_version: str) -> int:
         int: Number of files updated.
     """
     files_to_update = [
-        Path("VERSION"),
         Path("pyproject.toml"),
         Path("README.md"),
+        Path("VERSION"),
     ]
 
     updated_count = sum(update_file(path, old_version, new_version) for path in files_to_update)

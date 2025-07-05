@@ -1,0 +1,38 @@
+# Civic Interconnect default project policy
+# =========================================
+
+# Files that should exist in ALL Civic Interconnect repositories
+required_files:
+  - .gitattributes
+  - .gitignore
+  - .pre-commit-config.yaml
+  - DEVELOPER.md
+  - LICENSE
+  - README.md
+  - runtime_config.yaml
+  - VERSION
+
+# Files that should exist if the project is a Python repo
+python_project_files:
+  - pyproject.toml
+  - mkdocs.yml
+
+# Directories expected in Python repos
+python_project_dirs:
+  - src
+
+# Maximum recommended Python file length (lines)
+max_python_file_length: 1000
+
+# MkDocs configuration
+# Group MkDocs specific settings under a 'docs' key for better organization
+docs:
+  mkdocs_config: mkdocs.yml       # Path to mkdocs.yml relative to project root
+  mkdocs_src_dir: mkdocs_src      # Directory where all Markdown source files live (e.g., project_root/mkdocs_src)
+  site_dir: docs                  # Directory where MkDocs builds HTML (e.g., project_root/docs) - ADD THIS
+  api_markdown_subdir: api        # Subdirectory within mkdocs_src_dir for API Markdown (e.g., mkdocs_src/api) - ADD THIS
+
+# Logging configuration
+log_subdir: logs                  # Subfolder under project root for logs
+log_file_template: "{time:YYYY-MM-DD}.log" # Log filename pattern
+log_level: INFO                   # Default log level if not overridden in runtime_config.yaml

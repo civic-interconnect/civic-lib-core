@@ -9,7 +9,7 @@ This script:
 - Installs pre-commit hooks
 - Installs in non-editable mode by default
 
-Does NOT create or activate the virtual environment. Those should be done first.
+Does NOT create or activate the virtual environment. Those should be done before running this.
 """
 
 import os
@@ -69,21 +69,6 @@ def install_dependencies(python_bin: Path, is_editable: bool = False):
         "--prefer-binary",
     ]
     run(install_cmd)
-
-    # Optional: install extra dev requirements
-    req_file = Path("requirements-dev.txt")
-    if req_file.exists():
-        run([
-            str(python_bin),
-            "-m",
-            "pip",
-            "install",
-            "-r",
-            str(req_file),
-            "--timeout",
-            "100",
-            "--no-cache-dir",
-        ])
 
     # Install pre-commit hooks if available
     try:

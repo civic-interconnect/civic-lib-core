@@ -1,10 +1,22 @@
 """
 civic_lib_core/graphql_utils.py
 
-Unified GraphQL utilities for querying, pagination, and error handling.
-Used by agents and tools accessing GraphQL endpoints like OpenStates.
+Unified GraphQL utilities for Civic Interconnect projects.
 
-MIT License — maintained by Civic Interconnect
+Provides:
+- Consistent error handling for GraphQL transport errors
+- Asynchronous and synchronous helpers for paginated GraphQL queries
+- Utilities to fetch all pages of results from GraphQL APIs
+
+Typical usage:
+
+    from civic_lib_core import graphql_utils
+
+    # Run a paginated GraphQL query asynchronously
+    data = await graphql_utils.async_paged_query(...)
+
+    # Or synchronously:
+    data = graphql_utils.paged_query(...)
 """
 
 import asyncio
@@ -68,16 +80,16 @@ async def async_paged_query(
     query: Any,
     data_path: list[str],
     page_info_path: list[str] | None = None,
-) -> list:
+) -> list[Any]:
     """
     Asynchronously fetch paginated GraphQL results.
 
     Args:
         url (str): GraphQL endpoint URL.
         api_key (str): Authorization token.
-        query (gql): gql.Query object.
-        data_path (list): Path to the list of data edges.
-        page_info_path (list | None): Optional path to pageInfo.
+        query (gql.Query): Query object.
+        data_path (list[str]): Path to the list of data edges.
+        page_info_path (list[str] | None): Optional explicit path to pageInfo.
 
     Returns:
         list: Combined list of items from all pages.
@@ -98,6 +110,7 @@ async def async_paged_query(
             data = data[key]
         collected.extend(data)
 
+        # Locate pageInfo
         if page_info_path is None:
             try:
                 page_info = response
@@ -113,10 +126,12 @@ async def async_paged_query(
             for key in page_info_path:
                 page_info = page_info[key]
 
-        if not page_info["hasNextPage"]:
+        if not page_info.get("hasNextPage"):
             break
-        after = page_info["endCursor"]
 
+        after = page_info.get("endCursor")
+
+    logger.info(f"Fetched {len(collected)} records from {url}.")
     return collected
 
 
@@ -125,20 +140,27 @@ def paged_query(
     api_key: str,
     query: Any,
     data_path: list[str],
-) -> list:
+) -> list[Any]:
     """
     Run a paged GraphQL query synchronously.
 
     Args:
-        url (str): GraphQL endpoint.
+        url (str): GraphQL endpoint URL.
         api_key (str): Authorization token.
-        query (gql): gql.Query object.
-        data_path (list): Path to data in response.
+        query (gql.Query): Query object.
+        data_path (list[str]): Path to the list of data edges.
 
     Returns:
         list: Combined results from all pages.
+
+    Raises:
+        Exception: Any error raised by async_paged_query.
     """
-    return asyncio.run(async_paged_query(url, api_key, query, data_path))
+    try:
+        return asyncio.run(async_paged_query(url, api_key, query, data_path))
+    except Exception as e:
+        handle_transport_errors(e, resource_name=url)
+        return []
 
 
 async def fetch_paginated(

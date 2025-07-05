@@ -1,10 +1,25 @@
 """
 civic_lib_core/date_utils.py
 
-Date handling helpers for reports and time-based logic.
-Part of the Civic Interconnect agent framework.
+Date and time utilities for Civic Interconnect projects.
 
-MIT License — maintained by Civic Interconnect
+Provides helpers to:
+- Generate date ranges for reports
+- Retrieve current UTC time or date
+- Format UTC datetimes into strings
+
+Typical usage:
+
+    from civic_lib_core import date_utils
+
+    # Get today's UTC date string
+    today = date_utils.today_utc_str()
+
+    # Get current UTC datetime as a string
+    timestamp = date_utils.now_utc_str()
+
+    # Generate list of dates for the past 7 days
+    dates = date_utils.date_range(7)
 """
 
 from datetime import UTC, datetime, timedelta
@@ -25,7 +40,10 @@ def date_range(days_back: int) -> list[str]:
         days_back (int): Number of days to include, ending with today (inclusive).
 
     Returns:
-        list[str]: List of UTC dates in 'YYYY-MM-DD', earliest to latest.
+        list[str]: List of UTC dates in 'YYYY-MM-DD' format, earliest to latest.
+
+    Raises:
+        ValueError: If days_back is negative.
     """
     if days_back < 0:
         raise ValueError("days_back must be non-negative")

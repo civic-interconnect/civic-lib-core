@@ -1,0 +1,1732 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+
+        <meta name="description" content="Documentation for civic-lib-core">
+
+
+
+
+        <link rel="prev" href="../docs_api_render/">
+
+
+        <link rel="next" href="../graphql_utils/">
+
+
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+
+
+
+        <title>Fs Utils - civic-lib-core Documentation</title>
+
+
+
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+
+
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+
+
+
+
+
+
+
+
+
+
+
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+
+
+
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+
+
+
+
+
+
+  </head>
+
+
+
+
+
+
+
+
+
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+
+
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+
+
+        <a href="#module-fs_utils" class="md-skip">
+          Skip to content
+        </a>
+
+    </div>
+    <div data-md-component="announce">
+
+    </div>
+
+
+
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="civic-lib-core Documentation" class="md-header__button md-logo" aria-label="civic-lib-core Documentation" data-md-component="logo">
+
+
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            civic-lib-core Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+
+              Fs Utils
+
+          </span>
+        </div>
+      </div>
+    </div>
+
+
+        <form class="md-header__option" data-md-component="palette">
+
+
+
+
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+
+
+</form>
+
+
+
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+
+
+
+
+
+        <label class="md-header__button md-icon" for="__search">
+
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  </nav>
+
+</header>
+
+    <div class="md-container" data-md-component="container">
+
+
+
+
+
+
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+
+
+
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="civic-lib-core Documentation" class="md-nav__button md-logo" aria-label="civic-lib-core Documentation" data-md-component="logo">
+
+
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    civic-lib-core Documentation
+  </label>
+
+  <ul class="md-nav__list" data-md-scrollfix>
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Home
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+
+
+
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+
+
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+
+
+
+  <span class="md-ellipsis">
+    API Reference
+
+  </span>
+
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../bump_version/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Bump Version
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../cli.cli/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Cli.Cli
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Cli
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../config_utils/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Config Utils
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../date_utils/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Date Utils
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../dev_utils/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Dev Utils
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../docs_api_build/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Docs Api Build
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../docs_api_config/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Docs Api Config
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../docs_api_extract/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Docs Api Extract
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../docs_api_render/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Docs Api Render
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item md-nav__item--active">
+
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+
+
+
+
+
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+
+
+
+  <span class="md-ellipsis">
+    Fs Utils
+
+  </span>
+
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+
+      <a href="./" class="md-nav__link md-nav__link--active">
+
+
+
+  <span class="md-ellipsis">
+    Fs Utils
+
+  </span>
+
+
+      </a>
+
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+
+
+
+
+
+
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+
+        <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Classes
+    </span>
+  </a>
+
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+
+          <li class="md-nav__item">
+  <a href="#pathself-args-kwargs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Path(self, *args, **kwargs)
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#projectlayoutself-args-kwargs" class="md-nav__link">
+    <span class="md-ellipsis">
+      ProjectLayout(self, /, *args, **kwargs)
+    </span>
+  </a>
+
+</li>
+
+      </ul>
+    </nav>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Functions
+    </span>
+  </a>
+
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+
+          <li class="md-nav__item">
+  <a href="#discover_project_layout-civic_lib_coreproject_layoutprojectlayout" class="md-nav__link">
+    <span class="md-ellipsis">
+      discover_project_layout() -&gt; civic_lib_core.project_layout.ProjectLayout
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#ensure_dirpath-str-pathlibpath-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      ensure_dir(path: str | pathlib.Path) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#ensure_docs_output_dirproject_root-pathlibpath-none-none-policy-dict-none-none-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      ensure_docs_output_dir(project_root: pathlib.Path | None = None, policy: dict | None = None) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#find_project_rootstart_path-pathlibpath-none-none-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      find_project_root(start_path: pathlib.Path | None = None) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#find_source_dirroot_dir-pathlibpath-pathlibpath-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      find_source_dir(root_dir: pathlib.Path) -&gt; pathlib.Path | None
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_api_markdown_source_dirpolicy-dict-none-none-root_dir-pathlibpath-none-none-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_api_markdown_source_dir(policy: dict | None = None, root_dir: pathlib.Path | None = None) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_data_config_dirproject_root-pathlibpath-none-none-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_data_config_dir(project_root: pathlib.Path | None = None) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_mkdocs_pathspolicy-dict-project_root-pathlibpath-tuplepathlibpath-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_mkdocs_paths(policy: dict, project_root: pathlib.Path) -&gt; tuple[pathlib.Path, pathlib.Path]
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_org_nameproject_root-pathlibpath-str-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_org_name(project_root: pathlib.Path) -&gt; str | None
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_project_rootstart_path-pathlibpath-none-none-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_project_root(start_path: pathlib.Path | None = None) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_repo_package_namesroot_path-pathlibpath-none-none-liststr" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_repo_package_names(root_path: pathlib.Path | None = None) -&gt; list[str]
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_runtime_config_pathproject_root-pathlibpath-none-none-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_runtime_config_path(project_root: pathlib.Path | None = None) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_source_dirroot_dir-pathlibpath-pathlibpath-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_source_dir(root_dir: pathlib.Path) -&gt; pathlib.Path | None
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_valid_packagessrc_dir-pathlibpath-listpathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_valid_packages(src_dir: pathlib.Path) -&gt; list[pathlib.Path]
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#load_project_policyproject_root-pathlibpath-none-none-dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      load_project_policy(project_root: pathlib.Path | None = None) -&gt; dict
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#resolve_pathrelative_path-str-pathlibpath-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      resolve_path(relative_path: str | pathlib.Path) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#safe_filenamename-str-max_length-int-255-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      safe_filename(name: str, max_length: int = 255) -&gt; str
+    </span>
+  </a>
+
+</li>
+
+      </ul>
+    </nav>
+
+</li>
+
+    </ul>
+
+</nav>
+
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../graphql_utils/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Graphql Utils
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../install_deps/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Install Deps
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../layout/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Layout
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../log_utils/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Log Utils
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../prep_code/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Prep Code
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../project_checks/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Project Checks
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../project_layout/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Project Layout
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../project_policy/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Project Policy
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../publish_api/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Publish Api
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../query_utils/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Query Utils
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../release/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Release
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../report_archiver/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Report Archiver
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../report_constants/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Report Constants
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../report_formatter/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Report Formatter
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../report_indexer/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Report Indexer
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../report_reader/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Report Reader
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../report_summary/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Report Summary
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../report_utils/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Report Utils
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../report_writer/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Report Writer
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../schema_utils/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Schema Utils
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../version_utils/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Version Utils
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../yaml_utils/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Yaml Utils
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+          </ul>
+        </nav>
+
+    </li>
+
+
+
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+
+
+
+
+
+
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+
+        <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Classes
+    </span>
+  </a>
+
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+
+          <li class="md-nav__item">
+  <a href="#pathself-args-kwargs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Path(self, *args, **kwargs)
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#projectlayoutself-args-kwargs" class="md-nav__link">
+    <span class="md-ellipsis">
+      ProjectLayout(self, /, *args, **kwargs)
+    </span>
+  </a>
+
+</li>
+
+      </ul>
+    </nav>
+
+</li>
+
+        <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Functions
+    </span>
+  </a>
+
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+
+          <li class="md-nav__item">
+  <a href="#discover_project_layout-civic_lib_coreproject_layoutprojectlayout" class="md-nav__link">
+    <span class="md-ellipsis">
+      discover_project_layout() -&gt; civic_lib_core.project_layout.ProjectLayout
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#ensure_dirpath-str-pathlibpath-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      ensure_dir(path: str | pathlib.Path) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#ensure_docs_output_dirproject_root-pathlibpath-none-none-policy-dict-none-none-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      ensure_docs_output_dir(project_root: pathlib.Path | None = None, policy: dict | None = None) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#find_project_rootstart_path-pathlibpath-none-none-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      find_project_root(start_path: pathlib.Path | None = None) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#find_source_dirroot_dir-pathlibpath-pathlibpath-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      find_source_dir(root_dir: pathlib.Path) -&gt; pathlib.Path | None
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_api_markdown_source_dirpolicy-dict-none-none-root_dir-pathlibpath-none-none-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_api_markdown_source_dir(policy: dict | None = None, root_dir: pathlib.Path | None = None) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_data_config_dirproject_root-pathlibpath-none-none-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_data_config_dir(project_root: pathlib.Path | None = None) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_mkdocs_pathspolicy-dict-project_root-pathlibpath-tuplepathlibpath-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_mkdocs_paths(policy: dict, project_root: pathlib.Path) -&gt; tuple[pathlib.Path, pathlib.Path]
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_org_nameproject_root-pathlibpath-str-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_org_name(project_root: pathlib.Path) -&gt; str | None
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_project_rootstart_path-pathlibpath-none-none-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_project_root(start_path: pathlib.Path | None = None) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_repo_package_namesroot_path-pathlibpath-none-none-liststr" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_repo_package_names(root_path: pathlib.Path | None = None) -&gt; list[str]
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_runtime_config_pathproject_root-pathlibpath-none-none-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_runtime_config_path(project_root: pathlib.Path | None = None) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_source_dirroot_dir-pathlibpath-pathlibpath-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_source_dir(root_dir: pathlib.Path) -&gt; pathlib.Path | None
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#get_valid_packagessrc_dir-pathlibpath-listpathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_valid_packages(src_dir: pathlib.Path) -&gt; list[pathlib.Path]
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#load_project_policyproject_root-pathlibpath-none-none-dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      load_project_policy(project_root: pathlib.Path | None = None) -&gt; dict
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#resolve_pathrelative_path-str-pathlibpath-pathlibpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      resolve_path(relative_path: str | pathlib.Path) -&gt; pathlib.Path
+    </span>
+  </a>
+
+</li>
+
+          <li class="md-nav__item">
+  <a href="#safe_filenamename-str-max_length-int-255-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      safe_filename(name: str, max_length: int = 255) -&gt; str
+    </span>
+  </a>
+
+</li>
+
+      </ul>
+    </nav>
+
+</li>
+
+    </ul>
+
+</nav>
+                  </div>
+                </div>
+              </div>
+
+
+
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+
+
+
+
+
+<h1 id="module-fs_utils">Module <code>fs_utils</code></h1>
+<h2 id="classes">Classes</h2>
+<h3 id="pathself-args-kwargs"><code>Path(self, *args, **kwargs)</code></h3>
+<p>PurePath subclass that can make system calls.</p>
+<p>Path represents a filesystem path but unlike PurePath, also offers
+methods to do system calls on path objects. Depending on your system,
+instantiating a Path will return either a PosixPath or a WindowsPath
+object. You can also instantiate a PosixPath or WindowsPath directly,
+but cannot instantiate a WindowsPath on a POSIX system or vice versa.</p>
+<h3 id="projectlayoutself-args-kwargs"><code>ProjectLayout(self, /, *args, **kwargs)</code></h3>
+<p>Represents the layout of a project, including key directories and metadata.</p>
+<p>Attributes:
+    project_root (Path): The root directory of the project.
+    src_dir (Path | None): The source directory containing the main code, or None if not applicable.
+    packages (list[Path]): A list of paths to package directories within the project.
+    api_markdown_src_dir (Path): The directory containing API documentation <em>source</em> Markdown files
+                                  (e.g., project_root/mkdocs_src/api).
+    org_name (str | None): The name of the organization, or None if not specified.
+    policy (dict): A dictionary containing project policy information.</p>
+<h2 id="functions">Functions</h2>
+<h3 id="discover_project_layout-civic_lib_coreproject_layoutprojectlayout"><code>discover_project_layout() -&gt; civic_lib_core.project_layout.ProjectLayout</code></h3>
+<p>Dynamically discovers and returns key layout paths and information for
+the current Civic Interconnect project, encapsulated in a ProjectLayout NamedTuple.</p>
+<p>This function performs the following steps:
+1. Determines the project root directory.
+2. Loads the project policy configuration.
+3. Identifies the primary source directory (e.g., 'src/').
+4. Lists all top-level Python packages within the source directory.
+5. Calculates the path to the API documentation <em>source</em> directory (mkdocs_src/api).
+6. Attempts to determine the organization name associated with the project.</p>
+<p>The returned ProjectLayout object provides structured, type-hinted access
+to these essential project paths and configurations, simplifying their
+consumption by other parts of the system and improving type safety.</p>
+<p>Returns:
+    ProjectLayout: A NamedTuple containing structured layout information,
+                    including project_root, src_dir, packages, docs_api_dir,
+                    org_name, and the loaded policy.</p>
+<h3 id="ensure_dirpath-str-pathlibpath-pathlibpath"><code>ensure_dir(path: str | pathlib.Path) -&gt; pathlib.Path</code></h3>
+<p>Ensure a directory exists, creating it if necessary.</p>
+<p>Args:
+    path (str | Path): The directory path to ensure.</p>
+<p>Returns:
+    Path: The resolved Path object of the directory.</p>
+<p>Raises:
+    OSError: If directory cannot be created.</p>
+<h3 id="ensure_docs_output_dirproject_root-pathlibpath-none-none-policy-dict-none-none-pathlibpath"><code>ensure_docs_output_dir(project_root: pathlib.Path | None = None, policy: dict | None = None) -&gt; pathlib.Path</code></h3>
+<p>Ensures the <em>final HTML output directory</em> for MkDocs exists.
+This is typically <code>project_root/docs/</code>, as defined in the project policy.</p>
+<p>Args:
+    project_root (Optional[Path]): The project root directory. If None, it will be discovered internally.
+    policy (Optional[dict]): The loaded project policy. If None, it will be loaded internally.</p>
+<p>Returns:
+    Path: The created or existing path to the main HTML output directory.</p>
+<p>Raises:
+    Exception: If the directory cannot be located or created.</p>
+<h3 id="find_project_rootstart_path-pathlibpath-none-none-pathlibpath"><code>find_project_root(start_path: pathlib.Path | None = None) -&gt; pathlib.Path</code></h3>
+<p>DEPRECATED: Use get_project_root instead.</p>
+<h3 id="find_source_dirroot_dir-pathlibpath-pathlibpath-none"><code>find_source_dir(root_dir: pathlib.Path) -&gt; pathlib.Path | None</code></h3>
+<p>DEPRECATED: Use get_source_dir instead.</p>
+<h3 id="get_api_markdown_source_dirpolicy-dict-none-none-root_dir-pathlibpath-none-none-pathlibpath"><code>get_api_markdown_source_dir(policy: dict | None = None, root_dir: pathlib.Path | None = None) -&gt; pathlib.Path</code></h3>
+<p>Determines the specific directory within mkdocs_src where API Markdown files should go.
+This is the target for the Python script generating API Markdown.</p>
+<p>Args:
+    policy (Optional[dict]): The loaded project policy. If None, it will be loaded internally.
+    root_dir (Optional[Path]): The project root directory. If None, it will be discovered internally.</p>
+<p>Returns:
+    Path: The absolute path to the API Markdown source directory (e.g., project_root/mkdocs_src/api).</p>
+<h3 id="get_data_config_dirproject_root-pathlibpath-none-none-pathlibpath"><code>get_data_config_dir(project_root: pathlib.Path | None = None) -&gt; pathlib.Path</code></h3>
+<p>Return the standard data-config folder path for the repo.</p>
+<p>Args:
+    project_root (Path | None): Optionally provide the repo root.</p>
+<p>Returns:
+    Path: Full path to <repo-root>/data-config.</p>
+<h3 id="get_mkdocs_pathspolicy-dict-project_root-pathlibpath-tuplepathlibpath-pathlibpath"><code>get_mkdocs_paths(policy: dict, project_root: pathlib.Path) -&gt; tuple[pathlib.Path, pathlib.Path]</code></h3>
+<p>Return paths to mkdocs.yml and the mkdocs source folder based on policy.</p>
+<p>Args:
+    policy (dict): Loaded project policy.
+    project_root (Path): Root of the repo.</p>
+<p>Returns:
+    Tuple[Path, Path]: (mkdocs_config_file_path, mkdocs_src_path)</p>
+<h3 id="get_org_nameproject_root-pathlibpath-str-none"><code>get_org_name(project_root: pathlib.Path) -&gt; str | None</code></h3>
+<p>Return the organization folder name, assuming the repo path
+follows /path/to/<org>/<repo> convention.</p>
+<p>Args:
+    project_root (Path): The project root path.</p>
+<p>Returns:
+    Optional[str]: Organization name, or None if not found.</p>
+<h3 id="get_project_rootstart_path-pathlibpath-none-none-pathlibpath"><code>get_project_root(start_path: pathlib.Path | None = None) -&gt; pathlib.Path</code></h3>
+<p>Return the root of the repo based on common markers.</p>
+<p>Searches for markers like .git or pyproject.toml in the current
+directory and its parents.</p>
+<p>Args:
+    start_path (Optional[Path]): Directory to start search from. Defaults to cwd.</p>
+<p>Returns:
+    Path: Project root directory.</p>
+<p>Raises:
+    RuntimeError: If project root cannot be found based on the markers.</p>
+<h3 id="get_repo_package_namesroot_path-pathlibpath-none-none-liststr"><code>get_repo_package_names(root_path: pathlib.Path | None = None) -&gt; list[str]</code></h3>
+<p>Return a list of all top-level Python packages in the project.</p>
+<p>Args:
+    root_path (Optional[Path]): Optionally specify repo root. Defaults to auto-detection.</p>
+<p>Returns:
+    list[str]: List of package names (e.g. 'civic_lib_core', 'civic_dev').</p>
+<h3 id="get_runtime_config_pathproject_root-pathlibpath-none-none-pathlibpath"><code>get_runtime_config_path(project_root: pathlib.Path | None = None) -&gt; pathlib.Path</code></h3>
+<p>Return the path to runtime_config.yaml under the project root.</p>
+<p>Args:
+    project_root (Path | None): Optionally provide the repo root.</p>
+<p>Returns:
+    Path: Full path to <repo-root>/runtime_config.yaml.</p>
+<h3 id="get_source_dirroot_dir-pathlibpath-pathlibpath-none"><code>get_source_dir(root_dir: pathlib.Path) -&gt; pathlib.Path | None</code></h3>
+<p>Return the source directory containing Python packages under src/.</p>
+<p>Args:
+    root_dir (Path): Project root directory</p>
+<p>Returns:
+    Optional[Path]: The source directory if found, otherwise None.</p>
+<h3 id="get_valid_packagessrc_dir-pathlibpath-listpathlibpath"><code>get_valid_packages(src_dir: pathlib.Path) -&gt; list[pathlib.Path]</code></h3>
+<p>Return all top-level valid Python packages in the given directory.</p>
+<p>Args:
+    src_dir (Path): Directory to search for packages.</p>
+<p>Returns:
+    list[Path]: List of package directory paths.</p>
+<p>Raises:
+    FileNotFoundError: If src_dir doesn't exist.
+    ValueError: If no valid packages are found.</p>
+<h3 id="load_project_policyproject_root-pathlibpath-none-none-dict"><code>load_project_policy(project_root: pathlib.Path | None = None) -&gt; dict</code></h3>
+<p>Load Civic Interconnect project policy, allowing client repos to
+optionally override default settings via a custom policy file.</p>
+<p>The default policy is loaded from the library's internal <code>project_policy.yaml</code>.
+If <code>project_root</code> is provided and a <code>project_policy.yaml</code> exists within it,
+this custom policy will be loaded and its values will be recursively
+merged into the default policy, overriding any conflicting keys.</p>
+<p>Args:
+    project_root (Path | None): If provided, looks for <code>project_policy.yaml</code>
+                                 in this root directory to apply custom overrides.</p>
+<p>Returns:
+    dict: The combined policy data, with custom settings merged over defaults.</p>
+<h3 id="resolve_pathrelative_path-str-pathlibpath-pathlibpath"><code>resolve_path(relative_path: str | pathlib.Path) -&gt; pathlib.Path</code></h3>
+<p>Resolve a relative path from the repo root.</p>
+<p>Args:
+    relative_path (str | Path): Path to resolve.</p>
+<p>Returns:
+    Path: Absolute path resolved from project root.</p>
+<h3 id="safe_filenamename-str-max_length-int-255-str"><code>safe_filename(name: str, max_length: int = 255) -&gt; str</code></h3>
+<p>Convert a string into a safe, filesystem-compatible filename.</p>
+<p>Args:
+    name (str): Original string.
+    max_length (int): Maximum filename length.</p>
+<p>Returns:
+    str: Sanitized filename.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </article>
+            </div>
+
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+
+      </main>
+
+        <footer class="md-footer">
+
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+
+
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+
+</div>
+
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+
+
+
+
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+
+
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+
+
+  </body>
+</html>

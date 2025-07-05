@@ -1,10 +1,16 @@
 """
-civic_lib_core/doc_utils.py
+civic_lib_core/docs_api_extract.py
 
-Core development utilities.
-Part of the Civic Interconnect agent framework.
+Utilities to analyze Python source code and extract public API metadata
+for documentation purposes in Civic Interconnect projects.
 
-MIT License — maintained by Civic Interconnect
+Features:
+- Dynamic import of Python modules from file paths
+- AST-based extraction of public classes and functions
+- Capture of signatures and docstrings for documentation rendering
+
+This module is backend logic for transforming code into structured
+data used by the documentation system.
 """
 
 import ast
@@ -12,6 +18,7 @@ import importlib.util
 import inspect
 import sys
 from pathlib import Path
+from types import ModuleType
 
 from civic_lib_core import log_utils
 
@@ -23,13 +30,25 @@ __all__ = [
     "find_public_functions",
     "get_public_members",
     "parse_python_file",
-    "extract_public_names",
 ]
 
 logger = log_utils.logger
 
 
-def dynamic_import_from_path(file_path: Path, module_name: str):
+def dynamic_import_from_path(file_path: Path, module_name: str) -> ModuleType:
+    """
+    Dynamically import a Python module from a file path.
+
+    Args:
+        file_path (Path): Path to the .py file.
+        module_name (str): Name to assign to the imported module.
+
+    Returns:
+        ModuleType: Imported Python module object.
+
+    Raises:
+        ImportError: If module cannot be loaded.
+    """
     spec = importlib.util.spec_from_file_location(module_name, file_path)
     if spec is None or spec.loader is None:
         raise ImportError(f"Cannot load {module_name} from {file_path}")
@@ -42,7 +61,12 @@ def dynamic_import_from_path(file_path: Path, module_name: str):
 def extract_module_api(package_path: Path) -> dict[str, dict]:
     """
     Recursively extract public functions and classes from Python source files.
-    Returns a dict with module names as keys.
+
+    Args:
+        package_path (Path): Path to a Python package directory.
+
+    Returns:
+        dict[str, dict]: Mapping of module names to their functions and classes.
     """
     api_data = {}
 
@@ -68,7 +92,15 @@ def extract_module_api(package_path: Path) -> dict[str, dict]:
 
 
 def extract_public_names(tree: ast.AST) -> set[str]:
-    """Extract names from __all__ declaration."""
+    """
+    Extract names listed in a module's __all__ variable.
+
+    Args:
+        tree (ast.AST): Parsed AST tree.
+
+    Returns:
+        set[str]: Public names listed in __all__, if any.
+    """
     public_names = set()
     for node in ast.walk(tree):
         if (
@@ -81,13 +113,21 @@ def extract_public_names(tree: ast.AST) -> set[str]:
 
 
 def find_public_classes(tree: ast.AST, public_names: set[str]) -> list[dict[str, str]]:
-    """Find all public classes in the AST with their docstrings."""
+    """
+    Find all public classes in a Python module AST.
+
+    Args:
+        tree (ast.AST): Parsed AST tree.
+        public_names (set[str]): Names explicitly marked public in __all__.
+
+    Returns:
+        list[dict[str, str]]: Class info dicts.
+    """
     classes = []
     for node in ast.walk(tree):
         if isinstance(node, ast.ClassDef) and (
             not node.name.startswith("_") or node.name in public_names
         ):
-            # Extract docstring
             docstring = ast.get_docstring(node) or "No description available."
 
             # Get base classes
@@ -104,28 +144,31 @@ def find_public_classes(tree: ast.AST, public_names: set[str]) -> list[dict[str,
 
 
 def find_public_functions(tree: ast.AST, public_names: set[str]) -> list[dict[str, str]]:
-    """Find all public functions in the AST with their docstrings."""
+    """
+    Find all public functions in a Python module AST.
+
+    Args:
+        tree (ast.AST): Parsed AST tree.
+        public_names (set[str]): Names explicitly marked public in __all__.
+
+    Returns:
+        list[dict[str, str]]: Function info dicts.
+    """
     functions = []
     for node in ast.walk(tree):
         if isinstance(node, ast.FunctionDef) and (
             not node.name.startswith("_") or node.name in public_names
         ):
-            # Extract docstring
             docstring = ast.get_docstring(node) or "No description available."
 
-            # Get function signature
-            args = []
-            for arg in node.args.args:
-                args.append(arg.arg)
-
-            # Add defaults
+            # Build signature
+            args = [arg.arg for arg in node.args.args]
             defaults = (
                 [ast.unparse(default) for default in node.args.defaults]
                 if node.args.defaults
                 else []
             )
 
-            # Combine args with defaults
             signature_parts = []
             num_defaults = len(defaults)
             for i, arg in enumerate(args):
@@ -137,12 +180,26 @@ def find_public_functions(tree: ast.AST, public_names: set[str]) -> list[dict[st
 
             signature = f"{node.name}({', '.join(signature_parts)})"
 
-            functions.append({"name": node.name, "signature": signature, "docstring": docstring})
+            functions.append({
+                "name": node.name,
+                "signature": signature,
+                "docstring": docstring,
+            })
 
     return sorted(functions, key=lambda x: x["name"])
 
 
-def get_public_members(module):
+def get_public_members(module) -> tuple[list[dict[str, str]], list[dict[str, str]]]:
+    """
+    Inspect a live imported Python module for public classes and functions.
+
+    Args:
+        module (ModuleType): Imported Python module.
+
+    Returns:
+        tuple: (functions, classes)
+            Each is a list of dicts with name, signature, and docstring.
+    """
     functions = []
     classes = []
 
@@ -170,7 +227,15 @@ def get_public_members(module):
 
 
 def parse_python_file(file_path: Path) -> ast.AST | None:
-    """Parse a Python file and return its AST, or None if there's a syntax error."""
+    """
+    Parse a Python file into an AST.
+
+    Args:
+        file_path (Path): Path to a Python file.
+
+    Returns:
+        ast.AST | None: AST object if parsing succeeds, else None.
+    """
     try:
         with open(file_path, encoding="utf-8") as f:
             return ast.parse(f.read(), filename=str(file_path))

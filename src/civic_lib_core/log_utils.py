@@ -1,26 +1,28 @@
 """
-log_utils.py
+civic_lib_core/log_utils.py
 
 Centralized logging for Civic Interconnect agents and libraries.
 
-In config.yaml:
-    log_level: info  # or debug, warning, error, critical
+Integrates with Loguru for flexible logging and reads config
+from the Civic Interconnect project policy.
 
-In code:
+Typical usage:
+
     from civic_lib_core import log_utils
-    log_utils.init_logger()
-    logger = log_utils.logger
 
+    log_utils.init_logger("INFO")
+    logger = log_utils.logger
 
 MIT License — maintained by Civic Interconnect
 """
 
 import sys
+from pathlib import Path
 
 from loguru import logger
 
+from civic_lib_core import fs_utils, project_policy
 from civic_lib_core.date_utils import now_utc_str
-from civic_lib_core.fs_utils import ensure_dir
 
 __all__ = [
     "init_logger",
@@ -31,44 +33,56 @@ __all__ = [
 
 _logger_initialized = False
 
-DEFAULT_LOG_LEVEL = "INFO"
-DEFAULT_LOG_PATH = "logs/{time:YYYY-MM-DD}.log"
-
 
 def init_logger(log_level: str | None = None, log_to_console: bool = True) -> None:
     """
-    Initialize loguru logging once per session.
+    Initialize Loguru logging once per session.
 
-    If no log level is provided, attempts to load it from config.yaml as 'log_level'.
-    Defaults to INFO if not found or config is missing.
+    Automatically loads logging config from project_policy.yaml
+    if available. Defaults to INFO and logs/{date}.log if not found.
 
     Args:
-        log_level (str | None): Optional log level override (default: config.yaml or "INFO").
-        log_to_console (bool): If True, logs to stderr in addition to file.
+        log_level (str | None): Optional log level override.
+        log_to_console (bool): Whether to also log to stderr.
+
+    Example:
+        from civic_lib_core import log_utils
+        log_utils.init_logger("INFO")
     """
     global _logger_initialized
     if _logger_initialized:
         logger.debug("Logger already initialized.")
         return
 
-    # Remove the default loguru handler to prevent duplicates
+    # Remove any existing loguru handlers to prevent duplicate logs
     logger.remove()
 
+    # Discover the project root
+    layout = fs_utils.discover_project_layout()
+    project_root = layout[0]
+    if not isinstance(project_root, Path):
+        raise TypeError(f"project_root is not a Path: {project_root}")
+
+    # Load project policy for logging settings
+    policy = project_policy.load_project_policy(project_root)
+
+    log_subdir = policy.get("log_subdir", "logs")
+    log_file_template = policy.get("log_file_template", "{time:YYYY-MM-DD}.log")
+
+    logs_dir = project_root / log_subdir
+    fs_utils.ensure_dir(logs_dir)
+
+    log_file_path = logs_dir / log_file_template
+
+    # Load log level from policy if not overridden
     if log_level is None:
-        try:
-            from civic_lib_core.config_utils import load_yaml_config
+        log_level = policy.get("log_level", "INFO")
 
-            cfg = load_yaml_config()
-            log_level = cfg.get("log_level", DEFAULT_LOG_LEVEL)
-        except Exception as e:
-            logger.warning(f"Could not load config.yaml for log level: {e}")
-            log_level = DEFAULT_LOG_LEVEL
+    level = (log_level or "INFO").upper().strip()
 
-    ensure_dir("logs")
-    level = (log_level or DEFAULT_LOG_LEVEL).upper().strip()
-
+    # Add file sink
     logger.add(
-        DEFAULT_LOG_PATH,
+        str(log_file_path),
         rotation="1 day",
         retention="7 days",
         level=level,
@@ -76,6 +90,7 @@ def init_logger(log_level: str | None = None, log_to_console: bool = True) -> No
         diagnose=True,
     )
 
+    # Optionally add console sink
     if log_to_console:
         logger.add(
             sink=sys.stderr,
@@ -84,13 +99,17 @@ def init_logger(log_level: str | None = None, log_to_console: bool = True) -> No
             diagnose=True,
         )
 
-    logger.info(f"===== Agent logger initialized (level: {level}) =====")
+    logger.info(f"===== Civic Interconnect logger initialized (level: {level}) =====")
     _logger_initialized = True
 
 
 def log_agent_end(agent_name: str, status: str = "success") -> None:
     """
     Log the end of an agent with its status and UTC timestamp.
+
+    Args:
+        agent_name (str): Name of the agent.
+        status (str): e.g. "success" or "error".
     """
     timestamp = now_utc_str()
     logger.info(f"===== {agent_name} completed with status: {status} at {timestamp} =====")
@@ -99,5 +118,8 @@ def log_agent_end(agent_name: str, status: str = "success") -> None:
 def log_agent_start(agent_name: str) -> None:
     """
     Log the start of an agent by name.
+
+    Args:
+        agent_name (str): Name of the agent.
     """
     logger.info(f"===== Starting {agent_name} =====")

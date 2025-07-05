@@ -1,21 +1,29 @@
 """
 civic_lib_core/config_utils.py
 
-Service-specific configuration and environment helpers.
+Utilities for managing configuration and environment data in Civic Interconnect projects.
 
-In config.yaml:
+Provides:
+- Loading environment-based API keys
+- Reading YAML configuration files
+- Reading project version information
+- Parsing version strings into numeric tuples
 
-    log_level: info  # or debug, warning, error, critical
-
-In code:
+Typical usage:
 
     from civic_lib_core import config_utils
 
-    "load_api_key",
-    "load_yaml_config",
-    "load_version",
-    "parse_version",
+    # Load an API key from the environment
+    api_key = config_utils.load_api_key("MY_API_KEY", "MyService")
 
+    # Load a YAML configuration
+    config = config_utils.load_yaml_config()
+
+    # Load version from VERSION file
+    version = config_utils.load_version()
+
+    # Parse version string into numbers
+    major, minor, patch = config_utils.parse_version("1.2.3")
 """
 
 import os
@@ -25,7 +33,7 @@ from pathlib import Path
 
 import yaml
 
-from civic_lib_core import log_utils
+from civic_lib_core import fs_utils, log_utils
 
 __all__ = [
     "load_api_key",
@@ -39,43 +47,43 @@ logger = log_utils.logger
 
 def load_api_key(env_var: str, service_name: str) -> str:
     """
-    Load an API key from the environment.
+    Load an API key from the environment variables.
 
     Args:
-        env_var (str): Environment variable name to load.
-        service_name (str): Friendly service name for error messaging.
+        env_var (str): The name of the environment variable to read.
+        service_name (str): A friendly name for the service (for error messages).
 
     Returns:
-        str: API key value.
+        str: The API key value.
 
     Exits:
-        If the API key is missing.
+        If the environment variable is missing or empty.
     """
     key = (os.getenv(env_var) or "").strip()
     if not key:
         logger.error(
-            f"Missing {service_name} API key.\n"
+            f"Missing API key for {service_name}.\n"
             f"Fix: Add {env_var!r} to your .env file or system environment variables."
         )
-        sys.exit(f"Error: {env_var} is required for {service_name}.")
+        sys.exit(f"Error: Environment variable {env_var} is required for {service_name}.")
     return key
 
 
 def load_yaml_config(filename: str = "config.yaml", root_dir: Path | None = None) -> dict:
     """
-    Load a YAML configuration file from the given root directory.
+    Load a YAML configuration file from the project root.
 
     Args:
-        filename (str): The config file name (default: "config.yaml").
-        root_dir (Path | None): Root directory to search (default: Path.cwd()).
+        filename (str): Name of the config file (default: "config.yaml").
+        root_dir (Optional[Path]): Directory to search (default: detected project root).
 
     Returns:
-        dict: Parsed configuration as a dictionary.
+        dict: Parsed configuration as a Python dictionary.
 
     Raises:
         FileNotFoundError: If the config file cannot be found.
     """
-    root = root_dir or Path.cwd()
+    root = root_dir or fs_utils.get_project_root()
     config_path = root / filename
 
     if not config_path.exists():
@@ -92,19 +100,19 @@ def load_yaml_config(filename: str = "config.yaml", root_dir: Path | None = None
 
 def load_version(filename: str = "VERSION", root_dir: Path | None = None) -> str:
     """
-    Load the version string from a VERSION file.
+    Load the version string from a VERSION file in the project.
 
     Args:
-        filename (str): The version filename (default: "VERSION").
-        root_dir (Path | None): Optional base path.
+        filename (str): Name of the version file (default: "VERSION").
+        root_dir (Optional[Path]): Base path to search (default: detected project root).
 
     Returns:
-        str: Version string.
+        str: Version string (e.g., "1.2.3").
 
     Exits:
-        If the file is missing or unreadable.
+        If the version file is missing or unreadable.
     """
-    root = root_dir or Path.cwd()
+    root = root_dir or fs_utils.get_project_root()
     version_path = root / filename
 
     try:
@@ -113,15 +121,21 @@ def load_version(filename: str = "VERSION", root_dir: Path | None = None) -> str
         return version
     except Exception as e:
         logger.error(f"Error reading VERSION file at {version_path}: {str(e)}")
-        sys.exit("Error: VERSION file is missing or unreadable.")
+        sys.exit(f"Error: VERSION file missing or unreadable at {version_path}.")
 
 
 def parse_version(version: str) -> tuple[int, int, int]:
     """
-    Parse a version string like '1.2.3' into a tuple.
+    Parse a version string (e.g., "1.2.3") into a tuple of integers.
+
+    Args:
+        version (str): Version string.
+
+    Returns:
+        tuple[int, int, int]: A tuple of (major, minor, patch).
 
     Raises:
-        ValueError: if the version is not properly formatted.
+        ValueError: If the version string is improperly formatted.
     """
     match = re.match(r"(\d+)\.(\d+)\.(\d+)", version)
     if not match:
@@ -131,4 +145,4 @@ def parse_version(version: str) -> tuple[int, int, int]:
 
 
 if __name__ == "__main__":
-    print("This module provides utilities and should not be run directly.")
+    print("This module provides configuration utilities and is not intended to be run directly.")

@@ -1,10 +1,16 @@
 """
-civic_lib_core/doc_utils.py
+civic_lib_core/docs_api_render.py
 
-Core development utilities.
-Part of the Civic Interconnect agent framework.
+Renders extracted API metadata into documentation files for Civic Interconnect
+projects.
 
-MIT License — maintained by Civic Interconnect
+Responsibilities:
+- Generate Markdown files documenting Python modules
+- Produce YAML summaries for quick API overviews
+- Format class and function details into readable outputs
+
+This module converts structured API data into human-readable documentation
+for inclusion in Civic Interconnect documentation sites.
 """
 
 from pathlib import Path
@@ -23,7 +29,16 @@ logger = log_utils.logger
 
 
 def write_markdown_docs(api_data: dict, output_dir: Path) -> None:
-    """Write full Markdown docs for each module."""
+    """
+    Write full Markdown documentation for all extracted modules.
+
+    Args:
+        api_data (dict): Dictionary from extract_module_api.
+        output_dir (Path): Path to folder where Markdown files will be written.
+    """
+    if not output_dir.exists():
+        output_dir.mkdir(parents=True, exist_ok=True)
+
     for module_name, module_data in api_data.items():
         if not isinstance(module_data, dict):
             logger.warning(f"Skipping {module_name} due to unexpected type: {type(module_data)}")
@@ -31,11 +46,16 @@ def write_markdown_docs(api_data: dict, output_dir: Path) -> None:
 
         functions = module_data.get("functions", [])
         classes = module_data.get("classes", [])
+
+        if not functions and not classes:
+            logger.info(f"Skipping {module_name}. No public API elements found.")
+            continue
+
         md_path = output_dir / f"{module_name}.md"
         write_module_markdown(md_path, module_name, functions, classes)
         logger.debug(f"Wrote markdown: {md_path}")
 
-    logger.info(f"Markdown API docs: {output_dir}")
+    logger.info(f"Markdown API docs written to: {output_dir}")
 
 
 def write_module_markdown(
@@ -43,8 +63,16 @@ def write_module_markdown(
     module_name: str,
     functions: list[dict[str, str]],
     classes: list[dict[str, str]],
-):
-    """Write markdown documentation for a single module."""
+) -> None:
+    """
+    Write Markdown documentation for a single Python module.
+
+    Args:
+        file_path (Path): Output file path.
+        module_name (str): Name of the module being documented.
+        functions (list[dict]): Public functions extracted from the module.
+        classes (list[dict]): Public classes extracted from the module.
+    """
     with file_path.open("w", encoding="utf-8") as out:
         out.write(f"# Module `{module_name}`\n\n")
 
@@ -62,7 +90,13 @@ def write_module_markdown(
 
 
 def write_yaml_summary(api_data: dict, output_dir: Path) -> None:
-    """Write minimal YAML summary with module → [function names]."""
+    """
+    Write a minimal YAML summary listing module names and their function names.
+
+    Args:
+        api_data (dict): Dictionary from extract_module_api.
+        output_dir (Path): Path to folder where API.yaml will be written.
+    """
     minimal_yaml = {}
     for module_name, module_data in api_data.items():
         if isinstance(module_data, dict):
@@ -72,8 +106,22 @@ def write_yaml_summary(api_data: dict, output_dir: Path) -> None:
                 if names:
                     minimal_yaml[module_name] = names
 
+    if not minimal_yaml:
+        logger.warning("No function data found to write to YAML summary.")
+        return
+
+    if not output_dir.exists():
+        output_dir.mkdir(parents=True, exist_ok=True)
+
     yaml_path = output_dir / "API.yaml"
     with yaml_path.open("w", encoding="utf-8") as f:
-        yaml.dump(minimal_yaml, f, sort_keys=True)
+        yaml.dump(
+            minimal_yaml,
+            f,
+            sort_keys=True,
+            default_flow_style=False,
+            allow_unicode=True,
+            indent=2,
+        )
 
-    logger.info(f"YAML API summary: {yaml_path}")
+    logger.info(f"YAML API summary written to: {yaml_path}")

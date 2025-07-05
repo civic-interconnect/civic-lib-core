@@ -1,5 +1,7 @@
 site_name: civic-lib-core Documentation
 site_description: Documentation for civic-lib-core
+docs_dir: mkdocs_src
+site_dir: docs
 theme:
   name: material
   palette:
@@ -11,9 +13,39 @@ theme:
 nav:
 - Home: index.md
 - API Reference:
-  - Developer: api/DEVELOPER.md
-  - Index: api/index.md
-  - Readme: api/README.md
+  - Bump Version: api/bump_version.md
+  - Cli.Cli: api/cli.cli.md
+  - Cli: api/cli.md
+  - Config Utils: api/config_utils.md
+  - Date Utils: api/date_utils.md
+  - Dev Utils: api/dev_utils.md
+  - Docs Api Build: api/docs_api_build.md
+  - Docs Api Config: api/docs_api_config.md
+  - Docs Api Extract: api/docs_api_extract.md
+  - Docs Api Render: api/docs_api_render.md
+  - Fs Utils: api/fs_utils.md
+  - Graphql Utils: api/graphql_utils.md
+  - Install Deps: api/install_deps.md
+  - Layout: api/layout.md
+  - Log Utils: api/log_utils.md
+  - Prep Code: api/prep_code.md
+  - Project Checks: api/project_checks.md
+  - Project Layout: api/project_layout.md
+  - Project Policy: api/project_policy.md
+  - Publish Api: api/publish_api.md
+  - Query Utils: api/query_utils.md
+  - Release: api/release.md
+  - Report Archiver: api/report_archiver.md
+  - Report Constants: api/report_constants.md
+  - Report Formatter: api/report_formatter.md
+  - Report Indexer: api/report_indexer.md
+  - Report Reader: api/report_reader.md
+  - Report Summary: api/report_summary.md
+  - Report Utils: api/report_utils.md
+  - Report Writer: api/report_writer.md
+  - Schema Utils: api/schema_utils.md
+  - Version Utils: api/version_utils.md
+  - Yaml Utils: api/yaml_utils.md
 plugins:
 - search
 markdown_extensions:

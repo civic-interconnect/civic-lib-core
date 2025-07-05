@@ -12,6 +12,7 @@ repos:
         exclude: ^schemas/|^storage/
       - id: check-added-large-files
         args: ["--maxkb=100"]
+        exclude: ^docs/ # Exclude files in docs/
 
   # Ruff linting and formatting
   - repo: https://github.com/astral-sh/ruff-pre-commit

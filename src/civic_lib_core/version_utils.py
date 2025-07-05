@@ -10,7 +10,7 @@ MIT License — maintained by Civic Interconnect
 import re
 from pathlib import Path
 
-from civic_lib_core import log_utils
+from civic_lib_core import fs_utils, log_utils
 
 __all__ = [
     "bump_version",
@@ -96,7 +96,7 @@ def get_lib_version() -> str:
     """
     try:
         # Try to read from VERSION file first
-        version_file = Path(__file__).parent / "VERSION"
+        version_file = fs_utils.get_project_root() / "VERSION"
         if version_file.exists():
             return version_file.read_text(encoding="utf-8").strip()
 

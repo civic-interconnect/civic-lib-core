@@ -1,6 +1,6 @@
 [project]
 name = "civic-lib-core"
-version = "0.9.5"
+version = "0.9.6"
 description = "Shared internal utility library for Civic Interconnect Agents"
 authors = [
     { name="Civic Interconnect", email="info@civic-interconnect.org" }
@@ -45,7 +45,9 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
-license-files = ["LICENSE"]
+
+[tool.setuptools.package-data]
+"civic_lib_core" = ["*.yaml"]
 
 [tool.ruff]
 line-length = 100
@@ -55,7 +57,7 @@ unsafe-fixes = true
 preview = true
 
 [tool.ruff.lint]
-extend-select = ["E", "F", "W", "I", "UP", "C90", "N", "B", "A", "SIM"]
+extend-select = ["E", "F", "W", "I", "UP", "C90", "N", "B", "A", "SIM", "TCH"]
 ignore = ["E501"]  # line length handled by formatter
 
 [tool.ruff.format]
@@ -64,7 +66,14 @@ docstring-code-format = true
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = "-ra --strict-markers"
-testpaths = [
-  "tests"
-]
+pythonpath = ["src"]
+testpaths = ["tests"]
 python_files = "test_*.py"
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true

@@ -36,15 +36,19 @@ py -m venv .venv
 py -m pip install --upgrade pip setuptools wheel --prefer-binary
 py -m pip install --upgrade .[dev]
 pytest tests
+
+civic-dev layout
+civic-dev install-deps
 civic-dev prep-code
 civic-dev publish-api
+mkdocs build
 mkdocs serve
 ```
 
 After verifying changes:
 
 ```powershell
-civic-dev bump-version 0.9.4 0.9.5
+civic-dev bump-version 0.9.5 0.9.6
 civic-dev release
 ```
 
@@ -55,4 +59,28 @@ Requires a valid PyPI token set in your environment or `~/.pypirc`.
 ```powershell
 py -m build
 py -m twine upload dist/*
+```
+
+## Publishing an API for a repo
+
+| Module                    | Purpose                                              |
+| ------------------------- | ---------------------------------------------------- |
+| **docs\_api\_build.py**   | top-level commands for generating/publishing docs    |
+| **docs\_api\_config.py**  | orchestrates config files and navigation bar         |
+| **docs\_api\_extract.py** | parses Python code to extract docstrings, signatures |
+| **docs\_api\_render.py**  | generates Markdown and YAML files                    |
+
+
+## Folders
+
+- Markdown lives in: mkdocs_src/
+- API Markdown lives in: mkdocs_src/api/
+- Built HTML goes into: docs/
+
+## Publish API
+
+Client repos can publish their api with with:
+
+```powershell
+civic-dev publish-api
 ```
