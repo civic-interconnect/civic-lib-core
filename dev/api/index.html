@@ -2775,7 +2775,9 @@ tools in sequence. If any step fails, the process is terminated early.</p>
 
 
 <a href="#civic_lib_core.config_utils.load_version" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">load_version</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;VERSION&#39;</span><span class="p">,</span> <span class="n">root_dir</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">load_version</span><span class="p">(</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;VERSION&#39;</span><span class="p">,</span> <span class="n">root_dir</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -2919,7 +2921,10 @@ tools in sequence. If any step fails, the process is terminated early.</p>
 
 
 <a href="#civic_lib_core.config_utils.load_yaml_config" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">load_yaml_config</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;config.yaml&#39;</span><span class="p">,</span> <span class="n">root_dir</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">load_yaml_config</span><span class="p">(</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;config.yaml&#39;</span><span class="p">,</span>
+    <span class="n">root_dir</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3686,7 +3691,11 @@ Part of the Civic Interconnect agent framework.</p>
 
 
 <a href="#civic_lib_core.dev_utils.log_suggested_paths" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">log_suggested_paths</span><span class="p">(</span><span class="n">response</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">source_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;response&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">log_suggested_paths</span><span class="p">(</span>
+    <span class="n">response</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">max_depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">source_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;response&#39;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3822,7 +3831,11 @@ Part of the Civic Interconnect agent framework.</p>
 
 
 <a href="#civic_lib_core.dev_utils.suggest_paths" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">suggest_paths</span><span class="p">(</span><span class="n">response</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">current_path</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">suggest_paths</span><span class="p">(</span>
+    <span class="n">response</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">max_depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">current_path</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -4366,7 +4379,9 @@ PosixPath('/absolute/path/to/relative/path')</p>
 
 
 <a href="#civic_lib_core.fs_utils.get_data_config_dir" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_data_config_dir</span><span class="p">(</span><span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_data_config_dir</span><span class="p">(</span>
+    <span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -4468,7 +4483,9 @@ If None, uses the discovered project root. Defaults to None.</p>
 
 
 <a href="#civic_lib_core.fs_utils.get_docs_api_dir" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_docs_api_dir</span><span class="p">(</span><span class="n">root_dir</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">create</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_docs_api_dir</span><span class="p">(</span>
+    <span class="n">root_dir</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">create</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -4844,7 +4861,9 @@ If None, uses the current working directory. Defaults to None.</p>
 
 
 <a href="#civic_lib_core.fs_utils.get_repo_package_names" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_repo_package_names</span><span class="p">(</span><span class="n">root_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_repo_package_names</span><span class="p">(</span>
+    <span class="n">root_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -4950,7 +4969,9 @@ If None, uses the current working directory. Defaults to None.</p>
 
 
 <a href="#civic_lib_core.fs_utils.get_runtime_config_path" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_runtime_config_path</span><span class="p">(</span><span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_runtime_config_path</span><span class="p">(</span>
+    <span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -5688,7 +5709,13 @@ are converted to underscores.</p>
   </span>
 
 <a href="#civic_lib_core.graphql_utils.async_paged_query" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">async_paged_query</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">data_path</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">page_info_path</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">async_paged_query</span><span class="p">(</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">query</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">data_path</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">page_info_path</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -5979,7 +6006,12 @@ If None, will attempt to infer from data_path. Defaults to None.</p>
   </span>
 
 <a href="#civic_lib_core.graphql_utils.fetch_paginated" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">fetch_paginated</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">data_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">variables</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">fetch_paginated</span><span class="p">(</span>
+    <span class="n">client</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">query</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">data_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">variables</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -6233,7 +6265,9 @@ of results combined.</p>
 
 
 <a href="#civic_lib_core.graphql_utils.handle_transport_errors" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">handle_transport_errors</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">resource_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;resource&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">handle_transport_errors</span><span class="p">(</span>
+    <span class="n">e</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">resource_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;resource&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -6413,7 +6447,12 @@ error message based on the exception type.</p>
 
 
 <a href="#civic_lib_core.graphql_utils.paged_query" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">paged_query</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">data_path</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">paged_query</span><span class="p">(</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">query</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">data_path</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -6636,7 +6675,10 @@ or empty list if an error occurs.</p>
 
 
 <a href="#civic_lib_core.log_utils.init_logger" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">init_logger</span><span class="p">(</span><span class="n">log_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">log_to_console</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">init_logger</span><span class="p">(</span>
+    <span class="n">log_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_to_console</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -6853,7 +6895,9 @@ or empty list if an error occurs.</p>
 
 
 <a href="#civic_lib_core.log_utils.log_agent_end" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">log_agent_end</span><span class="p">(</span><span class="n">agent_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;success&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">log_agent_end</span><span class="p">(</span>
+    <span class="n">agent_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;success&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -7257,7 +7301,9 @@ or empty list if an error occurs.</p>
 
 
 <a href="#civic_lib_core.project_checks.check_additional_files" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">check_additional_files</span><span class="p">(</span><span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">check_additional_files</span><span class="p">(</span>
+    <span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -7505,7 +7551,9 @@ or empty list if an error occurs.</p>
 
 
 <a href="#civic_lib_core.project_checks.check_oversized_py_files" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">check_oversized_py_files</span><span class="p">(</span><span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">src_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">check_oversized_py_files</span><span class="p">(</span>
+    <span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">src_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="nb">dict</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -7664,7 +7712,9 @@ or empty list if an error occurs.</p>
 
 
 <a href="#civic_lib_core.project_checks.check_py_files_outside_src" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">check_py_files_outside_src</span><span class="p">(</span><span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">src_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">check_py_files_outside_src</span><span class="p">(</span>
+    <span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">src_dir</span><span class="p">:</span> <span class="n">Path</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -7795,7 +7845,9 @@ or empty list if an error occurs.</p>
 
 
 <a href="#civic_lib_core.project_checks.check_python_project_dirs" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">check_python_project_dirs</span><span class="p">(</span><span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">check_python_project_dirs</span><span class="p">(</span>
+    <span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="nb">dict</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -7918,7 +7970,9 @@ or empty list if an error occurs.</p>
 
 
 <a href="#civic_lib_core.project_checks.check_python_project_files" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">check_python_project_files</span><span class="p">(</span><span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">check_python_project_files</span><span class="p">(</span>
+    <span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="nb">dict</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -8041,7 +8095,9 @@ or empty list if an error occurs.</p>
 
 
 <a href="#civic_lib_core.project_checks.check_required_files" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">check_required_files</span><span class="p">(</span><span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">check_required_files</span><span class="p">(</span>
+    <span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="nb">dict</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -9000,7 +9056,10 @@ or empty list if an error occurs.</p>
 
 
 <a href="#civic_lib_core.project_policy.load_project_policy" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">load_project_policy</span><span class="p">(</span><span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">override_file</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">load_project_policy</span><span class="p">(</span>
+    <span class="n">project_root</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">override_file</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -9253,7 +9312,9 @@ Used by admin and maintenance tools, not daily agents.</p>
 
 
 <a href="#civic_lib_core.report_archiver.archive_old_reports" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">archive_old_reports</span><span class="p">(</span><span class="n">agent_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">keep_latest</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">archive_old_reports</span><span class="p">(</span>
+    <span class="n">agent_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">keep_latest</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -9414,7 +9475,9 @@ Used by admin and maintenance tools, not daily agents.</p>
 
 
 <a href="#civic_lib_core.report_archiver.archive_reports_older_than" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">archive_reports_older_than</span><span class="p">(</span><span class="n">agent_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">days_old</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">archive_reports_older_than</span><span class="p">(</span>
+    <span class="n">agent_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">days_old</span><span class="p">:</span> <span class="nb">int</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -10860,7 +10923,9 @@ Used by dashboards, CLI tools, and indexing utilities.</p>
 
 
 <a href="#civic_lib_core.report_reader.read_latest_report" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">read_latest_report</span><span class="p">(</span><span class="n">agent_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">read_latest_report</span><span class="p">(</span>
+    <span class="n">agent_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -11177,7 +11242,9 @@ Used optionally by agents or admin tools alongside JSON output.</p>
 
 
 <a href="#civic_lib_core.report_summary.write_markdown_summary" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">write_markdown_summary</span><span class="p">(</span><span class="n">report</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">write_markdown_summary</span><span class="p">(</span>
+    <span class="n">report</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -11611,7 +11678,14 @@ Used by daily Civic Interconnect agents.</p>
 
 
 <a href="#civic_lib_core.report_writer.write_report" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">write_report</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">agent_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">agent_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">schema_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;1.0.0&#39;</span><span class="p">,</span> <span class="n">report_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">REPORTS_DIR</span><span class="p">,</span> <span class="n">file_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;json&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">write_report</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">agent_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">agent_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">schema_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;1.0.0&#39;</span><span class="p">,</span>
+    <span class="n">report_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">REPORTS_DIR</span><span class="p">,</span>
+    <span class="n">file_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -11906,7 +11980,9 @@ Part of the Civic Interconnect agent framework.</p>
 
 
 <a href="#civic_lib_core.schema_utils.detect_schema_change" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">detect_schema_change</span><span class="p">(</span><span class="n">old_file</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">new_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">detect_schema_change</span><span class="p">(</span>
+    <span class="n">old_file</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">new_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -12340,7 +12416,10 @@ repos.</p>
 
 
 <a href="#civic_lib_core.version_utils.get_repo_version" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_repo_version</span><span class="p">(</span><span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;civic-lib-core&#39;</span><span class="p">,</span> <span class="n">root_dir</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_repo_version</span><span class="p">(</span>
+    <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;civic-lib-core&#39;</span><span class="p">,</span>
+    <span class="n">root_dir</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -12553,7 +12632,9 @@ repos.</p>
 
 
 <a href="#civic_lib_core.version_utils.get_version_from_python_metadata" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_version_from_python_metadata</span><span class="p">(</span><span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_version_from_python_metadata</span><span class="p">(</span>
+    <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
