@@ -1,10 +1,8 @@
-"""
-civic_lib_core/report_reader.py
+"""civic_lib_core/report_reader.py.
 
 Functions for reading, inspecting, and validating Civic Interconnect agent reports.
 Used by dashboards, CLI tools, and indexing utilities.
 
-MIT License — maintained by Civic Interconnect
 """
 
 import json
@@ -14,10 +12,8 @@ from typing import Any
 from civic_lib_core import log_utils
 from civic_lib_core.report_constants import EXPECTED_REPORT_KEYS, REPORT_EXTENSION
 from civic_lib_core.report_utils import is_report_file
-from civic_lib_core.version_utils import check_version
 
 __all__ = [
-    "check_schema_version",
     "get_latest_report",
     "read_latest_report",
     "validate_report_format",
@@ -26,24 +22,8 @@ __all__ = [
 logger = log_utils.logger
 
 
-def check_schema_version(report: dict[str, Any], required: str, strict: bool = False) -> bool:
-    """
-    Check if the report's schema version matches the required version.
-    Args:
-        report (dict): The parsed report dictionary.
-        required (str): The required schema version to check against.
-        strict (bool): If True, raise an error if the version does not match.
-                       If False, return False and log a warning.
-    Returns:
-        bool: True if the schema version matches, False otherwise.
-    """
-    actual = report.get("schema_version", "0.0.0")
-    return check_version(required, actual, strict=strict)
-
-
 def get_latest_report(agent_dir: Path) -> Path | None:
-    """
-    Get the most recent report file from the specified agent directory.
+    """Get the most recent report file from the specified agent directory.
 
     Args:
         agent_dir (Path): Path to the agent's report folder.
@@ -65,9 +45,8 @@ def get_latest_report(agent_dir: Path) -> Path | None:
     return latest
 
 
-def read_latest_report(agent_dir: Path, strict: bool = False) -> dict | None:
-    """
-    Read and return the contents of the latest report for a given agent.
+def read_latest_report(agent_dir: Path, strict: bool = False) -> dict[str, Any] | None:
+    """Read and return the contents of the latest report for a given agent.
 
     Args:
         agent_dir (Path): Path to the agent's report folder.
@@ -104,9 +83,8 @@ def read_latest_report(agent_dir: Path, strict: bool = False) -> dict | None:
     return data
 
 
-def validate_report_format(report: dict) -> bool:
-    """
-    Validate that a report contains all expected top-level keys.
+def validate_report_format(report: dict[str, Any]) -> bool:
+    """Validate that a report contains all expected top-level keys.
 
     Args:
         report (dict): The parsed report to validate.

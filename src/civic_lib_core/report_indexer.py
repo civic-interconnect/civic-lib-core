@@ -1,3 +1,9 @@
+"""Module for generating a Markdown index of agent reports.
+
+This module provides:
+- generate_index: generates a Markdown index listing the latest report from each agent
+"""
+
 from pathlib import Path
 
 from civic_lib_core import log_utils
@@ -12,8 +18,7 @@ logger = log_utils.logger
 
 
 def generate_index(report_dir: Path = REPORTS_DIR) -> None:
-    """
-    Generate a Markdown index listing the latest report from each agent.
+    """Generate a Markdown index listing the latest report from each agent.
 
     Args:
         report_dir (Path): The base `reports/` directory to scan.
@@ -28,7 +33,7 @@ def generate_index(report_dir: Path = REPORTS_DIR) -> None:
         index_file.unlink()
 
     logger.debug(f"Creating new index file at {index_file}")
-    lines = ["# Civic Interconnect Agent Reports\n"]
+    lines = ["# Civic Interconnect Agent Reports", ""]
 
     for agent_dir in sorted(report_dir.iterdir(), key=lambda p: p.name.lower()):
         if agent_dir.is_dir():
@@ -38,5 +43,9 @@ def generate_index(report_dir: Path = REPORTS_DIR) -> None:
                 agent_display = get_agent_name_from_path(latest) or agent_dir.name
                 lines.append(f"- **{agent_display}**: [Latest Report]({relative_path})")
 
-    index_file.write_text("\n".join(lines), encoding="utf-8")
+    if len(lines) == 2:
+        lines.append("_No reports found._")
+        logger.warning("No agent reports found. Generated empty index.")
+
+    index_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
     logger.info(f"Index written to {index_file}")

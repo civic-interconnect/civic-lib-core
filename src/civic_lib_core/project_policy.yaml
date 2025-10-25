@@ -1,4 +1,5 @@
 # Civic Interconnect default project policy
+# src/civic_lib_core/project_policy.yaml
 # =========================================
 
 # Files that should exist in ALL Civic Interconnect repositories
@@ -10,12 +11,22 @@ required_files:
   - LICENSE
   - README.md
   - runtime_config.yaml
-  - VERSION
+
+# Files that should exist if the project is a pure browser PWA
+pwa_project_files:
+  - index.html
+  - manifest.json
+  - sw.js
+
+
+# Files that should exist if the project is a Node.js or PWA repo
+node_project_files:
+  - package.json
 
 # Files that should exist if the project is a Python repo
 python_project_files:
   - pyproject.toml
-  - mkdocs.yml
+
 
 # Directories expected in Python repos
 python_project_dirs:
@@ -24,15 +35,13 @@ python_project_dirs:
 # Maximum recommended Python file length (lines)
 max_python_file_length: 1000
 
-# MkDocs configuration
-# Group MkDocs specific settings under a 'docs' key for better organization
+# Documentation configuration
 docs:
-  mkdocs_config: mkdocs.yml       # Path to mkdocs.yml relative to project root
-  mkdocs_src_dir: mkdocs_src      # Directory where all Markdown source files live (e.g., project_root/mkdocs_src)
-  site_dir: docs                  # Directory where MkDocs builds HTML (e.g., project_root/docs) - ADD THIS
-  api_markdown_subdir: api        # Subdirectory within mkdocs_src_dir for API Markdown (e.g., mkdocs_src/api) - ADD THIS
+  docs_dir: docs
+  docs_api_dir: api
 
 # Logging configuration
-log_subdir: logs                  # Subfolder under project root for logs
-log_file_template: "{time:YYYY-MM-DD}.log" # Log filename pattern
-log_level: INFO                   # Default log level if not overridden in runtime_config.yaml
+log_subdir: logs
+log_file_template: "{time:YYYY-MM-DD}.log"
+log_level: INFO
+log_retention_days: 7

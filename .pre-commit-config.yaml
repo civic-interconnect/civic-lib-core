@@ -1,27 +1,57 @@
-repos:
-  # YAML, JSON, file hygiene
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
-    hooks:
-      - id: check-yaml
-        files: ^\.github/|\.pre-commit-config\.yaml
-      - id: check-json
-      - id: end-of-file-fixer
-        exclude: ^schemas/|^storage/
-      - id: trailing-whitespace
-        exclude: ^schemas/|^storage/
-      - id: check-added-large-files
-        args: ["--maxkb=100"]
-        exclude: ^docs/ # Exclude files in docs/
+# .pre-commit-config.yaml
+#
+# This file runs quality checks through uvx.
+#
+# Install after creating virtual environment:
+#   uvx pre-commit install
+#
+# Periodically update:
+#   uvx pre-commit autoupdate
+#
+# Run all checks (might have to run it twice):
+#   uvx pre-commit run --all-files
+---
+# Don't attempt to format these kinds of files
+exclude: |
+  (?x)^(
+    \.DS_Store|
+    \.coverage|
+    \.ipynb_checkpoints/|
+    \.mypy_cache/|
+    \.nox/|
+    \.pytest_cache/|
+    \.ruff_cache/|
+    \.tox/|
+    \.venv/|
+    .*\.(egg-info)/|
+    build/|
+    coverage\.xml|
+    dist/|
+    htmlcov/|
+    node_modules/|
+    site/
+  )
 
-  # Ruff linting and formatting
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.0
+repos:
+  - repo: local
     hooks:
-      - id: ruff-check
-        name: ruff check
-        args: [--fix]
-        types_or: [python, pyi]
-      - id: ruff-format
-        name: ruff format
-        types_or: [python, pyi]
+      # ------------------- BASELINE CHECKS -------------------
+
+      - id: B1-validate-pyproject
+        name: B1) Validate pyproject
+        entry: uvx validate-pyproject
+        language: system
+        pass_filenames: false
+        files: pyproject.toml
+
+      - id: B2-ruff-format
+        name: B2) Ruff format (normalize EOF and whitespace)
+        entry: uvx ruff format
+        language: system
+        types: [python]
+
+      - id: B3-ruff-check
+        name: B3) Ruff check (lint, autofix)
+        entry: uvx ruff check --fix
+        language: system
+        types: [python]

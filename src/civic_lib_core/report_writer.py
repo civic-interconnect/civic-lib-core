@@ -1,14 +1,12 @@
-"""
-civic_lib_core/report_writer.py
+"""civic_lib_core/report_writer.py.
 
 Functions for writing timestamped agent reports in multiple formats.
 Used by daily Civic Interconnect agents.
 
-MIT License — maintained by Civic Interconnect
 """
 
-import json
 from datetime import datetime
+import json
 from pathlib import Path
 from typing import Any
 
@@ -30,13 +28,13 @@ def write_report(
     report_dir: str | Path = REPORTS_DIR,
     file_format: str = "json",
 ) -> Path:
-    """
-    Write agent output to a timestamped report file with metadata.
+    """Write agent output to a timestamped report file with metadata.
 
     Args:
         data (list[dict[str, Any]]): The results to include in the report.
         agent_name (str): The name of the agent generating the report.
         agent_version (str): The version of the agent code.
+        schema_version (str): The version of the report schema (default: "1.0.0").
         report_dir (str | Path): Root directory where reports are saved (default: REPORTS_DIR).
         file_format (str): Output format, one of "json" or "csv" (default: "json").
 
@@ -56,11 +54,10 @@ def write_report(
             "record_count": len(data),
             "agent_version": agent_version,
             "schema_version": schema_version,
-            "lib_version": version_utils.get_lib_version(),
+            "lib_version": version_utils.get_repo_version(),
             "results": data,
         }
-        with open(report_path, "w", encoding="utf-8") as f:
-            json.dump(report, f, indent=2)
+        report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
 
     elif file_format == "csv":
         report_formatter.to_csv(data, report_path)

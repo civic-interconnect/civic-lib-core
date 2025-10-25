@@ -2,8 +2,8 @@
 Test cases for civic-lib-core.path_utils module.
 """
 
-import tempfile
 from pathlib import Path
+import tempfile
 
 from civic_lib_core import fs_utils
 

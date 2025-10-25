@@ -53,7 +53,7 @@ def read_latest_report(agent_dir: Path) -> dict[str, Any] | None:
     latest = get_latest_report(agent_dir)
     if latest:
         try:
-            with open(latest, encoding="utf-8") as f:
+            with Path.open(latest, encoding="utf-8") as f:
                 return json.load(f)
         except Exception as e:
             logger.error(f"Failed to read report {latest}: {e}")

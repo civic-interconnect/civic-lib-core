@@ -1,18 +1,20 @@
 # civic-lib-core
 
-[![Version](https://img.shields.io/badge/version-v0.9.6-blue)](https://github.com/civic-interconnect/civic-lib-core/releases)
+[![PyPI](https://img.shields.io/pypi/v/civic-lib-core.svg)](https://pypi.org/project/civic-lib-core/)
+[![Python versions](https://img.shields.io/pypi/pyversions/civic-lib-core.svg)](https://pypi.org/project/civic-lib-core/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Tests](https://github.com/civic-interconnect/civic-lib-core/actions/workflows/tests.yml/badge.svg)](https://github.com/civic-interconnect/civic-lib-core/actions/workflows/tests.yml)
+[![CI Status](https://github.com/civic-interconnect/civic-lib-core/actions/workflows/ci.yml/badge.svg)](https://github.com/civic-interconnect/civic-lib-core/actions/workflows/ci.yml)
+[![Docs](https://img.shields.io/badge/docs-mkdocs--material-blue)](https://civic-interconnect.github.io/civic-lib-core/)
 
 > Shared internal utility library for Civic Interconnect projects
 
+## Installation
 
-## Installation When Building Civic Interconnect Projects
+```shell
+uv add civic-lib-core
+```
 
-Add to the pyproject.toml:
-
-`"civic-lib-core @ git+https://github.com/civic-interconnect/civic-lib-core.git@main"`
-
+Or add to pyproject.toml dependencies.
 
 ## Development
 

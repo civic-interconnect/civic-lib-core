@@ -1,10 +1,8 @@
-"""
-civic_lib_core/report_archiver.py
+"""civic_lib_core/report_archiver.py.
 
 Archives old Civic Interconnect agent reports by renaming them with `.archived.json`.
 Used by admin and maintenance tools, not daily agents.
 
-MIT License — maintained by Civic Interconnect
 """
 
 from datetime import UTC, datetime, timedelta
@@ -19,8 +17,7 @@ logger = log_utils.logger
 
 
 def archive_old_reports(agent_dir: Path, keep_latest: bool = True) -> list[Path]:
-    """
-    Rename old .json reports to .archived.json, optionally keeping the latest.
+    """Rename old .json reports to .archived.json, optionally keeping the latest.
 
     Args:
         agent_dir (Path): Directory with report files.
@@ -41,6 +38,8 @@ def archive_old_reports(agent_dir: Path, keep_latest: bool = True) -> list[Path]
     archived = []
 
     for path in json_reports:
+        # Safer alternative if you want to preserve complex suffixes:
+        # archived_path = path.with_name(path.stem + ".archived.json")
         archived_path = path.with_suffix(".archived.json")
         try:
             path.rename(archived_path)
@@ -48,20 +47,27 @@ def archive_old_reports(agent_dir: Path, keep_latest: bool = True) -> list[Path]
             archived.append(archived_path)
         except Exception as e:
             logger.error(f"Failed to archive {path}: {e}")
+            # raise e  # Uncomment if you want failures to crash the script
 
     return archived
 
 
 def archive_reports_older_than(agent_dir: Path, days_old: int) -> list[Path]:
-    """
-    Archive reports older than a specified number of days.
+    """Archive reports older than a specified number of days.
+
+    Args:
+        agent_dir (Path): Directory with report files.
+        days_old (int): Number of days to retain. Older reports get archived.
+
+    Returns:
+        list[Path]: List of archived report file paths.
     """
     cutoff_date = datetime.now(UTC) - timedelta(days=days_old)
     archived = []
 
     for path in agent_dir.glob("*.json"):
         try:
-            date_str = path.stem  # e.g., "2024-07-17"
+            date_str = path.stem
             report_date = datetime.strptime(date_str, DATE_ONLY_FORMAT).replace(tzinfo=UTC)
             if report_date < cutoff_date:
                 archived_path = path.with_suffix(".archived.json")
@@ -72,5 +78,6 @@ def archive_reports_older_than(agent_dir: Path, days_old: int) -> list[Path]:
             logger.warning(f"Skipping non-date report file: {path.name}")
         except Exception as e:
             logger.error(f"Failed to archive {path.name}: {e}")
+            # raise e
 
     return archived

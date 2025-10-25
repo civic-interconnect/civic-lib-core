@@ -1,173 +1,112 @@
+"""civic_lib_core/version_utils.py.
+
+Version discovery utilities for Civic Interconnect projects.
+
+Supports:
+- Python projects (via importlib.metadata or pyproject.toml)
+- Non-Python projects (via VERSION file)
+- JavaScript/NodeJS projects (via package.json)
+
+This allows the Civic CLI and shared tools to work seamlessly across mixed
+technology stacks, ensuring consistent version handling even in frontend-only
+repos.
+
 """
-version_utils.py
 
-Tools for checking and reporting agent/library compatibility.
-Part of the Civic Interconnect agent framework.
-
-MIT License — maintained by Civic Interconnect
-"""
-
-import re
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as get_python_version
+import json
 from pathlib import Path
+import tomllib
 
 from civic_lib_core import fs_utils, log_utils
 
-__all__ = [
-    "bump_version",
-    "check_version",
-    "find_init_files",
-    "get_lib_version",
-    "get_version",
-    "lib_version",
-    "parse_version",
-    "update_version_in_init",
-    "update_version_string",
-]
-
+__all__ = ["get_repo_version"]
 
 logger = log_utils.logger
 
 
-def bump_version(old_version: str, new_version: str) -> int:
-    files_to_update = [
-        Path("VERSION"),
-        Path("pyproject.toml"),
-        Path("README.md"),
-    ]
-
-    updated_count = sum(
-        update_version_string(path, old_version, new_version) for path in files_to_update
-    )
-
-    # Update __version__ in all __init__.py files
-    init_files = find_init_files(Path("."))
-    for path in init_files:
-        if update_version_in_init(path, new_version):
-            updated_count += 1
-
-    return updated_count
-
-
-def check_version(agent_version: str, lib_version: str, strict: bool = False) -> bool:
-    """
-    Check compatibility of agent and lib versions using SemVer rules.
-
-    Args:
-        agent_version (str): Version string for the agent.
-        lib_version (str): Version string for the shared library.
-        strict (bool): If True, requires exact version match.
-
-    Returns:
-        bool: True if compatible, False otherwise.
-    """
+def get_version_from_python_metadata(package_name: str) -> str | None:
+    """Try reading the version from installed Python package metadata."""
     try:
-        agent_major, agent_minor, agent_patch = parse_version(agent_version)
-        lib_major, lib_minor, lib_patch = parse_version(lib_version)
-    except ValueError as e:
-        logger.warning(str(e))
-        return False
-
-    if strict:
-        if (agent_major, agent_minor, agent_patch) != (lib_major, lib_minor, lib_patch):
-            logger.warning(f"Strict version mismatch: agent={agent_version}, lib={lib_version}")
-            return False
-        return True
-
-    if agent_major != lib_major:
-        logger.warning(f"Major version mismatch: agent={agent_version}, lib={lib_version}")
-        return False
-
-    return True
-
-
-def find_init_files(root_dir: Path) -> list[Path]:
-    """
-    Recursively find all __init__.py files under the given directory.
-    """
-    return list(root_dir.rglob("__init__.py"))
-
-
-def get_lib_version() -> str:
-    """
-    Get the current library version.
-
-    Returns:
-        str: The semantic version string (e.g., "1.2.3").
-    """
-    try:
-        # Try to read from VERSION file first
-        version_file = fs_utils.get_project_root() / "VERSION"
-        if version_file.exists():
-            return version_file.read_text(encoding="utf-8").strip()
-
-        # Fallback to reading from __init__.py
-        init_file = Path(__file__).parent / "__init__.py"
-        if init_file.exists():
-            content = init_file.read_text(encoding="utf-8")
-            match = re.search(r'__version__\s*=\s*["\']([^"\']+)["\']', content)
-            if match:
-                return match.group(1)
-
-        logger.warning("Could not determine library version")
-        return "0.0.0"
-
+        version_str = get_python_version(package_name)
+        logger.info(f"Version found via Python metadata: {version_str}")
+        return version_str
+    except PackageNotFoundError:
+        logger.debug(f"Package {package_name} not installed.")
     except Exception as e:
-        logger.warning(f"Error reading library version: {e}")
-        return "0.0.0"
+        logger.warning(f"Unexpected error reading Python version metadata: {e}")
+    return None
 
 
-def get_version() -> str:
-    """Convenience alias for get_lib_version()."""
-    return get_lib_version()
+def get_version_from_files(root: Path) -> str | None:
+    """Check pyproject.toml, VERSION, or package.json for the project version."""
+    pyproject = root / "pyproject.toml"
+    if pyproject.exists():
+        try:
+            with pyproject.open("rb") as f:
+                data = tomllib.load(f)
+            version_str = data.get("project", {}).get("version")
+            if version_str:
+                logger.info(f"Version found in pyproject.toml: {version_str}")
+                return version_str
+        except Exception as e:
+            logger.warning(f"Error parsing pyproject.toml: {e}")
+
+    version_file = root / "VERSION"
+    if version_file.exists():
+        try:
+            version_str = version_file.read_text(encoding="utf-8").strip()
+            if version_str:
+                logger.info(f"Version found in VERSION file: {version_str}")
+                return version_str
+        except Exception as e:
+            logger.warning(f"Error reading VERSION file: {e}")
+
+    package_json = root / "package.json"
+    if package_json.exists():
+        try:
+            data = json.loads(package_json.read_text(encoding="utf-8"))
+            version_str = data.get("version")
+            if version_str:
+                logger.info(f"Version found in package.json: {version_str}")
+                return version_str
+        except Exception as e:
+            logger.warning(f"Error reading package.json: {e}")
+
+    return None
 
 
-def lib_version() -> str:
-    """Convenience alias for get_lib_version()."""
-    return get_lib_version()
+def get_repo_version(
+    package_name: str = "civic-lib-core",
+    root_dir: Path | None = None,
+) -> str:
+    """Retrieve the project version from various sources.
 
-
-def parse_version(version: str) -> tuple[int, int, int]:
-    """
-    Parse a version string into a tuple of integers.
-
-    Args:
-        version (str): A semantic version string, e.g., "1.2.3".
+    1. Python metadata (if package installed)
+    2. pyproject.toml
+    3. VERSION file
+    4. package.json.
 
     Returns:
-        tuple[int, int, int]: A tuple of (major, minor, patch) version numbers.
-
-    Raises:
-        ValueError: If the version string is not in the expected format.
+        str: The discovered version string, or "0.0.0" if none found.
     """
-    match = re.match(r"(\d+)\.(\d+)\.(\d+)", version)
-    if not match:
-        raise ValueError(f"Invalid version format: {version}")
-    major, minor, patch = match.groups()
-    return int(major), int(minor), int(patch)
+    # 1. Check Python metadata
+    version_str = get_version_from_python_metadata(package_name)
+    if version_str:
+        return version_str
 
+    # 2. Determine root
+    try:
+        root = root_dir or fs_utils.get_project_root()
+    except Exception as e:
+        logger.warning(f"Could not detect project root. Defaulting to cwd. Error: {e}")
+        root = Path.cwd()
 
-def update_version_in_init(path: Path, new_version: str) -> bool:
-    """
-    Update __version__ assignment in a given __init__.py file.
-    Only works for simple string assignment: __version__ = "..."
-    """
-    content = path.read_text(encoding="utf-8")
-    pattern = re.compile(r'(__version__\s*=\s*["\'])([\d.]+)(["\'])')
-    updated_content, count = pattern.subn(rf"\1{new_version}\3", content)
+    # 3. Check files in root
+    version_str = get_version_from_files(root)
+    if version_str:
+        return version_str
 
-    if count > 0:
-        path.write_text(updated_content, encoding="utf-8")
-        logger.info(f"Updated __version__ in {path}")
-        return True
-    return False
-
-
-def update_version_string(path: Path, old: str, new: str) -> bool:
-    if not path.exists():
-        return False
-    content = path.read_text(encoding="utf-8")
-    updated = content.replace(old, new)
-    if content != updated:
-        path.write_text(updated, encoding="utf-8")
-        return True
-    return False
+    logger.info("No version found in repo. Defaulting to 0.0.0")
+    return "0.0.0"

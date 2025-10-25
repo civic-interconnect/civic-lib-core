@@ -2,8 +2,8 @@
 Test cases for civic-lib-core.config_utils module.
 """
 
-import tempfile
 from pathlib import Path
+import tempfile
 
 import pytest
 import yaml

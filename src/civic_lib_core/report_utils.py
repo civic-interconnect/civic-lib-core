@@ -1,10 +1,8 @@
-"""
-civic_lib_core/report_utils.py
+"""civic_lib_core/report_utils.py.
 
 Basic helpers for working with Civic Interconnect reports.
 Part of the Civic Interconnect agent framework.
 
-MIT License — maintained by Civic Interconnect
 """
 
 import datetime
@@ -14,8 +12,7 @@ __all__ = ["get_agent_name_from_path", "is_report_file"]
 
 
 def get_agent_name_from_path(path: Path) -> str:
-    """
-    Extract and format the agent name from a report file path.
+    """Extract and format the agent name from a report file path.
 
     The agent name is derived from the parent folder of the report file,
     with underscores replaced by spaces and title-cased.
@@ -28,16 +25,12 @@ def get_agent_name_from_path(path: Path) -> str:
     Returns:
         str: Formatted agent name or fallback string.
     """
-    try:
-        name = path.parent.name
-        return name.replace("_", " ").title() if name else "Unknown Agent"
-    except Exception:
-        return "Unknown Agent"
+    name = path.parent.name
+    return name.replace("_", " ").title() if name else "Unknown Agent"
 
 
 def is_report_file(path: Path) -> bool:
-    """
-    Determine whether the given file path is a valid report file.
+    """Determine whether the given file path is a valid report file.
 
     A valid report file must:
     - Have a ".json" extension

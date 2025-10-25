@@ -1,11 +1,10 @@
-"""
-civic_lib_core/project_policy.py
+"""civic_lib_core/project_policy.py.
 
 Load the project policy for any Civic Interconnect client repo.
 
-MIT License — maintained by Civic Interconnect
 """
 
+import logging
 from pathlib import Path
 from typing import Any
 
@@ -13,13 +12,22 @@ import yaml
 
 __all__ = ["load_project_policy"]
 
+logger = logging.getLogger(__name__)
+
 DEFAULT_POLICY_PATH = Path(__file__).parent / "project_policy.yaml"
 
 
 def _deep_merge_dicts(dict1: dict[str, Any], dict2: dict[str, Any]) -> dict[str, Any]:
-    """
-    Recursively merges dict2 into dict1.
+    """Recursively merge dict2 into dict1.
+
     Values from dict2 overwrite values from dict1.
+
+    Args:
+        dict1: The base dictionary.
+        dict2: The dictionary to merge into dict1.
+
+    Returns:
+        dict: A merged dictionary.
     """
     merged_dict = dict1.copy()
     for key, value in dict2.items():
@@ -30,58 +38,58 @@ def _deep_merge_dicts(dict1: dict[str, Any], dict2: dict[str, Any]) -> dict[str,
     return merged_dict
 
 
-def load_project_policy(project_root: Path | None = None) -> dict:
-    """
-    Load Civic Interconnect project policy, allowing client repos to
-    optionally override default settings via a custom policy file.
+def load_project_policy(
+    project_root: Path | None = None,
+    override_file: Path | None = None,
+) -> dict[str, Any]:
+    """Load Civic Interconnect project policy.
 
-    The default policy is loaded from the library's internal `project_policy.yaml`.
-    If `project_root` is provided and a `project_policy.yaml` exists within it,
-    this custom policy will be loaded and its values will be recursively
-    merged into the default policy, overriding any conflicting keys.
+    Behavior:
+    - Load defaults from civic_lib_core's bundled `project_policy.yaml`.
+    - If a client repo defines its own `project_policy.yaml`, merge its
+      overrides into the default policy.
 
     Args:
-        project_root (Path | None): If provided, looks for `project_policy.yaml`
-                                     in this root directory to apply custom overrides.
+        project_root: Optional project root to look for client `project_policy.yaml`.
+        override_file: Optional path to explicitly provide a custom policy file.
 
     Returns:
-        dict: The combined policy data, with custom settings merged over defaults.
+        dict: Combined policy dictionary.
     """
-    # 1. Load the default policy from the library
+    # Load default policy
     try:
-        with open(DEFAULT_POLICY_PATH, encoding="utf-8") as f:
-            policy_data = yaml.safe_load(f) or {}  # Ensure it's a dict even if file is empty
+        with DEFAULT_POLICY_PATH.open(encoding="utf-8") as f:
+            policy_data = yaml.safe_load(f) or {}
     except FileNotFoundError:
-        policy_data = {}  # Start with empty if default is missing (though it shouldn't be)
-        # Consider logging a warning here if default is missing
-        print(f"Warning: Default policy file not found at {DEFAULT_POLICY_PATH}")
-    except yaml.YAMLError as e:
+        logger.warning(f"Default policy file not found at {DEFAULT_POLICY_PATH}")
         policy_data = {}
-        print(f"Error loading default policy from {DEFAULT_POLICY_PATH}: {e}")
-        # Re-raise or handle as appropriate for your error policy
+    except yaml.YAMLError as e:
+        logger.error(f"Failed to parse default policy file at {DEFAULT_POLICY_PATH}: {e}")
         raise
 
-    # 2. Check for and load a custom policy from the project root
-    if project_root:
-        custom_policy_path = project_root / "project_policy.yaml"
-        if custom_policy_path.exists():
-            try:
-                with open(custom_policy_path, encoding="utf-8") as f:
-                    custom_data = yaml.safe_load(f) or {}
-                # 3. Merge custom policy into the default policy
-                policy_data = _deep_merge_dicts(policy_data, custom_data)
-                # Add a special key to indicate which policy file was used
-                policy_data["__policy_path__"] = str(custom_policy_path)
-            except FileNotFoundError:
-                # Should not happen given custom_policy_path.exists() check
-                pass
-            except yaml.YAMLError as e:
-                print(f"Error loading custom policy from {custom_policy_path}: {e}")
-                # Log a warning or error, but continue with default policy
-                # Or re-raise if custom policy is critical and must be valid
-                raise  # Re-raising might be appropriate if custom policy is malformed
+    # Load client-specific override if provided
+    custom_policy_path = None
 
-    # If no custom policy was loaded or merged, and the default was used, set its path
+    if override_file:
+        custom_policy_path = Path(override_file)
+    elif project_root:
+        custom_policy_path = Path(project_root) / "project_policy.yaml"
+
+    if custom_policy_path and custom_policy_path.exists():
+        try:
+            with custom_policy_path.open(encoding="utf-8") as f:
+                custom_data = yaml.safe_load(f) or {}
+
+            policy_data = _deep_merge_dicts(policy_data, custom_data)
+            policy_data["__policy_path__"] = str(custom_policy_path)
+
+            logger.debug(f"Loaded custom policy from {custom_policy_path}")
+
+        except yaml.YAMLError as e:
+            logger.error(f"Failed to parse custom policy at {custom_policy_path}: {e}")
+            raise
+
+    # Indicate the policy file used
     if "__policy_path__" not in policy_data:
         policy_data["__policy_path__"] = str(DEFAULT_POLICY_PATH)
 

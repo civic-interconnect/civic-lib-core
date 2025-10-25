@@ -1,9 +1,6 @@
-"""
-civic_lib_core/project_layout.py
+"""civic_lib_core/project_layout.py.
 
 Discover and verify basic project layout for any Civic Interconnect client repo.
-
-MIT License — maintained by Civic Interconnect
 """
 
 from pathlib import Path
@@ -20,58 +17,53 @@ __all__ = [
 
 
 class ProjectLayout(NamedTuple):
-    """
-    Represents the layout of a project, including key directories and metadata.
+    """Represents the layout of a Civic Interconnect project.
 
     Attributes:
-        project_root (Path): The root directory of the project.
-        src_dir (Path | None): The source directory containing the main code, or None if not applicable.
-        packages (list[Path]): A list of paths to package directories within the project.
-        api_markdown_src_dir (Path): The directory containing API documentation *source* Markdown files
-                                      (e.g., project_root/mkdocs_src/api).
-        org_name (str | None): The name of the organization, or None if not specified.
-        policy (dict): A dictionary containing project policy information.
+        project_root (Path): Root directory of the project.
+        src_dir (Path | None): Source directory, or None if not found.
+        docs_dir (Path | None): Documentation directory, or None if not found.
+        docs_api_dir (Path | None): API documentation source directory, or None if not found.
+        packages (list[Path]): List of package directories under src_dir.
+        org_name (str | None): Organization name, if detected.
+        policy (dict): Loaded project policy data.
     """
 
     project_root: Path
     src_dir: Path | None
+    docs_dir: Path | None
+    docs_api_dir: Path | None
     packages: list[Path]
-    api_markdown_src_dir: Path
     org_name: str | None
     policy: dict
 
 
 def discover_project_layout() -> ProjectLayout:
-    """
-    Return key layout paths for the current Civic Interconnect project.
+    """Discover and return the layout of the current Civic Interconnect project.
 
-    This function delegates the primary discovery to `fs_utils.discover_project_layout()`
-    which is responsible for finding all necessary paths and loading the policy,
-    then returns the structured ProjectLayout object.
+    Delegates to `fs_utils.discover_project_layout()` to perform actual discovery.
 
     Returns:
-        ProjectLayout: Structured layout information.
+        ProjectLayout: Populated project layout info.
     """
-    layout = fs_utils.discover_project_layout()
-    return layout
+    return fs_utils.discover_project_layout()
 
 
 def format_layout(layout: ProjectLayout) -> str:
-    """
-    Format layout info for display.
+    """Format the layout info for display.
 
     Args:
-        layout (ProjectLayout): The layout info to print.
+        layout (ProjectLayout): The layout info to format.
 
     Returns:
-        str: A formatted string for display.
+        str: Formatted layout details.
     """
     parts = [
-        f"Project Root:      {layout.project_root}",
-        f"Org Name:          {layout.org_name or 'unknown'}",
-        f"Source Directory:  {layout.src_dir or 'none'}",
-        f"API Docs Source Dir: {layout.api_markdown_src_dir}",
-        f"Policy file:       {layout.policy.get('__policy_path__', 'unknown')}",
+        f"Org:      {layout.org_name or 'unknown'}",
+        f"Root:     {layout.project_root}",
+        f"API Docs: {layout.docs_api_dir or 'none'}",
+        f"Source:   {layout.src_dir or 'none'}",
+        f"Policy:   {layout.policy.get('__policy_path__', 'unknown')}",
         "Packages:",
         *(
             [f"  - {p.relative_to(layout.project_root)}" for p in layout.packages]
@@ -82,16 +74,15 @@ def format_layout(layout: ProjectLayout) -> str:
 
 
 def verify_layout(layout: ProjectLayout) -> list[str]:
-    """
-    Verify layout assumptions for a Civic Interconnect repo.
+    """Verify that the discovered layout satisfies expectations.
 
     Args:
-        layout (ProjectLayout): The discovered layout.
+        layout (ProjectLayout): The layout to check.
 
     Returns:
-        list[str]: Any problems detected (empty list means all OK).
+        list[str]: List of issues found (empty list means all OK).
     """
-    errors = []
+    errors: list[str] = []
 
     if not layout.project_root.exists():
         errors.append(f"Project root not found: {layout.project_root}")
@@ -103,36 +94,21 @@ def verify_layout(layout: ProjectLayout) -> list[str]:
             errors.append(f"Missing source directory: {layout.src_dir}")
         elif not layout.src_dir.is_dir():
             errors.append(f"Source directory is not a directory: {layout.src_dir}")
-        elif not layout.packages:  # Check packages only if src_dir exists and is a directory
+        elif not layout.packages:
             errors.append(f"No Python packages found under: {layout.src_dir}")
-    else:
-        pass
 
-    if not layout.api_markdown_src_dir.exists():
-        errors.append(f"Missing API docs source directory: {layout.api_markdown_src_dir}")
-    elif not layout.api_markdown_src_dir.is_dir():
-        errors.append(
-            f"API docs source directory is not a directory: {layout.api_markdown_src_dir}"
-        )
+    if layout.docs_api_dir:
+        if not layout.docs_api_dir.exists():
+            errors.append(f"Missing API docs source directory: {layout.docs_api_dir}")
+        elif not layout.docs_api_dir.is_dir():
+            errors.append(f"API docs source directory is not a directory: {layout.docs_api_dir}")
 
-    return get_errors(layout, errors)
-
-
-def get_errors(layout, errors):
-    policy_errors = []
-    required_files = layout.policy.get("required_files", [])
-    for f in required_files:
-        if not (layout.project_root / f).exists():
-            policy_errors.append(f"Required project file missing: {f}")
-    if policy_errors:
-        errors.append("Project policy violations:")
-        errors.extend([f"  - {e}" for e in policy_errors])
     return errors
 
 
 def main() -> None:
-    """
-    Standalone entry point for testing this layout module.
+    """Standalone entry point for manual testing of this layout module.
+
     Prints layout and any issues found.
     """
     import sys

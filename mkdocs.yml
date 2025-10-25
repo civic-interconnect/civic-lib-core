@@ -1,54 +1,65 @@
-site_name: civic-lib-core Documentation
-site_description: Documentation for civic-lib-core
-docs_dir: mkdocs_src
-site_dir: docs
+# mkdocs.yml
+# Configuration file for MkDocs (Automated project documentation generator)
+
+site_name: Civic Lib Core
+site_url: https://civic-interconnect.github.io/civic-lib-core/
+repo_url: https://github.com/civic-interconnect/civic-lib-core
+site_description: Core library for Civic Interconnect projects.
+site_author: Civic Interconnect
+docs_dir: docs
+site_dir: site
+
 theme:
   name: material
-  palette:
-  - scheme: default
-    primary: indigo
-    accent: indigo
   features:
-  - navigation.expand
-nav:
-- Home: index.md
-- API Reference:
-  - Bump Version: api/bump_version.md
-  - Cli.Cli: api/cli.cli.md
-  - Cli: api/cli.md
-  - Config Utils: api/config_utils.md
-  - Date Utils: api/date_utils.md
-  - Dev Utils: api/dev_utils.md
-  - Docs Api Build: api/docs_api_build.md
-  - Docs Api Config: api/docs_api_config.md
-  - Docs Api Extract: api/docs_api_extract.md
-  - Docs Api Render: api/docs_api_render.md
-  - Fs Utils: api/fs_utils.md
-  - Graphql Utils: api/graphql_utils.md
-  - Install Deps: api/install_deps.md
-  - Layout: api/layout.md
-  - Log Utils: api/log_utils.md
-  - Prep Code: api/prep_code.md
-  - Project Checks: api/project_checks.md
-  - Project Layout: api/project_layout.md
-  - Project Policy: api/project_policy.md
-  - Publish Api: api/publish_api.md
-  - Query Utils: api/query_utils.md
-  - Release: api/release.md
-  - Report Archiver: api/report_archiver.md
-  - Report Constants: api/report_constants.md
-  - Report Formatter: api/report_formatter.md
-  - Report Indexer: api/report_indexer.md
-  - Report Reader: api/report_reader.md
-  - Report Summary: api/report_summary.md
-  - Report Utils: api/report_utils.md
-  - Report Writer: api/report_writer.md
-  - Schema Utils: api/schema_utils.md
-  - Version Utils: api/version_utils.md
-  - Yaml Utils: api/yaml_utils.md
+    - navigation.expand
+    - navigation.sections # Group navigation items
+    - navigation.top # Back-to-top button
+    - search.suggest # Search suggestions as you type
+    - search.highlight # Highlight search terms
+    - content.code.copy # Copy button on code blocks
+    - toc.follow # Highlight current section in TOC
+
+  palette:
+    - scheme: default # Light/dark mode toggle
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
 plugins:
-- search
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            show_root_heading: true # Include module names
+            show_root_toc_entry: true # Include module in TOC
+            docstring_style: google # Professional docstring format
+            show_signature_annotations: true
+            separate_signature: true    # Makes function signatures easier to read
+
 markdown_extensions:
-- toc
-- codehilite
-- admonition
+  - admonition # Note/Warning/Tip boxes
+  - codehilite # Syntax highlighting
+  - tables # Markdown tables
+  - toc:
+      permalink: true # Clickable headers
+      toc_depth: 3
+  - pymdownx.superfences # Code blocks with syntax highlighting
+  - pymdownx.details # Collapsible sections
+
+nav:
+  - User Guide:
+      - Home: index.md
+      - CLI: cli.md
+  - Developer Guide:
+      - API: api.md

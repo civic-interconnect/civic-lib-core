@@ -1,13 +1,12 @@
-"""
-civic_lib_core/report_summary.py
+"""civic_lib_core/report_summary.py.
 
 Generates human-readable Markdown summaries of Civic Interconnect agent reports.
 Used optionally by agents or admin tools alongside JSON output.
 
-MIT License — maintained by Civic Interconnect
 """
 
 from pathlib import Path
+from typing import Any
 
 from civic_lib_core import log_utils
 
@@ -16,9 +15,8 @@ __all__ = ["write_markdown_summary"]
 logger = log_utils.logger
 
 
-def write_markdown_summary(report: dict, path: Path) -> None:
-    """
-    Write a Markdown summary of a report's key metadata.
+def write_markdown_summary(report: dict[str, Any], path: Path) -> None:
+    """Write a Markdown summary of a report's key metadata.
 
     Args:
         report (dict): The report data (already parsed).
@@ -33,6 +31,9 @@ def write_markdown_summary(report: dict, path: Path) -> None:
         "",
         "Auto-generated summary. Data is available in the JSON report.",
     ]
+
+    # Ensure output folder exists
+    path.parent.mkdir(parents=True, exist_ok=True)
 
     path.write_text("\n".join(lines), encoding="utf-8")
     logger.info(f"Markdown summary written to {path}")

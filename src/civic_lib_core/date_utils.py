@@ -1,5 +1,4 @@
-"""
-civic_lib_core/date_utils.py
+"""civic_lib_core/date_utils.py.
 
 Date and time utilities for Civic Interconnect projects.
 
@@ -33,11 +32,11 @@ __all__ = [
 
 
 def date_range(days_back: int) -> list[str]:
-    """
-    Generate a list of date strings from `days_back` days ago up to today (UTC).
+    """Generate a list of date strings from `days_back` days ago up to today (UTC).
 
     Args:
         days_back (int): Number of days to include, ending with today (inclusive).
+                         For example, days_back=7 returns 7 dates.
 
     Returns:
         list[str]: List of UTC dates in 'YYYY-MM-DD' format, earliest to latest.
@@ -47,14 +46,17 @@ def date_range(days_back: int) -> list[str]:
     """
     if days_back < 0:
         raise ValueError("days_back must be non-negative")
+
+    if days_back == 0:
+        return []
+
     today = now_utc().date()
     start_date = today - timedelta(days=days_back - 1)
     return [(start_date + timedelta(days=i)).strftime("%Y-%m-%d") for i in range(days_back)]
 
 
 def now_utc() -> datetime:
-    """
-    Return the current UTC datetime object.
+    """Return the current UTC datetime object.
 
     Returns:
         datetime: Current UTC datetime.
@@ -63,8 +65,7 @@ def now_utc() -> datetime:
 
 
 def now_utc_str(fmt: str = "%Y-%m-%d %H:%M:%S UTC") -> str:
-    """
-    Return the current time in UTC as a formatted string.
+    """Return the current time in UTC as a formatted string.
 
     Args:
         fmt (str): Format string for datetime output. Default includes 'UTC'.
@@ -76,8 +77,7 @@ def now_utc_str(fmt: str = "%Y-%m-%d %H:%M:%S UTC") -> str:
 
 
 def today_utc_str() -> str:
-    """
-    Return today's date in UTC in 'YYYY-MM-DD' format.
+    """Return today's date in UTC in 'YYYY-MM-DD' format.
 
     Returns:
         str: Current UTC date as a string.
