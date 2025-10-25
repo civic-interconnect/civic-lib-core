@@ -101,7 +101,7 @@ jobs:
 
       - name: C3) Upload Reports
         if: steps.test.outputs.has_coverage == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: coverage-reports-${{ matrix.python-version }}
           path: |
