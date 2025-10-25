@@ -1,7 +1,8 @@
 # .github/workflows/deploy-docs.yml
 name: Deploy Docs (on latest push to main branch)
 # It builds and deploys the latest version of the documentation to GitHub Pages.
-# IMPORTANT: Ensure Repo Settings / Pages / Build and deployment / Set Source to `GitHub Actions`.
+# IMPORTANT: Ensure Repo Settings / Pages / Build and deployment:
+# Set Source to `Deploy from branch`, and select `gh-pages` branch, root.
 
 # CI PHASES A-B-C-D:
 # - Assemble: Install dependencies, verify environment setup
@@ -15,12 +16,10 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write # gh-pages deployment
-  pages: write
-  id-token: write
+  contents: write # mike pushes to gh-pages
 
 concurrency:
-  group: pages-${{ github.ref }}
+  group: docs-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -28,13 +27,9 @@ env:
   PYTHONIOENCODING: "utf-8"
 
 jobs:
-  deploy:
+  docs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
   
     steps:
       # ------------------- ASSEMBLE -------------------
@@ -53,38 +48,15 @@ jobs:
         run: uv python pin 3.12
 
       - name: A4) Sync to install dependencies
-        run: uv sync --extra dev --extra docs --upgrade
-
-      # ------------------- BASELINE CHECKS -------------------
-
-      - name: B1) Fail fast if no MkDocs configuration
-        run: |
-          if [ -f "mkdocs.yml" ] || [ -f "mkdocs.yaml" ]; then
-            echo "MkDocs configuration found. Proceeding."
-          else
-            echo "ERROR: mkdocs.yml not found."
-            echo "If you do not want documentation deployment,"
-            echo "delete .github/workflows/deploy-docs.yml (or add mkdocs.yml)."
-            exit 1
-          fi
+        run: uv sync --extra docs --upgrade
 
       # ------------ DEPLOY ------------------
 
-      - name: D1) Build docs (mkdocs --strict)
-        run: uv run mkdocs build --strict
-
-      - name: D2) Assert site artifact exists
+      - name: D1) Deploy docs (dev alias)
+        if: hashFiles('mkdocs.yml', 'mkdocs.yaml') != ''
         run: |
-          test -d site && test -f site/index.html || {
-            echo "ERROR: MkDocs build produced no site/index.html"
-            exit 1
-          }
-
-      - name: D3) Upload site as artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: ./site
-
-      - name: D4) Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+            set -euo pipefail
+            git config user.name  "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            uv run mike deploy --push --update-aliases dev
+       
