@@ -36,6 +36,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [  # Add all to deptry ignores
   "build",
+  "defusedxml",
   "pre-commit",
   "pytest",
   "pytest-asyncio",
@@ -117,6 +118,7 @@ package_module_name_map = {PyYAML = "yaml"  }
 DEP002 = [
   # Dev dependencies
   "build",
+  "defusedxml",
   "pre-commit",
   "pytest",
   "pytest-asyncio",
@@ -138,11 +140,6 @@ DEP002 = [
   "requests",  # If not actually used in code
   "rich",      # Used by typer for CLI output
 ]
-
-[tool.pdoc]
-docformat = "google"
-modules = ["civic_lib_core"]
-output_dir = "docs/api"
 
 [tool.pyright]
 executionEnvironments = [
