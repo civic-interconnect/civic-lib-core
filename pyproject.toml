@@ -56,6 +56,7 @@ docs = [  # Add all to deptry ignores
   "mkdocstrings[python]>=0.18",
   "mike",
   "pdoc",
+  "ruff", # required for mkdocstrings
 ]
 
 [project.urls]
@@ -125,6 +126,7 @@ DEP002 = [
   "pytest-cov",
   "pytest-env",
   "twine",
+  "validate-pyproject",
   # Docs dependencies
   "mike",
   "mkdocs",
@@ -134,8 +136,9 @@ DEP002 = [
   "mkdocs-literate-nav",
   "mkdocs-material",
   "mkdocs-static-i18n",
-  "mkdocstrings",  # Fixed: removed [python]>=0.18
+  "mkdocstrings",  
   "pdoc",
+  "ruff",
   # Main dependencies that might not be directly imported
   "requests",  # If not actually used in code
   "rich",      # Used by typer for CLI output
@@ -165,7 +168,7 @@ addopts = [
   "--cov-report=term-missing",  # term-missing:skip-covered is typical
   "--cov-report=xml:coverage.xml",  # output coverage in XML format
   "--cov-report=html:htmlcov",  # output coverage in HTML format
-  "--cov-fail-under=20",  # reasonable for core library
+  "--cov-fail-under=25",  # reasonable for core library
   "-v",  # verbose output
   "--tb=short",  # short traceback format
 ]
@@ -223,6 +226,7 @@ force-sort-within-sections = true
 [tool.ruff.lint.per-file-ignores]
 "src/**/__init__.py" = ["D104", "F401"]  # F401 for re-exports
 "tests/**/*.py" = ["TID251", "TID252", "S101", "D", "PLR2004"]  # PLR2004 for magic values
+"src/**/_version.py" = ["ALL"] 
 
 [tool.setuptools]
 include-package-data = true
@@ -237,7 +241,7 @@ namespaces = true
 where = ["src"]
 
 [tool.setuptools_scm]
-fallback_version = "0.9.6"
-local_scheme = "dirty-tag"
+fallback_version = "0.0.1"
+local_scheme = "no-local-version"
 version_file = "src/civic_lib_core/_version.py"
 version_scheme = "guess-next-dev"

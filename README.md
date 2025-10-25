@@ -6,7 +6,7 @@
 [![CI Status](https://github.com/civic-interconnect/civic-lib-core/actions/workflows/ci.yml/badge.svg)](https://github.com/civic-interconnect/civic-lib-core/actions/workflows/ci.yml)
 [![Docs](https://img.shields.io/badge/docs-mkdocs--material-blue)](https://civic-interconnect.github.io/civic-lib-core/)
 
-> Shared internal utility library for Civic Interconnect projects
+> Shared internal utility library for [Civic Interconnect](https://github.com/civic-interconnect) projects
 
 ## Installation
 
