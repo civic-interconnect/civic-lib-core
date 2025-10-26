@@ -9,6 +9,10 @@ site_author: Civic Interconnect
 docs_dir: docs
 site_dir: site
 
+extra:
+  version:
+    provider: mike
+
 theme:
   name: material
   features:
