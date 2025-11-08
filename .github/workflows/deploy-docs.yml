@@ -1,8 +1,9 @@
 # .github/workflows/deploy-docs.yml
 name: Deploy Docs (on latest push to main branch)
 # It builds and deploys the latest version of the documentation to GitHub Pages.
-# IMPORTANT: Ensure Repo Settings / Pages / Build and deployment:
-# Set Source to `Deploy from branch`, and select `gh-pages` branch, root.
+# IMPORTANT: Ensure Repo Settings / Pages / Build and deployment / Set Source to `Deploy from a branch`,
+# and set Branch = `gh-pages`, Folder = `/`.
+# Note: mike manages dev/ and versioned docs on gh-pages branch.
 
 # CI PHASES A-B-C-D:
 # - Assemble: Install dependencies, verify environment setup
@@ -16,7 +17,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write # mike pushes to gh-pages
+  contents: write # required for pushing to gh-pages via mike
 
 concurrency:
   group: docs-${{ github.ref }}
@@ -28,35 +29,76 @@ env:
 
 jobs:
   docs:
+    if: github.repository == 'civic-interconnect/civic-lib-core'
     runs-on: ubuntu-latest
     timeout-minutes: 30
   
     steps:
       # ------------------- ASSEMBLE -------------------
 
-      - name: A1) Checkout
+      - name: A1) Checkout (with tag history)
         uses: actions/checkout@v5
         with:
           fetch-depth: 0 # Full history for tags
 
-      - name: A2) Install uv
+      - name: A2) Prepare gh-pages branch (create if missing)
+        run: |
+          if git ls-remote --exit-code origin gh-pages; then
+            echo "Existing gh-pages branch found. Fetching..."
+            git fetch origin gh-pages:gh-pages
+          else
+            echo "No gh-pages branch yet. Skipping fetch; mike will create it."
+            git checkout --orphan gh-pages || true
+            git reset --hard
+            git checkout main
+          fi
+
+      - name: A3) Install uv (with caching)
         uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
 
-      - name: A3) Pin Python version for consistency
+      - name: A4) Pin Python version for consistency
         run: uv python pin 3.12
 
-      - name: A4) Sync to install dependencies
-        run: uv sync --extra docs --upgrade
-
-      # ------------ DEPLOY ------------------
-
-      - name: D1) Deploy docs (dev alias)
-        if: hashFiles('mkdocs.yml', 'mkdocs.yaml') != ''
+      - name: A5) Display versions
         run: |
-            set -euo pipefail
-            git config user.name  "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            uv run mike deploy --push --update-aliases dev
-       
+          python --version
+          uv --version
+          uv pip list | head -n 50
+
+      - name: A6) Sync to install dependencies
+        run: uv sync --extra dev --extra docs --upgrade
+
+      # ------------------- BASELINE CHECKS -------------------
+
+      - name: B1) Fail fast if no MkDocs configuration
+        run: |
+          if [ -f "mkdocs.yml" ] || [ -f "mkdocs.yaml" ]; then
+            echo "MkDocs configuration found. Proceeding."
+          else
+            echo "ERROR: mkdocs.yml not found."
+            echo "If you do not want documentation deployment,"
+            echo "delete .github/workflows/deploy-docs.yml (or add mkdocs.yml)."
+            exit 1
+          fi
+
+      # ------------------- DEPLOY (BUILD, RELEASE, DOCS) -------------------
+
+      - name: D1) Build docs (mkdocs --strict)
+        run: uv run mkdocs build --strict
+
+      - name: D2) Configure git author for gh-pages pushes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: D3) Deploy dev channel with mike (keeps other versions)
+        run: |
+          # Publish the dev docs to gh-pages under /dev/
+          uv run mike deploy --push --update-aliases dev
+          # Do not set default here; release workflow will set 'latest' as default.
+
+      - name: D4) Make 'dev' the site default at root (/)
+        run: |
+          uv run mike set-default --push dev

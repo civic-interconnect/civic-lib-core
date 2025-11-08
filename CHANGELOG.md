@@ -14,6 +14,14 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 
 ---
 
+## [0.9.11] - 2025-11-08
+
+### Changed
+- add date_utils.now_utc_str_for_schemas()
+- updated pyproject.toml
+
+---
+
 ## [0.9.10] - 2025-10-26
 
 ### Changed

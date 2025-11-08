@@ -14,9 +14,15 @@ permissions:
   contents: write   # create the GitHub Release
   id-token: write   # PyPI Trusted Publishing (OIDC)
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-release:
+    if: github.repository == 'civic-interconnect/civic-lib-core'
     runs-on: ubuntu-latest
+    environment: pypi
     timeout-minutes: 30
 
     steps:
@@ -45,28 +51,58 @@ jobs:
         run: |
             uv sync --extra dev --extra docs --upgrade
 
+      # ------------------- BASELINE / TESTS -------------------
+
+      - name: B1) Validate pyproject
+        run: uvx validate-pyproject
+
+      - name: B2) Ruff lint (check only)
+        run: uvx ruff check .
+
+      - name: B3) Pyright (type check)
+        run: uv run pyright
+
+      - name: B4) Deptry (dependency check)
+        run: uvx deptry .
+
       # ------------------- COVERAGE (TESTING) -------------------
 
       - name: C1) Run tests (pytest; coverage per pytest.ini)
         run: uv run pytest -q
 
-      # ------------ DEPLOY (SANITY CHECKS, VERIFY BUILDS) -------------------
+      # ------------ DEPLOY  (BUILD, RELEASE, DOCS) -------------------
 
-      - name: D0) Extract plain version from tag (no leading 'v')
+      - name: D1) Extract plain version from tag (no leading 'v')
         id: ver
         shell: bash
         run: echo "plain=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
-      - name: D1) Build sdist + wheel
+      - name: D2) Build sdist + wheel
+        env:
+          SETUPTOOLS_SCM_PRETEND_VERSION: ${{ steps.ver.outputs.plain }}
         run: uv build
 
-      - name: D2) Validate built artifacts
+      - name: D3) Ensure built artifact version matches tag
+        shell: bash
+        run: |
+          set -e
+          TAG="${{ steps.ver.outputs.plain }}"
+          echo "Tag version: $TAG"
+          ls dist
+          # Check that at least one artifact embeds the same version
+          if ! ls dist/*"$TAG"*.whl dist/*"$TAG"*.tar.gz >/dev/null 2>&1; then
+            echo "ERROR: Built artifact version does not match tag $TAG"
+            exit 1
+          fi
+          echo "Artifact version matches tag."
+
+      - name: D4) Validate built artifacts
         run: uv run twine check dist/*
 
-      - name: D3) List dist artifacts
+      - name: D5) List dist artifacts
         run: ls -lah dist
 
-      - name: D4) Create GitHub Release and upload artifacts
+      - name: D6) Create GitHub Release and upload artifacts
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}   # e.g., vx.y.z
@@ -79,14 +115,14 @@ jobs:
           prerelease: false
           make_latest: true
 
-      - name: D5) Publish to PyPI
+      - name: D7) Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
 
-      - name: D6) Ensure 'latest' is not a version (self-heal)
+      - name: D8) Ensure 'latest' is not a version (self-heal)
         if: hashFiles('mkdocs.yml', 'mkdocs.yaml') != ''
         run: uv run mike delete latest --push || true
 
-      - name: D7) Deploy docs with Mike for this version and set latest
+      - name: D9) Deploy docs with Mike for this version and set latest
         if: hashFiles('mkdocs.yml', 'mkdocs.yaml') != ''
         run: |
           set -e
@@ -97,3 +133,6 @@ jobs:
           uv run mike deploy --push --update-aliases "$VERSION" latest
           uv run mike set-default --push latest
 
+      - name: D10) Show mike versions (after)
+        if: hashFiles('mkdocs.yml', 'mkdocs.yaml') != ''
+        run: uv run mike list

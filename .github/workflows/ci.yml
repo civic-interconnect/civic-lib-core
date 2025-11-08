@@ -19,12 +19,17 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 env:
   PYTHONUNBUFFERED: "1" # real-time logging
   PYTHONIOENCODING: "utf-8"
+  MPLBACKEND: Agg # headless matplotlib
 
 jobs:
   ci:
@@ -40,12 +45,12 @@ jobs:
 
       # ------------------- ASSEMBLE -------------------
 
-      - name: A1) Checkout (full history for tags)
+      - name: A1) Checkout (with tag history)
         uses: actions/checkout@v5
         with:
           fetch-depth: 0 # Full history for tags
 
-      - name: A2) Install uv
+      - name: A2) Install uv (with caching)
         uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
@@ -75,6 +80,12 @@ jobs:
       - name: B2) Ruff lint (check only)
         run: uvx ruff check .
 
+      - name: B3) Pyright (type check)
+        run: uv run pyright
+
+      - name: B4) Deptry (dependency check)
+        run: uvx deptry .
+
       # ------------------- COVERAGE (TESTING) -------------------
 
       - name: C1) Run tests (coverage only on 3.12; skip if no tests/)
@@ -95,20 +106,12 @@ jobs:
             echo "has_coverage=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: C2) Append coverage summary
-        if: steps.test.outputs.has_coverage == 'true'
-        run: uv run python .github/scripts/coverage_summary.py
-
-      - name: C3) Upload Reports
-        if: steps.test.outputs.has_coverage == 'true'
+      - name: C2) Upload coverage HTML
+        if: always() && hashFiles('htmlcov/index.html') != ''
         uses: actions/upload-artifact@v5
         with:
-          name: coverage-reports-${{ matrix.python-version }}
-          path: |
-            coverage.xml
-            htmlcov/
-          overwrite: true
-          retention-days: 7
+          name: htmlcov-${{ matrix.python-version }}
+          path: htmlcov
 
 
       # ------------ DEPLOY (SANITY CHECKS, VERIFY BUILDS) -------------------

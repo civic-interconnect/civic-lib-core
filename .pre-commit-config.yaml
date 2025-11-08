@@ -33,6 +33,9 @@ exclude: |
   )
 
 repos:
+
+  # ------------------- ALL LOCAL FIRST ---------------------
+
   - repo: local
     hooks:
       # ------------------- BASELINE CHECKS -------------------
@@ -56,9 +59,41 @@ repos:
         language: system
         types: [python]
 
+      - id: B4-deptry
+        name: B4) Deptry (dependency check)
+        entry: uvx deptry . 
+        language: system
+        pass_filenames: false
+
+      - id: B5-pyright
+        name: B5) Pyright (type checking)
+        entry: uv run pyright
+        language: system
+        pass_filenames: false
+        types: [python]
+
+      - id: B6-bandit
+        name: B6) Bandit (security)
+        entry: uvx bandit -c pyproject.toml -r src
+        language: system
+        pass_filenames: false
+        types: [python]
+
+      # ------------------- COVERAGE -------------------
+
+      - id: C1-pytest
+        name: C1) Pytest
+        entry: uv run pytest
+        language: system
+        pass_filenames: false
+        types: [python]
+
+  # ------------------- THEN, EXTERNAL REPOS ---------------------
+
   - repo: https://github.com/rhysd/actionlint
     rev: v1.7.8
     hooks:
       - id: actionlint
-        name: B4) Actionlint (GitHub Actions Linter)
+        name: B7) Actionlint (GitHub Actions Linter)
         files: ^\.github/workflows/.*\.ya?ml$
+

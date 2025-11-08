@@ -27,6 +27,7 @@ __all__ = [
     "date_range",
     "now_utc",
     "now_utc_str",
+    "now_utc_str_for_schemas",
     "today_utc_str",
 ]
 
@@ -74,6 +75,11 @@ def now_utc_str(fmt: str = "%Y-%m-%d %H:%M:%S UTC") -> str:
         str: Formatted current UTC time.
     """
     return now_utc().strftime(fmt)
+
+
+def now_utc_str_for_schemas() -> str:
+    """Return the current UTC timestamp formatted for JSON Schema date-time (RFC 3339)."""
+    return now_utc().isoformat(timespec="seconds").replace("+00:00", "Z")
 
 
 def today_utc_str() -> str:
