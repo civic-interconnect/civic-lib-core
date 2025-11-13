@@ -18,7 +18,7 @@ on:
       - "v*.*.*"
 
 permissions:
-  contents: write # create the GitHub Release
+  contents: write # create the GitHub Release, push docs
   id-token: write # PyPI Trusted Publishing (OIDC)
 
 env:

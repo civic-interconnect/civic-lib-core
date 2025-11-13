@@ -8,6 +8,9 @@ on:
     paths: ["provenance/ptag.json"]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   validate-ptag:
     uses: civic-interconnect/.github/.github/workflows/validate-ptag-core.yml@main

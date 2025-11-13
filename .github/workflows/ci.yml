@@ -8,6 +8,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   ci:
     uses: civic-interconnect/.github/.github/workflows/ci-python.yml@main
