@@ -14,6 +14,13 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 
 ---
 
+## [0.9.13] - 2025-11-13
+
+### Changed
+- Concurrency in reusable actions
+
+---
+
 ## [0.9.12] - 2025-11-13
 
 ### Changed
