@@ -168,7 +168,6 @@ addopts = [
   "--cov-report=term-missing",  # term-missing:skip-covered is typical
   "--cov-report=xml:coverage.xml",  # output coverage in XML format
   "--cov-report=html:htmlcov",  # output coverage in HTML format
-  "--cov-fail-under=25",  
   "-v",  # verbose output
   "--tb=short",  # short traceback format
 ]

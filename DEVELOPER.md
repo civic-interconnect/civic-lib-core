@@ -2,6 +2,8 @@
 
 This repo uses simple Git tags (no automation needed).
 
+Change the version in README.md badge first. 
+
 ### 1. Prepare the release
 ```shell
 git add .
