@@ -1,4 +1,4 @@
-# .github/workflows/docs-deploy-mkdocs.yml
+# .github/workflows/deploy-docs.yml
 name: Docs Deploy (MkDocs)
 
 on:

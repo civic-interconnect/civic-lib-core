@@ -48,6 +48,7 @@ uvx ruff format .
 uvx deptry .
 uv run pyright
 uv run pytest
+uvx pre-commit autoupdate
 uvx pre-commit run --all-files
 ```
 

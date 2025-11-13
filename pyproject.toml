@@ -60,7 +60,6 @@ docs = [  # Add all to deptry ignores
   "mkdocs-material",
   "mkdocs-static-i18n",
   "mkdocstrings[python]>=0.18",
-  "pdoc",
   "ruff", # required for mkdocstrings
 ]
 
@@ -144,7 +143,6 @@ DEP002 = [
   "mkdocs-material",
   "mkdocs-static-i18n",
   "mkdocstrings",  
-  "pdoc",
   "ruff",
   # Main dependencies that might not be directly imported
   "requests",  # If not actually used in code
