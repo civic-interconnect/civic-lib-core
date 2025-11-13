@@ -14,6 +14,15 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 
 ---
 
+## [0.9.12] - 2025-11-13
+
+### Changed
+- Integrated shared org-level PTag validation workflows
+- Updated CI to reusable core, civic-data, and privacy validators
+- Minor cleanup of workflow files
+
+---
+
 ## [0.9.11] - 2025-11-08
 
 ### Changed

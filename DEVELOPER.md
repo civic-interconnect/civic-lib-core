@@ -1,8 +1,6 @@
 # DEVELOPER
 
-This repo uses simple Git tags (no automation needed).
-
-Change the version in README.md badge first. 
+Update CHANGELOG.md first.
 
 ### 1. Prepare the release
 ```shell
