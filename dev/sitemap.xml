@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://civic-interconnect.github.io/civic-lib-core/dev/</loc>
+         <loc>https://civic-interconnect.github.io/civic-lib-core/latest/</loc>
          <lastmod>2025-11-13</lastmod>
     </url>
     <url>
-         <loc>https://civic-interconnect.github.io/civic-lib-core/dev/api/</loc>
+         <loc>https://civic-interconnect.github.io/civic-lib-core/latest/api/</loc>
          <lastmod>2025-11-13</lastmod>
     </url>
     <url>
-         <loc>https://civic-interconnect.github.io/civic-lib-core/dev/cli/</loc>
+         <loc>https://civic-interconnect.github.io/civic-lib-core/latest/cli/</loc>
          <lastmod>2025-11-13</lastmod>
     </url>
 </urlset>
