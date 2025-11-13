@@ -9,7 +9,7 @@
       "prov:label": "civic-lib-core",
       "type": "software",
       "license": "MIT",
-      "releaseTag": "v0.9.11"
+      "releaseTag": "v0.9.14"
     }
   },
   "agent": {
@@ -19,15 +19,15 @@
     }
   },
   "activity": {
-    "activity:release_v0_9_11": {
-      "prov:label": "Release build v0.9.11",
+    "activity:release_v0_9_14": {
+      "prov:label": "Release build v0.9.14",
       "reproCommand": "uv build && uv publish"
     }
   },
   "wasGeneratedBy": {
     "_:g1": {
       "prov:entity": "entity:civic_lib_core",
-      "prov:activity": "activity:release_v0_9_11"
+      "prov:activity": "activity:release_v0_9_14"
     }
   },
   "wasAttributedTo": {

@@ -1,6 +1,7 @@
 # DEVELOPER
 
-Update CHANGELOG.md first.
+Update CHANGELOG.md first (2 places: beginning and end).
+Update versions in provenance/ptag.json (about 4 places).
 
 ### 1. Prepare the release
 ```shell
