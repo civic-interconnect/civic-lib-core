@@ -6,6 +6,7 @@ on:
     paths: ["provenance/ptag.json"]
   pull_request:
     paths: ["provenance/ptag.json"]
+  workflow_dispatch:
 
 jobs:
   validate-ptag:
