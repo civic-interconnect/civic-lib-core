@@ -34,7 +34,7 @@ exclude: |
 
 repos:
 
-  # ------------------- ALL LOCAL FIRST ---------------------
+  # ------------------- LOCAL HOOKS (UV-BASED) -------------------
 
   - repo: local
     hooks:
@@ -79,16 +79,15 @@ repos:
         pass_filenames: false
         types: [python]
 
-      # ------------------- COVERAGE -------------------
+      # ------------------- COVERAGE / TESTS -------------------
 
       - id: C1-pytest
         name: C1) Pytest
         entry: uv run pytest
         language: system
         pass_filenames: false
-        types: [python]
 
-  # ------------------- THEN, EXTERNAL REPOS ---------------------
+  # ------------------- EXTERNAL REPOS ---------------------  
 
   - repo: https://github.com/rhysd/actionlint
     rev: v1.7.8
@@ -96,4 +95,3 @@ repos:
       - id: actionlint
         name: B7) Actionlint (GitHub Actions Linter)
         files: ^\.github/workflows/.*\.ya?ml$
-
