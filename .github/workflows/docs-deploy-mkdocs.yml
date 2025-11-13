@@ -1,0 +1,12 @@
+# .github/workflows/docs-deploy-mkdocs.yml
+name: Docs Deploy (MkDocs)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy-docs:
+    uses: civic-interconnect/.github/.github/workflows/docs-deploy-mkdocs.yml@main
+

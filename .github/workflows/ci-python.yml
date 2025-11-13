@@ -1,0 +1,13 @@
+# .github/workflows/ci-python.yml
+name: CI (Python)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  ci:
+    uses: civic-interconnect/.github/.github/workflows/ci-python.yml@main

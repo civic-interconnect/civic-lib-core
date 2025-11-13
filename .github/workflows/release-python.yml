@@ -1,0 +1,23 @@
+# .github/workflows/release-python.yml
+name: Release (PyPI + versioned docs)
+# Designed to run only on version tags (e.g., vx.y.z).
+# Final step before distribution.
+# It builds distribution files, runs tests, prepares release, and publishes.
+# IMPORTANT: The PyPI project must enable Trusted Publishers and recognize this repository.
+
+on:
+  push:
+    tags:
+      - "v*.*.*"  # trigger only on version tags like vx.y.z
+
+permissions:
+  contents: write   # create the GitHub Release
+  id-token: write   # PyPI Trusted Publishing (OIDC)
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    uses: civic-interconnect/.github/.github/workflows/release-python.yml@main

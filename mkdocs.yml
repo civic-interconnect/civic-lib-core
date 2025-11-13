@@ -8,8 +8,12 @@ site_description: Core library for Civic Interconnect projects.
 site_author: Civic Interconnect
 docs_dir: docs
 site_dir: site
+copyright: Copyright &copy; 2025 Civic Interconnect
 
 extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/civic-interconnect/civic-lib-core
   version:
     provider: mike
 
@@ -40,9 +44,15 @@ theme:
 
 plugins:
   - search
+  - mike:
+      version_selector: true
+      css_dir: css
+      javascript_dir: js
+      canonical_version: latest
   - mkdocstrings:
       handlers:
         python:
+          paths: [src]
           options:
             show_source: true
             show_root_heading: true # Include module names
@@ -60,10 +70,11 @@ markdown_extensions:
       toc_depth: 3
   - pymdownx.superfences # Code blocks with syntax highlighting
   - pymdownx.details # Collapsible sections
+  - pymdownx.inlinehilite # Inline code highlighting
+  - pymdownx.snippets # Include external files
+  - pymdownx.tabbed # Tabbed content
 
 nav:
-  - User Guide:
-      - Home: index.md
-      - CLI: cli.md
-  - Developer Guide:
-      - API: api.md
+  - Home: index.md
+  - API Reference: api.md
+  - CLI Reference: cli.md

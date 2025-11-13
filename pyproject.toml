@@ -160,10 +160,7 @@ reportMissingTypeStubs = "warning"
 typeCheckingMode = "basic" # or "strict"
 # reportReturnType = "none"
 
-[tool.pytest.env]
-PYTEST_CURRENT_TEST = "true"
-
-[tool.pytest.ini_options]
+[tool.pytest]
 addopts = [
   "-ra",  # show extra test summary info for skipped, failed, etc.
   "--strict-markers",  # enforce marker usage
@@ -171,12 +168,11 @@ addopts = [
   "--cov-report=term-missing",  # term-missing:skip-covered is typical
   "--cov-report=xml:coverage.xml",  # output coverage in XML format
   "--cov-report=html:htmlcov",  # output coverage in HTML format
-  "--cov-fail-under=25",  # reasonable for core library
+  "--cov-fail-under=25",  
   "-v",  # verbose output
   "--tb=short",  # short traceback format
 ]
-minversion = "7.0"
-python_files = "test_*.py"
+minversion = "9.0"
 pythonpath = ["src"]
 testpaths = ["tests"]
 
@@ -204,7 +200,7 @@ extend-select = [
   "C408",  # unnecessary comprehension
   "D",     # Docstring conventions
   "D401",  # Missing argument descriptions in the docstring
-  "D417",  # First line should be in imperative mood (good habit)
+  "D417",  # First line should be in imperative mood
   "Q",     # flake8-quotes
   "S",     # Security issues
   "C90",   # McCabe complexity
